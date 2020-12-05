@@ -11,18 +11,16 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(modid = MainClassMod.MODID, version = MainClassMod.VERSION, name = "Bandagez Mod")
-
 public class MainClassMod
 {
     public static final String MODID = "bandmod";
     public static final String VERSION = "0.0.1";
 
-    @SidedProxy(clientSide = "ancndz.bandmod.proxy.ClientProxy", serverSide = "ancndz.bandmod.proxy.CommonProxy")
+    @SidedProxy(clientSide = "ru.ancndz.bandmod.proxy.ClientProxy", serverSide = "ru.ancndz.bandmod.proxy.CommonProxy")
     public static CommonProxy proxy;
-    
 
     //tab
-    public static CreativeTabs tabMain = new TabMain("tab");
+    public static CreativeTabs tabMain = new TabMain("Bandagez");
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) { proxy.preInit(event); }

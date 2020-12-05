@@ -29,10 +29,10 @@ public class ItemBand extends Item
     private final int healAmount; // power 0 1 2
     private final int maxHeal; // 10 15 20
     private final int MaxItemUseDuration; // 40 80 120 - item use time
-    private long lastworldtime;
+    private long lastWorldTime;
     
     public ItemBand(String name, int maxStackSize, int healTime, int amount, int maxHP, int duration) {
-        this.setRegistryName(name);
+        this.setRegistryName(MainClassMod.MODID, name);
         this.setUnlocalizedName(name);
         this.setMaxStackSize(maxStackSize);
         this.setCreativeTab(MainClassMod.tabMain);
@@ -42,13 +42,13 @@ public class ItemBand extends Item
         this.healAmount = amount;
 		this.maxHeal = maxHP;
 		this.MaxItemUseDuration = duration;
-		this.lastworldtime = 0;
+		this.lastWorldTime = 0;
     }
 	
-    public int gethealAmount(ItemStack stack) { return this.healAmount; }
-	public int getMaxhp(ItemStack stack) { return this.maxHeal;}
-	public int getHealTime(ItemStack stack) { return this.healTime; }
-	public int getMaxItemUseDuration(ItemStack stack) { return this.MaxItemUseDuration; }
+    public int gethealAmount() { return this.healAmount; }
+	public int getMaxhp() { return this.maxHeal;}
+	public int getHealTime() { return this.healTime; }
+	public int getMaxItemUseDuration() { return this.MaxItemUseDuration; }
 	////////////
 	
 	@Override
@@ -56,42 +56,41 @@ public class ItemBand extends Item
 		playerIn.setActiveHand(handIn);
 		ItemStack stack = playerIn.getHeldItem(handIn);
 		ItemBand item = (ItemBand) stack.getItem();
-		int hp = item.getMaxhp(stack);
+		int hp = item.getMaxhp();
 		SoundEvent sound;
 		
 		switch(hp) {
-			case 10: sound = SoundHandler.SMALL_BANDAGE_USE;  break;
 			case 15: sound = SoundHandler.MEDIUM_BANDAGE_USE;  break;
 			case 20: sound = SoundHandler.LARGE_BANDAGE_USE;  break;
 			default: sound = SoundHandler.SMALL_BANDAGE_USE; break;
 		}
 		
-		if (worldIn.getWorldTime() - this.lastworldtime > 40 || this.lastworldtime == 0) {
-			worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, sound, 
+		if (worldIn.getWorldTime() - this.lastWorldTime > 40 || this.lastWorldTime == 0) {
+			worldIn.playSound(null, playerIn.posX, playerIn.posY, playerIn.posZ, sound,
 					SoundCategory.PLAYERS, 0.5F, worldIn.rand.nextFloat() * 0.1F + 0.9F); 
 		} 
 	
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+		return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
 	}
 	
 	@Override
 	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft)
-    { this.lastworldtime = worldIn.getWorldTime(); }
+    { this.lastWorldTime = worldIn.getWorldTime(); }
 	
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
 		EntityPlayer player = (EntityPlayer) entityLiving;
 		ItemBand item = (ItemBand) stack.getItem();
-		int hp = item.getMaxhp(stack);
+		int hp = item.getMaxhp();
 		
 		if (player.getHealth() < hp) {
 			player.addPotionEffect( new PotionEffect(Potion.getPotionById(10), 
-					(int) (hp - player.getHealth()) * item.getHealTime(stack), item.gethealAmount(stack)));
+					(int) (hp - player.getHealth()) * item.getHealTime(), item.gethealAmount()));
 			
 			worldIn.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, 
 					SoundHandler.BANDAGE_AFTERUSE, SoundCategory.PLAYERS, 0.5F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
 			
-			this.lastworldtime = worldIn.getWorldTime();
+			this.lastWorldTime = worldIn.getWorldTime();
 			player.getHeldItem(EnumHand.MAIN_HAND).shrink(1);	
 		}
 		

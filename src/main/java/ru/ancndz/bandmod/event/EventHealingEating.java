@@ -9,8 +9,7 @@ import squeek.applecore.api.hunger.HealthRegenEvent.AllowSaturatedRegen;
 
 @Mod.EventBusSubscriber(modid = MainClassMod.MODID)
 public class EventHealingEating {
-	
-	
+
 	@SubscribeEvent
 	public static void Healing(AllowRegen event) {
 		if (event.player.getHealth() < 16)

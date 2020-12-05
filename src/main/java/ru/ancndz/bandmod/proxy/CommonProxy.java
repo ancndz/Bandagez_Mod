@@ -11,9 +11,7 @@ public class CommonProxy {
 	
 	public void preInit(FMLPreInitializationEvent event)
     {
-		ItemReg.register();
-		//eventshere
-		
+
     }
 
     public void init(FMLInitializationEvent event)
