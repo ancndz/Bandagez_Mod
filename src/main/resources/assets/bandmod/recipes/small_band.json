@@ -1,0 +1,28 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        " a ",
+        "x x",
+        " a "
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "minecraft:paper"
+        },
+        "a":
+        {
+            "item": "minecraft:wool",
+        	"data": 0
+        }
+    },
+    "result":
+    {
+        "item": "bandmod:small_band",
+        "count": 1,
+        "data": 0
+        
+    }
+}
