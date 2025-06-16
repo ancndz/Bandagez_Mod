@@ -1,6 +1,10 @@
 package ru.ancndz.bandagez.item;
 
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+
 import com.mojang.logging.LogUtils;
+
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -17,8 +21,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
 import ru.ancndz.bandagez.mod.BandagezMod;
 
 public class BandItem extends Item {
@@ -27,28 +29,20 @@ public class BandItem extends Item {
 
     private final int healTime;
 
-    private final int healAmount;
-
-    private final int maxHeal;
+	private final int amplifier;
 
     private final int itemUseDuration;
-
-    private final SoundEvent usingSound = BandagezMod.BANDAGE_USE_START.get();
-
-    private final SoundEvent midUsingSound = BandagezMod.BANDAGE_USE_MID.get();
-
-    private final SoundEvent afterUsingSound = BandagezMod.BANDAGE_USE_END.get();
 
     private boolean startSoundPlayed = false;
 
     private boolean midSoundPlayed = false;
 
-    public BandItem(int maxStackSize, int healTime, int amount, int maxHP, int duration) {
-        super(new Properties().stacksTo(maxStackSize));
+	private boolean midLateSoundPlayed = false;
 
-        this.healTime = healTime;
-        this.healAmount = amount;
-        this.maxHeal = maxHP;
+	public BandItem(int maxStackSize, int amplifier, int duration) {
+        super(new Properties().stacksTo(maxStackSize));
+		this.healTime = 100;
+		this.amplifier = amplifier;
         this.itemUseDuration = duration;
     }
 
@@ -60,26 +54,13 @@ public class BandItem extends Item {
     @Override
     public @NotNull InteractionResultHolder<ItemStack>
             use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
-        if (player.getHealth() >= this.getMaxHeal()) {
-            LOGGER.debug("Player {} ({} hp) tried to use bandage with max heal {}.",
-                    player.getName().getString(),
-                    player.getHealth(),
-                    this.getMaxHeal());
+		if (player.getHealth() == player.getMaxHealth()) {
             return InteractionResultHolder.fail(player.getItemInHand(hand));
         }
-        LOGGER.debug("Player {} ({} hp) is using bandage with max heal {}.",
+		LOGGER.debug("Player {} ({} hp) is using bandage",
                 player.getName().getString(),
-                player.getHealth(),
-                this.getMaxHeal());
+				player.getHealth());
         return ItemUtils.startUsingInstantly(level, player, hand);
-    }
-
-    @Override
-    public void releaseUsing(@NotNull ItemStack stack,
-            @NotNull Level worldIn,
-            @NotNull LivingEntity entityLiving,
-            int count) {
-
     }
 
     @Override
@@ -88,61 +69,61 @@ public class BandItem extends Item {
             @NotNull ItemStack itemStack,
             int count) {
         if (!worldIn.isClientSide()) {
-            float f = (float) (itemStack.getUseDuration() - count) / (itemStack.getUseDuration() - 3);
-            LOGGER.debug("onUseTick: count = {}, f = {}, startSoundPlayed = {}", count, f, this.startSoundPlayed);
+			float f = (float) (itemStack.getUseDuration() - count) / (itemStack.getUseDuration() - 12);
+			LOGGER.debug("onUseTick: count = {}, f = {}", count, f);
 
-            if (f < 0.15F) {
+			if (f < 0.05F) {
                 this.startSoundPlayed = false;
                 this.midSoundPlayed = false;
-            } else if (f >= 0.2F && !this.startSoundPlayed) {
+			}
+			if (f >= 0.05F && !this.startSoundPlayed) {
+				LOGGER.debug("Start playing startSound, f = {}", f);
                 this.startSoundPlayed = true;
-                LOGGER.debug("Playing start sound for player {}.", entityLiving.getName().getString());
                 worldIn.playSound(null,
                         entityLiving.getOnPos(),
-                        this.usingSound,
+						BandagezMod.BANDAGE_USE_START.get(),
                         SoundSource.PLAYERS,
                         0.5F,
                         worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
             }
-            if (f >= 0.5F && !this.midSoundPlayed) {
+			if (f >= 0.2F && !this.midSoundPlayed) {
+				LOGGER.debug("Start playing midSound, f = {}", f);
                 this.midSoundPlayed = true;
-                LOGGER.debug("Playing mid using sound for player {}.", entityLiving.getName().getString());
                 worldIn.playSound(null,
                         entityLiving.getOnPos(),
-                        this.midUsingSound,
+						BandagezMod.BANDAGE_USE_MID.get(),
                         SoundSource.PLAYERS,
                         0.5F,
                         worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
             }
+			if (f >= 0.5F && !this.midLateSoundPlayed) {
+				LOGGER.debug("Start playing midLateSound, f = {}", f);
+				this.midLateSoundPlayed = true;
+				worldIn.playSound(null, entityLiving.getOnPos(), BandagezMod.MEDIUM_BANDAGE_USE.get(),
+						SoundSource.PLAYERS, 0.5F, worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
+			}
         }
     }
 
     @Override
     public @NotNull ItemStack
             finishUsingItem(@NotNull ItemStack stack, @NotNull Level worldIn, @NotNull LivingEntity entityLiving) {
-        final BandItem item = (BandItem) stack.getItem();
-        int hp = item.getMaxHeal();
-
         if (entityLiving instanceof ServerPlayer serverPlayer) {
-            LOGGER.debug("Player {} finished using bandage, health before: {}, max heal: {}.",
+			LOGGER.debug("Player {} finished using bandage, health before: {}.",
                     serverPlayer.getName().getString(),
-                    entityLiving.getHealth(),
-                    hp);
+					entityLiving.getHealth());
             CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
         }
 
-        if (entityLiving instanceof Player player && entityLiving.getHealth() < hp) {
-            LOGGER.debug("Player {} is healing from {} hp to {} hp with bandage.",
+		if (entityLiving instanceof Player player) {
+			LOGGER.debug("Player {} is healing from {} hp with bandage.",
                     player.getName().getString(),
-                    player.getHealth(),
-                    hp);
-            player.addEffect(new MobEffectInstance(MobEffects.REGENERATION,
-                    (int) (hp - player.getHealth()) * item.getHealTime(),
-                    item.getHealAmount()));
+					player.getHealth());
+			addPlayerEffects(player);
 
             worldIn.playSound(null,
                     player.getOnPos(),
-                    this.afterUsingSound,
+					BandagezMod.BANDAGE_USE_END.get(),
                     SoundSource.PLAYERS,
                     0.5F,
                     worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
@@ -155,6 +136,10 @@ public class BandItem extends Item {
         return stack;
     }
 
+	protected void addPlayerEffects(Player player) {
+		player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, getHealTime(), getAmplifier()));
+	}
+
     @Override
     public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
         return UseAnim.BRUSH;
@@ -164,23 +149,7 @@ public class BandItem extends Item {
         return healTime;
     }
 
-    public int getHealAmount() {
-        return healAmount;
-    }
-
-    public int getMaxHeal() {
-        return maxHeal;
-    }
-
-    public SoundEvent getUsingSound() {
-        return usingSound;
-    }
-
-    public SoundEvent getMidUsingSound() {
-        return midUsingSound;
-    }
-
-    public SoundEvent getAfterUsingSound() {
-        return afterUsingSound;
+	public int getAmplifier() {
+		return amplifier;
     }
 }

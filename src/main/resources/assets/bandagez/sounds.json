@@ -11,12 +11,6 @@
         "sounds": [ { "name": "bandagez:item/band/medium_bandage_inuse", "stream":true } ]
     },
     
-    "item.band.large_bandage_inuse": {
-        "category": "player",
-        "subtitle": "item.band.large_bandage_inuse",
-        "sounds": [ { "name": "bandagez:item/band/large_bandage_inuse", "stream":true } ]
-    },
-    
     "item.band.bandage_use_start": {
         "category": "player",
         "subtitle": "item.band.bandage_use_start.",

@@ -42,11 +42,6 @@ public class BandagezMod {
             () -> SoundEvent.createVariableRangeEvent(
                     ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, "item.band.medium_bandage_inuse")));
 
-    public static final RegistryObject<SoundEvent> LARGE_BANDAGE_USE =
-            BandagezMod.SOUNDS.register("item.band.large_bandage_inuse",
-                    () -> SoundEvent.createVariableRangeEvent(
-                            ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, "item.band.large_bandage_inuse")));
-
     public static final RegistryObject<SoundEvent> BANDAGE_USE_START =
             BandagezMod.SOUNDS.register("item.band.bandage_use_start",
                     () -> SoundEvent.createVariableRangeEvent(
@@ -65,13 +60,13 @@ public class BandagezMod {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
 
     public static final RegistryObject<Item> SMALL_BAND_ITEM = BandagezMod.ITEMS.register("small_band",
-            () -> new BandItem(16, 50, 0, 10, 40));
+            () -> new BandItem(16, 0, 40));
 
     public static final RegistryObject<Item> MEDIUM_BAND_ITEM = BandagezMod.ITEMS.register("medium_band",
-            () -> new BandItem(16, 25, 1, 15, 80));
+            () -> new BandItem(16, 1, 70));
 
     public static final RegistryObject<Item> LARGE_BAND_ITEM = BandagezMod.ITEMS.register("large_band",
-            () -> new BandItem(16, 12, 2, 20, 120));
+            () -> new BandItem(16, 2, 100));
 
     public static final RegistryObject<Item> MOD_ITEM = BandagezMod.ITEMS.register("mod_icon_item",
             () -> new Item(new Item.Properties().stacksTo(1)));
