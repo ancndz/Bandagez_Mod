@@ -1,0 +1,35 @@
+{
+  "criteria": {
+    "has_wool": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "minecraft:wool"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bandagez:large_band"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "hurt": {
+      "trigger": "minecraft:entity_hurt_player"
+    }
+  },
+  "requirements": [
+    [
+      "has_wool",
+      "has_the_recipe",
+      "hurt"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bandagez:large_band"
+    ]
+  }
+}
