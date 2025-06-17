@@ -4,11 +4,14 @@
     "key": {
         "X": {
             "tag": "minecraft:wool"
+        },
+        "Y": {
+            "item": "minecraft:leather"
         }
     },
     "pattern": [
         "   ",
-        "X X",
+        "XYX",
         "   "
     ],
     "result": {

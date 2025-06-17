@@ -12,7 +12,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "bandagez:large_band"
+        "recipe": "bandagez:empty_band"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
@@ -29,6 +29,13 @@
   ],
   "rewards": {
     "recipes": [
+      "bandagez:empty_band",
+      "bandagez:hemostatic_band",
+      "bandagez:magic_band",
+      "bandagez:stimulant_band",
+      "bandagez:antibiotic_band",
+      "bandagez:small_band",
+      "bandagez:medium_band",
       "bandagez:large_band"
     ]
   }

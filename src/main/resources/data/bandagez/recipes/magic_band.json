@@ -4,18 +4,15 @@
     "key": {
         "X": {
             "tag": "minecraft:wool"
-        },
-        "Y": {
-            "item": "minecraft:leather"
         }
     },
     "pattern": [
         "   ",
-        "XXX",
-        " Y "
+        " X ",
+        "   "
     ],
     "result": {
-        "item": "bandagez:large_band",
+        "item": "bandagez:magic_band",
         "count": 1,
         "data": 0
     },

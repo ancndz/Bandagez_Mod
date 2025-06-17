@@ -1,6 +1,15 @@
 {
+  "item.bandagez.empty_band": "Простая повязка",
   "item.bandagez.small_band": "Небольшая повязка",
   "item.bandagez.medium_band": "Средняя повязка",
   "item.bandagez.large_band": "Большая повязка",
-  "bandagez.bandages_tab": "Бинты"
+  "item.bandagez.hemostatic_band": "Гемостатическая повязка",
+  "item.bandagez.antibiotic_band": "Антибиотическая повязка",
+  "item.bandagez.magic_band": "Волшебная повязка",
+  "item.bandagez.stimulant_band": "Стимулирующая повязка",
+  "bandagez.bandages_tab": "Бинты",
+
+  "effect.bandagez.bleed": "Кровотечение",
+  "effect.bandagez.hard_bleed": "Сильное кровотечение",
+  "effect.bandagez.fresh_bandage": "Свежая повязка"
 }

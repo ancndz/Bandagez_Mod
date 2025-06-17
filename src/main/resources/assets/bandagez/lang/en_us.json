@@ -1,6 +1,17 @@
 {
+  "item.bandagez.empty_band": "Common Bandage",
   "item.bandagez.small_band": "Small Bandage",
   "item.bandagez.medium_band": "Medium Bandage",
   "item.bandagez.large_band": "Large Bandage",
-  "bandagez.bandages_tab": "Bandages"
+  "item.bandagez.hemostatic_band": "Hemostatic Bandage",
+  "item.bandagez.antibiotic_band": "Antibiotic Bandage",
+  "item.bandagez.magic_band": "Magic Bandage",
+  "item.bandagez.stimulant_band": "Stimulant Bandage",
+
+  "bandagez.bandages_tab": "Bandages",
+  "bandagez.item.bandage.tooltip.removing_effects": "Bandages",
+
+  "effect.bandagez.bleed": "Bleeding",
+  "effect.bandagez.hard_bleed": "Hard Bleeding",
+  "effect.bandagez.fresh_bandage": "Fresh Bandage"
 }
