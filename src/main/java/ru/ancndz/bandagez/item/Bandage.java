@@ -7,13 +7,10 @@ import com.mojang.logging.LogUtils;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -23,15 +20,11 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import ru.ancndz.bandagez.mod.BandagezMod;
 
-public class BandItem extends Item {
+public class Bandage extends Item {
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private final int healTime;
-
-	private final int amplifier;
-
-    private final int itemUseDuration;
+    private final BandageType bandageType;
 
     private boolean startSoundPlayed = false;
 
@@ -39,22 +32,20 @@ public class BandItem extends Item {
 
 	private boolean midLateSoundPlayed = false;
 
-	public BandItem(int maxStackSize, int amplifier, int duration) {
-        super(new Properties().stacksTo(maxStackSize));
-		this.healTime = 100;
-		this.amplifier = amplifier;
-        this.itemUseDuration = duration;
+    public Bandage(BandageType bandageType, Properties properties) {
+        super(properties);
+        this.bandageType = bandageType;
     }
 
     @Override
     public int getUseDuration(@NotNull ItemStack itemstack) {
-        return this.itemUseDuration;
+        return bandageType.getUseDuration();
     }
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack>
             use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
-		if (player.getHealth() == player.getMaxHealth()) {
+		if (!bandageType.canUse(player)) {
             return InteractionResultHolder.fail(player.getItemInHand(hand));
         }
 		LOGGER.debug("Player {} ({} hp) is using bandage",
@@ -119,7 +110,8 @@ public class BandItem extends Item {
 			LOGGER.debug("Player {} is healing from {} hp with bandage.",
                     player.getName().getString(),
 					player.getHealth());
-			addPlayerEffects(player);
+
+            bandageType.applyEffects(player);
 
             worldIn.playSound(null,
                     player.getOnPos(),
@@ -136,20 +128,9 @@ public class BandItem extends Item {
         return stack;
     }
 
-	protected void addPlayerEffects(Player player) {
-		player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, getHealTime(), getAmplifier()));
-	}
-
     @Override
     public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
-        return UseAnim.BRUSH;
+        return UseAnim.SPEAR;
     }
 
-    public int getHealTime() {
-        return healTime;
-    }
-
-	public int getAmplifier() {
-		return amplifier;
-    }
 }

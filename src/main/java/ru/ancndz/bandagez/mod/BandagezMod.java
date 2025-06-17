@@ -1,10 +1,14 @@
 package ru.ancndz.bandagez.mod;
 
+import org.slf4j.Logger;
+
 import com.mojang.logging.LogUtils;
+
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -19,8 +23,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import org.slf4j.Logger;
-import ru.ancndz.bandagez.item.BandItem;
+import ru.ancndz.bandagez.item.Bandage;
+import ru.ancndz.bandagez.item.BandageTypes;
 
 @Mod(BandagezMod.MODID)
 public class BandagezMod {
@@ -60,13 +64,13 @@ public class BandagezMod {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
 
     public static final RegistryObject<Item> SMALL_BAND_ITEM = BandagezMod.ITEMS.register("small_band",
-            () -> new BandItem(16, 0, 40));
+			() -> new Bandage(BandageTypes.SMALL, new Item.Properties().stacksTo(16)));
 
     public static final RegistryObject<Item> MEDIUM_BAND_ITEM = BandagezMod.ITEMS.register("medium_band",
-            () -> new BandItem(16, 1, 70));
+			() -> new Bandage(BandageTypes.MEDIUM, new Item.Properties().stacksTo(16)));
 
     public static final RegistryObject<Item> LARGE_BAND_ITEM = BandagezMod.ITEMS.register("large_band",
-            () -> new BandItem(16, 2, 100));
+			() -> new Bandage(BandageTypes.LARGE, new Item.Properties().stacksTo(16)));
 
     public static final RegistryObject<Item> MOD_ITEM = BandagezMod.ITEMS.register("mod_icon_item",
             () -> new Item(new Item.Properties().stacksTo(1)));
@@ -89,6 +93,10 @@ public class BandagezMod {
                     })
                     .build());
 
+	public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS,
+			MODID);
+
+
     public BandagezMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -105,11 +113,8 @@ public class BandagezMod {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
 
-        if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
+		LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
 
         LOGGER.info("{}{}", Config.magicNumberIntroduction, Config.magicNumber);
     }
