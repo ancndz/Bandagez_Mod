@@ -1,4 +1,5 @@
 {
+  "item.bandagez.floral_string": "Floral String",
   "item.bandagez.empty_band": "Common Bandage",
   "item.bandagez.small_band": "Small Bandage",
   "item.bandagez.medium_band": "Medium Bandage",
@@ -9,9 +10,14 @@
   "item.bandagez.stimulant_band": "Stimulant Bandage",
 
   "bandagez.bandages_tab": "Bandages",
-  "bandagez.item.bandage.tooltip.removing_effects": "Bandages",
+  "bandagez.item.bandage.tooltip.removing_effects": "Heals:",
 
   "effect.bandagez.bleed": "Bleeding",
   "effect.bandagez.hard_bleed": "Hard Bleeding",
-  "effect.bandagez.fresh_bandage": "Fresh Bandage"
+  "effect.bandagez.fresh_bandage": "Fresh Bandage",
+
+  "bandagez.advancements.adventure.no_food_regen.title": "New way of healing",
+  "bandagez.advancements.adventure.no_food_regen.description": "No more food regen!™",
+  "bandagez.advancements.adventure.bandage_used.title": "That's better.",
+  "bandagez.advancements.adventure.bandage_used.description": ""
 }

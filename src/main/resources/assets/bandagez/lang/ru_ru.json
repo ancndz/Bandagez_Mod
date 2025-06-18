@@ -1,4 +1,5 @@
 {
+  "item.bandagez.floral_string": "Растительная нить",
   "item.bandagez.empty_band": "Простая повязка",
   "item.bandagez.small_band": "Небольшая повязка",
   "item.bandagez.medium_band": "Средняя повязка",
@@ -7,9 +8,16 @@
   "item.bandagez.antibiotic_band": "Антибиотическая повязка",
   "item.bandagez.magic_band": "Волшебная повязка",
   "item.bandagez.stimulant_band": "Стимулирующая повязка",
+
   "bandagez.bandages_tab": "Бинты",
+  "bandagez.item.bandage.tooltip.removing_effects": "Лечит:",
 
   "effect.bandagez.bleed": "Кровотечение",
   "effect.bandagez.hard_bleed": "Сильное кровотечение",
-  "effect.bandagez.fresh_bandage": "Свежая повязка"
+  "effect.bandagez.fresh_bandage": "Свежая повязка",
+
+  "bandagez.advancements.adventure.no_food_regen.title": "Новый способ лечения",
+  "bandagez.advancements.adventure.no_food_regen.description": "Никакого больше лечения едой!™",
+  "bandagez.advancements.adventure.bandage_used.title": "Так-то лучше.",
+  "bandagez.advancements.adventure.bandage_used.description": ""
 }

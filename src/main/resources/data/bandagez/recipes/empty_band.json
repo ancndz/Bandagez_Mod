@@ -1,15 +1,26 @@
 {
-    "type": "minecraft:crafting_shaped",
+    "type": "minecraft:crafting_shapeless",
     "category": "equipment",
-    "key": {
-        "X": {
+    "ingredients": [
+        [
+            {
+                "tag": "forge:string"
+            },
+            {
+                "item": "bandagez:floral_string"
+            }
+        ],
+        [
+            {
+                "tag": "forge:string"
+            },
+            {
+                "item": "bandagez:floral_string"
+            }
+        ],
+        {
             "tag": "minecraft:wool"
         }
-    },
-    "pattern": [
-        "   ",
-        " X ",
-        "   "
     ],
     "result": {
         "item": "bandagez:empty_band",

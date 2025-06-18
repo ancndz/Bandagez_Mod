@@ -1,7 +1,5 @@
 package ru.ancndz.bandagez.effect;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -9,6 +7,8 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 import ru.ancndz.bandagez.mod.BandagezMod;
+
+import javax.annotation.Nullable;
 
 public class Bleeding extends MobEffect {
 

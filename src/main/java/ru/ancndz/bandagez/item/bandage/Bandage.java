@@ -1,4 +1,6 @@
-package ru.ancndz.bandagez.item;
+package ru.ancndz.bandagez.item.bandage;
+
+import static ru.ancndz.bandagez.mod.LocalizationPath.BANDAGE_TOOLTIP_REMOVING_EFFECTS;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -19,7 +21,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
-import ru.ancndz.bandagez.mod.BandagezMod;
+import ru.ancndz.bandagez.sound.Sounds;
 
 import java.util.List;
 
@@ -51,10 +53,10 @@ public class Bandage extends Item {
             @NotNull List<Component> mainComponent,
             @NotNull TooltipFlag flag) {
         if (!bandageType.getRemovingEffects().isEmpty()) {
-            mainComponent.add(Component.translatable("bandagez.item.bandage.tooltip.removing_effects",
-                    bandageType.getRemovingEffects().size()));
+			mainComponent.add(Component.translatable(BANDAGE_TOOLTIP_REMOVING_EFFECTS));
             for (var effect : bandageType.getRemovingEffects()) {
-                mainComponent.add(Component.translatable(effect.getDescriptionId()));
+				mainComponent.add(Component.translatable(effect.getDescriptionId())
+						.withStyle(effect.getCategory().getTooltipFormatting()));
             }
         }
     }
@@ -87,7 +89,7 @@ public class Bandage extends Item {
                 this.startSoundPlayed = true;
                 worldIn.playSound(null,
                         entityLiving.getOnPos(),
-                        BandagezMod.BANDAGE_USE_START.get(),
+						Sounds.BANDAGE_USE_START.get(),
                         SoundSource.PLAYERS,
                         0.5F,
                         worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
@@ -97,7 +99,7 @@ public class Bandage extends Item {
                 this.midSoundPlayed = true;
                 worldIn.playSound(null,
                         entityLiving.getOnPos(),
-                        BandagezMod.BANDAGE_USE_MID.get(),
+						Sounds.BANDAGE_USE_MID.get(),
                         SoundSource.PLAYERS,
                         0.5F,
                         worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
@@ -107,7 +109,7 @@ public class Bandage extends Item {
                 this.midLateSoundPlayed = true;
                 worldIn.playSound(null,
                         entityLiving.getOnPos(),
-                        BandagezMod.MEDIUM_BANDAGE_USE.get(),
+						Sounds.MEDIUM_BANDAGE_USE.get(),
                         SoundSource.PLAYERS,
                         0.5F,
                         worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
@@ -118,38 +120,30 @@ public class Bandage extends Item {
     @Override
     public @NotNull ItemStack
             finishUsingItem(@NotNull ItemStack stack, @NotNull Level worldIn, @NotNull LivingEntity entityLiving) {
-        if (entityLiving instanceof ServerPlayer serverPlayer) {
-            LOGGER.debug("Player {} finished using bandage, health before: {}.",
-                    serverPlayer.getName().getString(),
-                    entityLiving.getHealth());
-            CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
-        }
+		if (entityLiving instanceof ServerPlayer serverPlayer) {
+			LOGGER.debug("Player {} finished using bandage, health before: {}.", serverPlayer.getName().getString(),
+					entityLiving.getHealth());
+			CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
+		}
 
-        if (entityLiving instanceof Player player) {
-            LOGGER.debug("Player {} is healing from {} hp with bandage.",
-                    player.getName().getString(),
-                    player.getHealth());
+		LOGGER.debug("Player {} applying bandage {}.", entityLiving.getName().getString(), bandageType.getName());
+		bandageType.applyEffects(entityLiving);
 
-            bandageType.applyEffects(player);
+		worldIn.playSound(null, entityLiving.getOnPos(), Sounds.BANDAGE_USE_END.get(), SoundSource.PLAYERS, 0.5F,
+				worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
 
-            worldIn.playSound(null,
-                    player.getOnPos(),
-                    BandagezMod.BANDAGE_USE_END.get(),
-                    SoundSource.PLAYERS,
-                    0.5F,
-                    worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
-
-            player.awardStat(Stats.ITEM_USED.get(this));
-            if (!player.getAbilities().instabuild) {
-                stack.shrink(1);
-            }
+		if (entityLiving instanceof Player player) {
+			player.awardStat(Stats.ITEM_USED.get(this));
+			if (!player.getAbilities().instabuild) {
+				stack.shrink(1);
+			}
         }
         return stack;
     }
 
     @Override
     public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
-        return UseAnim.TOOT_HORN;
+		return UseAnim.NONE;
     }
 
 }

@@ -6,13 +6,16 @@
             "tag": "minecraft:wool"
         },
         "Y": {
-            "item": "minecraft:leather"
+            "tag": "forge:string"
+        },
+        "Z": {
+            "tag": "forge:ingots/iron"
         }
     },
     "pattern": [
-        "   ",
-        "XYX",
-        "   "
+        " Y ",
+        "XZX",
+        " Y "
     ],
     "result": {
         "item": "bandagez:medium_band",

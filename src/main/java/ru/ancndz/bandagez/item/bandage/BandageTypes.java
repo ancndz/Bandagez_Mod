@@ -1,10 +1,10 @@
-package ru.ancndz.bandagez.item;
+package ru.ancndz.bandagez.item.bandage;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import ru.ancndz.bandagez.mod.BandagezMod;
+import ru.ancndz.bandagez.effect.Effects;
 
 import java.util.Collections;
 import java.util.List;
@@ -13,31 +13,38 @@ import java.util.function.Predicate;
 
 public enum BandageTypes implements BandageType {
 
-    EMPTY(20, Collections.singletonList(BandagezMod.BLEEDING.get())),
+	EMPTY(20, Collections.singletonList(Effects.BLEEDING.get())),
 
-    HEMOSTATIC(40, BandageTypes::handleHardBleeding, Collections.singletonList(BandagezMod.HARD_BLEEDING.get())),
-
-    SMALL(40, livingEntity -> livingEntity.getHealth() < livingEntity.getMaxHealth(), livingEntity -> {
+	SMALL(40, BandageTypes::isNotFullHealth, livingEntity -> {
         EMPTY.applyEffects(livingEntity);
         livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 0));
     }),
-    MEDIUM(70, livingEntity -> livingEntity.getHealth() < livingEntity.getMaxHealth(), livingEntity -> {
+	MEDIUM(70, BandageTypes::isNotFullHealth, livingEntity -> {
         EMPTY.applyEffects(livingEntity);
         livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1));
     }),
-    LARGE(100, livingEntity -> livingEntity.getHealth() < livingEntity.getMaxHealth(), livingEntity -> {
+	LARGE(100, BandageTypes::isNotFullHealth, livingEntity -> {
         EMPTY.applyEffects(livingEntity);
         livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 2));
     }),
 
+	HEMOSTATIC(40, BandageTypes::handleHardBleeding, Collections.singletonList(Effects.HARD_BLEEDING
+			.get())),
+
     ANTI_BIOTIC(50, List.of(MobEffects.POISON)),
+
     MAGIC(50, List.of(MobEffects.WITHER)),
+
     STIMULANT(50, List.of(MobEffects.DIG_SLOWDOWN, MobEffects.MOVEMENT_SLOWDOWN)),
 
     ;
 
     private static void handleHardBleeding(LivingEntity livingEntity) {
-        livingEntity.addEffect(new MobEffectInstance(BandagezMod.FRESH_BANDAGE.get(), 800));
+		livingEntity.addEffect(new MobEffectInstance(Effects.FRESH_BANDAGE.get(), 800));
+	}
+
+	private static boolean isNotFullHealth(LivingEntity livingEntity) {
+		return livingEntity.getHealth() < livingEntity.getMaxHealth();
     }
 
     private final int itemUseDuration;
@@ -102,4 +109,8 @@ public enum BandageTypes implements BandageType {
         return removingEffects;
     }
 
+	@Override
+	public String getName() {
+		return name().toLowerCase();
+	}
 }

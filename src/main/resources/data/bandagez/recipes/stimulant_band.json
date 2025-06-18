@@ -1,15 +1,19 @@
 {
-    "type": "minecraft:crafting_shaped",
+    "type": "minecraft:crafting_shapeless",
     "category": "equipment",
-    "key": {
-        "X": {
+    "ingredients": [
+        {
+            "tag": "forge:string"
+        },
+        {
+            "tag": "forge:string"
+        },
+        {
             "tag": "minecraft:wool"
+        },
+        {
+            "item": "minecraft:sugar"
         }
-    },
-    "pattern": [
-        "   ",
-        " X ",
-        "   "
     ],
     "result": {
         "item": "bandagez:stimulant_band",

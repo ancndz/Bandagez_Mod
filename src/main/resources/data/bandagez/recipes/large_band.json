@@ -6,13 +6,19 @@
             "tag": "minecraft:wool"
         },
         "Y": {
-            "item": "minecraft:leather"
+            "tag": "forge:string"
+        },
+        "Z": {
+            "tag": "forge:ingots/gold"
+        },
+        "A": {
+            "item": "minecraft:lapis_lazuli"
         }
     },
     "pattern": [
-        "   ",
-        "XXX",
-        " Y "
+        "YAY",
+        "XZX",
+        "YAY"
     ],
     "result": {
         "item": "bandagez:large_band",

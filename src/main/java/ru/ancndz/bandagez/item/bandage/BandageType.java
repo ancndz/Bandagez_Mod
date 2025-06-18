@@ -1,9 +1,9 @@
-package ru.ancndz.bandagez.item;
+package ru.ancndz.bandagez.item.bandage;
 
-import java.util.Collections;
-import java.util.List;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.LivingEntity;
+
+import java.util.List;
 
 public interface BandageType {
 
@@ -18,4 +18,5 @@ public interface BandageType {
 
 	List<MobEffect> getRemovingEffects();
 
+	String getName();
 }

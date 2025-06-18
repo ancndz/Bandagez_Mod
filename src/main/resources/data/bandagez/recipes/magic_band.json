@@ -4,12 +4,21 @@
     "key": {
         "X": {
             "tag": "minecraft:wool"
+        },
+        "Y": {
+            "tag": "forge:string"
+        },
+        "Z": {
+            "item": "minecraft:blaze_powder"
+        },
+        "A": {
+            "item": "minecraft:water_bucket"
         }
     },
     "pattern": [
-        "   ",
-        " X ",
-        "   "
+        "YAY",
+        "XZX",
+        "Y Y"
     ],
     "result": {
         "item": "bandagez:magic_band",

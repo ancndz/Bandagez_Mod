@@ -13,9 +13,9 @@ import javax.annotation.Nullable;
 
 public class FreshBandage extends MobEffect {
 
-    public static final int TICK_RATE = 10;
+	public static final int TICK_RATE = 40;
 
-    public static final float CHANCE_TO_BLEED = 0.3F;
+	public static final float CHANCE_TO_BLEED = 0.2F;
 
     @Nullable
     private String descriptionId;
@@ -27,7 +27,8 @@ public class FreshBandage extends MobEffect {
     @Override
     public void applyEffectTick(LivingEntity entity, int food) {
         if (entity.isSprinting() && entity.getRandom().nextFloat() < CHANCE_TO_BLEED) {
-            entity.addEffect(new MobEffectInstance(BandagezMod.BLEEDING.get(), 100));
+			entity.addEffect(new MobEffectInstance(Effects.BLEEDING.get(), MobEffectInstance.INFINITE_DURATION));
+			entity.removeEffect(Effects.FRESH_BANDAGE.get());
         }
     }
 
