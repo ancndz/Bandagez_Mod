@@ -2,13 +2,15 @@
   "type": "bandagez:grass_drop_modifier",
   "conditions": [
     {
-      "condition": "minecraft:match_tool",
-      "predicate": {
-        "items": [
-          "minecraft:shears"
-        ]
-      },
-      "inverted": true
+      "condition": "minecraft:inverted",
+      "term": {
+        "condition": "minecraft:match_tool",
+        "predicate": {
+          "items": [
+            "minecraft:shears"
+          ]
+        }
+      }
     },
     {
       "chance": 0.125,
