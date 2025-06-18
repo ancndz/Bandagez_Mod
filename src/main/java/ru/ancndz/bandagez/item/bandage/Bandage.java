@@ -10,6 +10,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -19,7 +20,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import ru.ancndz.bandagez.sound.Sounds;
 
@@ -48,15 +48,18 @@ public class Bandage extends Item {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack itemStack,
-            @Nullable Level level,
-            @NotNull List<Component> mainComponent,
-            @NotNull TooltipFlag flag) {
+	public void appendHoverText(@NotNull ItemStack itemStack, Item.@NotNull TooltipContext tooltipContext,
+			@NotNull List<Component> mainComponent, @NotNull TooltipFlag flag) {
+		if (bandageType == BandageTypes.SMALL || bandageType == BandageTypes.MEDIUM
+				|| bandageType == BandageTypes.LARGE) {
+			mainComponent.add(Component.translatable("bandagez.tooltip.bandage_healing"));
+		}
         if (!bandageType.getRemovingEffects().isEmpty()) {
 			mainComponent.add(Component.translatable(BANDAGE_TOOLTIP_REMOVING_EFFECTS));
             for (var effect : bandageType.getRemovingEffects()) {
-				mainComponent.add(Component.translatable(effect.getDescriptionId())
-						.withStyle(effect.getCategory().getTooltipFormatting()));
+				final MobEffect mobEffect = effect.get();
+				mainComponent.add(Component.translatable(mobEffect.getDescriptionId())
+						.withStyle(mobEffect.getCategory().getTooltipFormatting()));
             }
         }
     }

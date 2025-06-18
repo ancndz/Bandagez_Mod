@@ -21,7 +21,7 @@
         "YAY"
     ],
     "result": {
-        "item": "bandagez:large_band",
+        "id": "bandagez:large_band",
         "count": 1,
         "data": 0
     },

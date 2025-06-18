@@ -16,7 +16,7 @@
         }
     ],
     "result": {
-        "item": "bandagez:antibiotic_band",
+        "id": "bandagez:antibiotic_band",
         "count": 1,
         "data": 0
     },

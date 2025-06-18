@@ -1,5 +1,6 @@
 package ru.ancndz.bandagez.item.bandage;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -16,7 +17,9 @@ public interface BandageType {
 	default void applyAfterEffects(LivingEntity livingEntity) {
     }
 
-	List<MobEffect> getRemovingEffects();
+	List<Holder<MobEffect>> getRemovingEffects();
 
 	String getName();
+
+	boolean isHealing();
 }

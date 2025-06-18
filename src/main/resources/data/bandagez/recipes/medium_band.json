@@ -18,7 +18,7 @@
         " Y "
     ],
     "result": {
-        "item": "bandagez:medium_band",
+        "id": "bandagez:medium_band",
         "count": 1,
         "data": 0
     },

@@ -1,5 +1,6 @@
 package ru.ancndz.bandagez.item.bandage;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -13,23 +14,22 @@ import java.util.function.Predicate;
 
 public enum BandageTypes implements BandageType {
 
-	EMPTY(20, Collections.singletonList(Effects.BLEEDING.get())),
+	EMPTY(20, Collections.singletonList(Effects.BLEEDING.getHolder().orElseThrow())),
 
-	SMALL(40, BandageTypes::isNotFullHealth, livingEntity -> {
-        EMPTY.applyEffects(livingEntity);
-        livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 0));
-    }),
-	MEDIUM(70, BandageTypes::isNotFullHealth, livingEntity -> {
-        EMPTY.applyEffects(livingEntity);
-        livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1));
-    }),
-	LARGE(100, BandageTypes::isNotFullHealth, livingEntity -> {
-        EMPTY.applyEffects(livingEntity);
-        livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 2));
-    }),
+	SMALL(40, true, BandageTypes::isNotFullHealth,
+			livingEntity -> livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 0)),
+			Collections.singletonList(Effects.BLEEDING.getHolder().orElseThrow())),
+
+	MEDIUM(70, true, BandageTypes::isNotFullHealth,
+			livingEntity -> livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1)),
+			Collections.singletonList(Effects.BLEEDING.getHolder().orElseThrow())),
+
+	LARGE(100, true, BandageTypes::isNotFullHealth,
+			livingEntity -> livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 2)),
+			Collections.singletonList(Effects.BLEEDING.getHolder().orElseThrow())),
 
 	HEMOSTATIC(40, BandageTypes::handleHardBleeding, Collections.singletonList(Effects.HARD_BLEEDING
-			.get())),
+			.getHolder().orElseThrow())),
 
     ANTI_BIOTIC(50, List.of(MobEffects.POISON)),
 
@@ -40,7 +40,7 @@ public enum BandageTypes implements BandageType {
     ;
 
     private static void handleHardBleeding(LivingEntity livingEntity) {
-		livingEntity.addEffect(new MobEffectInstance(Effects.FRESH_BANDAGE.get(), 800));
+		livingEntity.addEffect(new MobEffectInstance(Effects.FRESH_BANDAGE.getHolder().orElseThrow(), 800));
 	}
 
 	private static boolean isNotFullHealth(LivingEntity livingEntity) {
@@ -49,43 +49,36 @@ public enum BandageTypes implements BandageType {
 
     private final int itemUseDuration;
 
+	private final boolean healing;
+
     private final Predicate<LivingEntity> canUseItem;
 
     private final Consumer<LivingEntity> applyEffect;
 
-    private final List<MobEffect> removingEffects;
-
-    BandageTypes(int itemUseDuration, Predicate<LivingEntity> canUseItem, Consumer<LivingEntity> applyEffect) {
-        this.itemUseDuration = itemUseDuration;
-        this.canUseItem = canUseItem;
-        this.applyEffect = applyEffect;
-        this.removingEffects = Collections.emptyList();
-    }
+	private final List<Holder<MobEffect>> removingEffects;
 
     BandageTypes(int itemUseDuration,
+			boolean healing,
             Predicate<LivingEntity> canUseItem,
             Consumer<LivingEntity> applyEffect,
-            List<MobEffect> removingEffects) {
+			List<Holder<MobEffect>> removingEffects) {
         this.itemUseDuration = itemUseDuration;
+		this.healing = healing;
         this.canUseItem = canUseItem;
         this.applyEffect = applyEffect;
         this.removingEffects = removingEffects;
     }
 
-    BandageTypes(int itemUseDuration, List<MobEffect> removingEffects) {
-        this.itemUseDuration = itemUseDuration;
-        this.canUseItem = livingEntity -> removingEffects.stream().anyMatch(livingEntity::hasEffect);
-        this.applyEffect = livingEntity -> {
-        };
-        this.removingEffects = removingEffects;
+	BandageTypes(int itemUseDuration, List<Holder<MobEffect>> removingEffects) {
+		this(itemUseDuration, false, livingEntity -> removingEffects.stream().anyMatch(livingEntity::hasEffect),
+				livingEntity -> {
+				}, removingEffects);
     }
 
     BandageTypes(int itemUseDuration,
-                 Consumer<LivingEntity> applyEffect, List<MobEffect> removingEffects) {
-        this.itemUseDuration = itemUseDuration;
-        this.canUseItem = livingEntity -> removingEffects.stream().anyMatch(livingEntity::hasEffect);
-        this.applyEffect = applyEffect;
-        this.removingEffects = removingEffects;
+			Consumer<LivingEntity> applyEffect, List<Holder<MobEffect>> removingEffects) {
+		this(itemUseDuration, false, livingEntity -> removingEffects.stream().anyMatch(livingEntity::hasEffect),
+				applyEffect, removingEffects);
     }
 
     @Override
@@ -105,7 +98,7 @@ public enum BandageTypes implements BandageType {
     }
 
     @Override
-    public List<MobEffect> getRemovingEffects() {
+	public List<Holder<MobEffect>> getRemovingEffects() {
         return removingEffects;
     }
 
@@ -113,4 +106,10 @@ public enum BandageTypes implements BandageType {
 	public String getName() {
 		return name().toLowerCase();
 	}
+
+	@Override
+	public boolean isHealing() {
+		return healing;
+	}
+
 }

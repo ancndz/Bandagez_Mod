@@ -23,7 +23,7 @@
         }
     ],
     "result": {
-        "item": "bandagez:empty_band",
+        "id": "bandagez:empty_band",
         "count": 1,
         "data": 0
     },

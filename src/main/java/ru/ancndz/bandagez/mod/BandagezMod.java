@@ -1,7 +1,7 @@
 package ru.ancndz.bandagez.mod;
 
 import com.mojang.logging.LogUtils;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
@@ -38,10 +38,10 @@ public class BandagezMod {
     public static final DeferredRegister<MobEffect> EFFECTS =
             DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, MODID);
 
-	public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = DeferredRegister
+	public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = DeferredRegister
 			.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, MODID);
 
-	public BandagezMod(FMLJavaModLoadingContext context) {
+	public BandagezMod(final FMLJavaModLoadingContext context) {
 		final IEventBus modEventBus = context.getModEventBus();
 
 		Effects.init();

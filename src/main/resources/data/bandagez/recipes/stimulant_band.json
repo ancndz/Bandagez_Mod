@@ -16,7 +16,7 @@
         }
     ],
     "result": {
-        "item": "bandagez:stimulant_band",
+        "id": "bandagez:stimulant_band",
         "count": 1,
         "data": 0
     },

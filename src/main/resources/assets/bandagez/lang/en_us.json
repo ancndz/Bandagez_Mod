@@ -10,7 +10,8 @@
   "item.bandagez.stimulant_band": "Stimulant Bandage",
 
   "bandagez.bandages_tab": "Bandages",
-  "bandagez.item.bandage.tooltip.removing_effects": "Heals:",
+  "bandagez.tooltip.bandage_healing": "Heals",
+  "bandagez.item.bandage.tooltip.removing_effects": "Removes:",
 
   "effect.bandagez.bleed": "Bleeding",
   "effect.bandagez.hard_bleed": "Hard Bleeding",
@@ -19,5 +20,5 @@
   "bandagez.advancements.adventure.no_food_regen.title": "New way of healing",
   "bandagez.advancements.adventure.no_food_regen.description": "No more food regen!™",
   "bandagez.advancements.adventure.bandage_used.title": "That's better.",
-  "bandagez.advancements.adventure.bandage_used.description": ""
+  "bandagez.advancements.adventure.bandage_used.description": "Heal yourself with a bandage"
 }

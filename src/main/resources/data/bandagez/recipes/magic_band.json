@@ -21,7 +21,7 @@
         "Y Y"
     ],
     "result": {
-        "item": "bandagez:magic_band",
+        "id": "bandagez:magic_band",
         "count": 1,
         "data": 0
     },

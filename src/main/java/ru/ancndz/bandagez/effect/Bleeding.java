@@ -24,18 +24,15 @@ public class Bleeding extends MobEffect {
 	}
 
 	@Override
-	public void applyEffectTick(LivingEntity entity, int food) {
+	public boolean applyEffectTick(LivingEntity entity, int food) {
 		entity.hurt(entity.damageSources().genericKill(), hard ? 1.5F : 1.0F);
+		return true;
 	}
 
 	@Override
-	public boolean isDurationEffectTick(int tick, int amplifier) {
+	public boolean shouldApplyEffectTickThisTick(int tick, int amplifier) {
 		int j = TICK_RATE >> amplifier;
-		if (j > 0) {
-			return tick % j == 0;
-		} else {
-			return true;
-		}
+		return j == 0 || tick % j == 0;
 	}
 
 	@Override

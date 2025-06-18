@@ -25,21 +25,18 @@ public class FreshBandage extends MobEffect {
     }
 
     @Override
-    public void applyEffectTick(LivingEntity entity, int food) {
+    public boolean applyEffectTick(LivingEntity entity, int food) {
         if (entity.isSprinting() && entity.getRandom().nextFloat() < CHANCE_TO_BLEED) {
-			entity.addEffect(new MobEffectInstance(Effects.BLEEDING.get(), MobEffectInstance.INFINITE_DURATION));
-			entity.removeEffect(Effects.FRESH_BANDAGE.get());
+			entity.addEffect(new MobEffectInstance(Effects.BLEEDING.getHolder().orElseThrow(), MobEffectInstance.INFINITE_DURATION));
+			entity.removeEffect(Effects.FRESH_BANDAGE.getHolder().orElseThrow());
         }
+        return true;
     }
 
     @Override
-    public boolean isDurationEffectTick(int tick, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int tick, int amplifier) {
         int j = TICK_RATE >> amplifier;
-        if (j > 0) {
-            return tick % j == 0;
-        } else {
-            return true;
-        }
+        return j == 0 || tick % j == 0;
     }
 
     @Override

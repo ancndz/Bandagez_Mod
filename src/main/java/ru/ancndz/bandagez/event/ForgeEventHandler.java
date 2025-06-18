@@ -2,6 +2,7 @@ package ru.ancndz.bandagez.event;
 
 import static java.util.Map.entry;
 
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
@@ -66,7 +67,7 @@ public class ForgeEventHandler {
             .filter(source::is)
             .findFirst()
             .ifPresent(type -> atomicBoolean.set(applyEffect(event.getEntity(),
-                    DAMAGE_TYPES_FOR_BLEEDING.get(type), Effects.BLEEDING.get(), source)));
+						DAMAGE_TYPES_FOR_BLEEDING.get(type), Effects.BLEEDING.getHolder().orElseThrow(), source)));
 		if (atomicBoolean.get()) {
 			return;
 		}
@@ -76,7 +77,8 @@ public class ForgeEventHandler {
             .filter(source::is)
             .findFirst()
             .ifPresent(type -> atomicBoolean.set(applyEffect(event.getEntity(),
-                    DAMAGE_TYPES_FOR_HARD_BLEEDING.get(type), Effects.HARD_BLEEDING.get(), source)));
+						DAMAGE_TYPES_FOR_HARD_BLEEDING.get(type), Effects.HARD_BLEEDING.getHolder().orElseThrow(),
+						source)));
 		if (atomicBoolean.get()) {
 			return;
 		}
@@ -87,17 +89,19 @@ public class ForgeEventHandler {
 		}
         Optional.ofNullable(ENTITY_TYPES_FOR_BLEEDING.get(damageSourceEntity.getType()))
             .ifPresent(bleedingChance -> atomicBoolean
-                .set(applyEffect(event.getEntity(), bleedingChance, Effects.BLEEDING.get(), source)));
+						.set(applyEffect(event.getEntity(), bleedingChance, Effects.BLEEDING.getHolder().orElseThrow(),
+								source)));
 		if (atomicBoolean.get()) {
 			return;
 		}
 
 		Optional.ofNullable(ENTITY_TYPES_FOR_HARD_BLEEDING.get(damageSourceEntity.getType()))
 				.ifPresent(bleedingChance -> atomicBoolean
-						.set(applyEffect(event.getEntity(), bleedingChance, Effects.HARD_BLEEDING.get(), source)));
+						.set(applyEffect(event.getEntity(), bleedingChance,
+								Effects.HARD_BLEEDING.getHolder().orElseThrow(), source)));
 	}
 
-	private static boolean applyEffect(LivingEntity entity, Double bleedingChance, MobEffect effect,
+	private static boolean applyEffect(LivingEntity entity, Double bleedingChance, Holder<MobEffect> effect,
 			DamageSource source) {
 		if (entity.level().getRandom().nextFloat() < bleedingChance) {
 			entity.addEffect(new MobEffectInstance(effect, MobEffectInstance.INFINITE_DURATION), source.getEntity());
