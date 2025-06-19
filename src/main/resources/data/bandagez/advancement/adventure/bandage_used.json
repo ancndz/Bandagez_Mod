@@ -18,6 +18,7 @@
     "frame": "task",
     "hidden": false,
     "icon": {
+      "count": 1,
       "id": "bandagez:small_band"
     },
     "show_toast": true,

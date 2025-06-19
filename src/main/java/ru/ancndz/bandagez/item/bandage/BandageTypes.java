@@ -35,7 +35,7 @@ public enum BandageTypes implements BandageType {
 
     MAGIC(50, List.of(MobEffects.WITHER)),
 
-    STIMULANT(50, List.of(MobEffects.DIG_SLOWDOWN, MobEffects.MOVEMENT_SLOWDOWN)),
+	STIMULANT(50, List.of(MobEffects.MINING_FATIGUE, MobEffects.SLOWNESS)),
 
     ;
 

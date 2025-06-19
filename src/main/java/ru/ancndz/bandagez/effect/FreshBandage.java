@@ -2,6 +2,7 @@ package ru.ancndz.bandagez.effect;
 
 import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -25,7 +26,7 @@ public class FreshBandage extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity entity, int food) {
+	public boolean applyEffectTick(ServerLevel level, LivingEntity entity, int food) {
         if (entity.isSprinting() && entity.getRandom().nextFloat() < CHANCE_TO_BLEED) {
 			entity.addEffect(new MobEffectInstance(Effects.BLEEDING.getHolder().orElseThrow(), MobEffectInstance.INFINITE_DURATION));
 			entity.removeEffect(Effects.FRESH_BANDAGE.getHolder().orElseThrow());

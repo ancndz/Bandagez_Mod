@@ -2,6 +2,7 @@ package ru.ancndz.bandagez.effect;
 
 import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,8 +25,8 @@ public class Bleeding extends MobEffect {
 	}
 
 	@Override
-	public boolean applyEffectTick(LivingEntity entity, int food) {
-		entity.hurt(entity.damageSources().genericKill(), hard ? 1.5F : 1.0F);
+	public boolean applyEffectTick(ServerLevel level, LivingEntity entity, int food) {
+		entity.hurtServer(level, entity.damageSources().genericKill(), hard ? 1.5F : 1.0F);
 		return true;
 	}
 

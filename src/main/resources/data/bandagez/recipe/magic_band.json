@@ -2,18 +2,10 @@
     "type": "minecraft:crafting_shaped",
     "category": "equipment",
     "key": {
-        "X": {
-            "tag": "minecraft:wool"
-        },
-        "Y": {
-            "tag": "forge:string"
-        },
-        "Z": {
-            "item": "minecraft:blaze_powder"
-        },
-        "A": {
-            "item": "minecraft:water_bucket"
-        }
+        "X": "#minecraft:wool",
+        "Y": "minecraft:string",
+        "Z": "minecraft:blaze_powder",
+        "A": "minecraft:water_bucket"
     },
     "pattern": [
         "YAY",

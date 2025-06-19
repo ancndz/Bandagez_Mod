@@ -2,18 +2,10 @@
     "type": "minecraft:crafting_shaped",
     "category": "equipment",
     "key": {
-        "X": {
-            "tag": "minecraft:wool"
-        },
-        "Y": {
-            "tag": "forge:string"
-        },
-        "Z": {
-            "tag": "forge:ingots/gold"
-        },
-        "A": {
-            "item": "minecraft:lapis_lazuli"
-        }
+        "X": "#minecraft:wool",
+        "Y": "minecraft:string",
+        "Z": "#forge:ingots/gold",
+        "A": "minecraft:lapis_lazuli"
     },
     "pattern": [
         "YAY",

@@ -7,9 +7,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.bus.BusGroup;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -42,22 +41,19 @@ public class BandagezMod {
 			.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, MODID);
 
 	public BandagezMod(final FMLJavaModLoadingContext context) {
-		final IEventBus modEventBus = context.getModEventBus();
+		final BusGroup modEventBus = context.getModBusGroup();
 
 		Effects.init();
 		Sounds.init();
 		Items.init();
 
-		LOOT_MODIFIERS.register("grass_drop_modifier", GrassDropModifier.CODEC);
+		LOOT_MODIFIERS.register("grass_drop_modifier", GrassDropModifier.CODEC_SUPPLIER);
 
         SOUNDS.register(modEventBus);
         ITEMS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
         EFFECTS.register(modEventBus);
 		LOOT_MODIFIERS.register(modEventBus);
-
-        MinecraftForge.EVENT_BUS.register(this);
-
     }
 
 }

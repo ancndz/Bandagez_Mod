@@ -9,23 +9,24 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import ru.ancndz.bandagez.sound.Sounds;
 
-import java.util.List;
+import java.util.function.Consumer;
 
-public class Bandage extends Item {
+public class BandageItem extends Item {
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -37,38 +38,39 @@ public class Bandage extends Item {
 
     private boolean midLateSoundPlayed = false;
 
-    public Bandage(BandageType bandageType, Properties properties) {
+	public BandageItem(BandageType bandageType, Properties properties) {
         super(properties);
         this.bandageType = bandageType;
     }
 
     @Override
-    public int getUseDuration(@NotNull ItemStack itemstack) {
+	public int getUseDuration(@NotNull ItemStack itemstack, @NotNull LivingEntity entity) {
         return bandageType.getUseDuration();
     }
 
     @Override
-	public void appendHoverText(@NotNull ItemStack itemStack, Item.@NotNull TooltipContext tooltipContext,
-			@NotNull List<Component> mainComponent, @NotNull TooltipFlag flag) {
+	@Deprecated
+	public void appendHoverText(@NotNull ItemStack itemStack, @NotNull TooltipContext tooltipContext,
+			@NotNull TooltipDisplay tooltipDisplay, Consumer<Component> componentConsumer, TooltipFlag tooltipFlag) {
 		if (bandageType == BandageTypes.SMALL || bandageType == BandageTypes.MEDIUM
 				|| bandageType == BandageTypes.LARGE) {
-			mainComponent.add(Component.translatable("bandagez.tooltip.bandage_healing"));
+			componentConsumer.accept(Component.translatable("bandagez.tooltip.bandage_healing"));
 		}
         if (!bandageType.getRemovingEffects().isEmpty()) {
-			mainComponent.add(Component.translatable(BANDAGE_TOOLTIP_REMOVING_EFFECTS));
+			componentConsumer.accept(Component.translatable(BANDAGE_TOOLTIP_REMOVING_EFFECTS));
             for (var effect : bandageType.getRemovingEffects()) {
 				final MobEffect mobEffect = effect.get();
-				mainComponent.add(Component.translatable(mobEffect.getDescriptionId())
+				componentConsumer.accept(Component.translatable(mobEffect.getDescriptionId())
 						.withStyle(mobEffect.getCategory().getTooltipFormatting()));
             }
         }
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack>
+	public @NotNull InteractionResult
             use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
         if (!bandageType.canUse(player)) {
-            return InteractionResultHolder.fail(player.getItemInHand(hand));
+			return InteractionResult.FAIL;
         }
         LOGGER.debug("Player {} ({} hp) is using bandage", player.getName().getString(), player.getHealth());
         return ItemUtils.startUsingInstantly(level, player, hand);
@@ -80,7 +82,8 @@ public class Bandage extends Item {
             @NotNull ItemStack itemStack,
             int count) {
         if (!worldIn.isClientSide()) {
-            float f = (float) (itemStack.getUseDuration() - count) / (itemStack.getUseDuration() - 12);
+			float f = (float) (itemStack.getUseDuration(entityLiving) - count)
+					/ (itemStack.getUseDuration(entityLiving) - 12);
             LOGGER.debug("onUseTick: count = {}, f = {}", count, f);
 
             if (f < 0.05F) {
@@ -145,8 +148,8 @@ public class Bandage extends Item {
     }
 
     @Override
-    public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
-		return UseAnim.NONE;
+	public @NotNull ItemUseAnimation getUseAnimation(@NotNull ItemStack stack) {
+		return ItemUseAnimation.NONE;
     }
 
 }

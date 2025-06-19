@@ -2,15 +2,9 @@
     "type": "minecraft:crafting_shaped",
     "category": "equipment",
     "key": {
-        "X": {
-            "tag": "minecraft:wool"
-        },
-        "Y": {
-            "tag": "forge:string"
-        },
-        "Z": {
-            "tag": "forge:ingots/iron"
-        }
+        "X": "#minecraft:wool",
+        "Y": "minecraft:string",
+        "Z": "#forge:ingots/iron"
     },
     "pattern": [
         " Y ",
