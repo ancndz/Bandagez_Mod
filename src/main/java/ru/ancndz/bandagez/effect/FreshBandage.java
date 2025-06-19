@@ -1,11 +1,14 @@
 package ru.ancndz.bandagez.effect;
 
 import net.minecraft.Util;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 import ru.ancndz.bandagez.mod.BandagezMod;
 
@@ -21,13 +24,13 @@ public class FreshBandage extends MobEffect {
     private String descriptionId;
 
     public FreshBandage(MobEffectCategory category, int color) {
-        super(category, color);
+		super(category, color, new BlockParticleOption(ParticleTypes.FALLING_DUST, Blocks.COBWEB.defaultBlockState()));
     }
 
     @Override
     public boolean applyEffectTick(LivingEntity entity, int food) {
         if (entity.isSprinting() && entity.getRandom().nextFloat() < CHANCE_TO_BLEED) {
-			entity.addEffect(new MobEffectInstance(Effects.BLEEDING.getHolder().orElseThrow(), MobEffectInstance.INFINITE_DURATION));
+			entity.addEffect(new MobEffectInstance(Effects.BLEEDING.getHolder().orElseThrow(), 400));
 			entity.removeEffect(Effects.FRESH_BANDAGE.getHolder().orElseThrow());
         }
         return true;
