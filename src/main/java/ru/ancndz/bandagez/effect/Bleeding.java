@@ -1,6 +1,7 @@
 package ru.ancndz.bandagez.effect;
 
 import net.minecraft.Util;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
@@ -20,7 +21,7 @@ public class Bleeding extends MobEffect {
 	private String descriptionId;
 
 	public Bleeding(boolean hard, MobEffectCategory category, int color) {
-		super(category, color);
+		super(category, color, ParticleTypes.FALLING_LAVA);
 		this.hard = hard;
 	}
 
@@ -44,4 +45,5 @@ public class Bleeding extends MobEffect {
 		}
 		return this.descriptionId;
 	}
+
 }
