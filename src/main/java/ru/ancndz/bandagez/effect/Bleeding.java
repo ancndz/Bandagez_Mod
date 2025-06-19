@@ -1,6 +1,9 @@
 package ru.ancndz.bandagez.effect;
 
+import static ru.ancndz.bandagez.effect.EffectParticlesHelper.addParticles;
+
 import net.minecraft.Util;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -26,6 +29,7 @@ public class Bleeding extends MobEffect {
 	@Override
 	public void applyEffectTick(LivingEntity entity, int food) {
 		entity.hurt(entity.damageSources().genericKill(), hard ? 1.5F : 1.0F);
+		addParticles(entity, ParticleTypes.FALLING_LAVA, hard ? 5 : 3);
 	}
 
 	@Override
@@ -46,4 +50,5 @@ public class Bleeding extends MobEffect {
 		}
 		return this.descriptionId;
 	}
+
 }

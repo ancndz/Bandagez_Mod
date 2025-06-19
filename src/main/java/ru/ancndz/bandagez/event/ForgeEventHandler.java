@@ -100,7 +100,8 @@ public class ForgeEventHandler {
 	private static boolean applyEffect(LivingEntity entity, Double bleedingChance, MobEffect effect,
 			DamageSource source) {
 		if (entity.level().getRandom().nextFloat() < bleedingChance) {
-			entity.addEffect(new MobEffectInstance(effect, MobEffectInstance.INFINITE_DURATION), source.getEntity());
+			entity.addEffect(new MobEffectInstance(effect, MobEffectInstance.INFINITE_DURATION, 0, false, false, true),
+					source.getEntity());
 			return true;
 		}
 		return false;
