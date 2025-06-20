@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "bandagez:item/mod_icon_item"
-  }
-}
