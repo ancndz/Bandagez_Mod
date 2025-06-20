@@ -49,13 +49,11 @@ public class Items {
 			() -> new BandageItem(BandageTypes.STIMULANT,
 					new Item.Properties().stacksTo(4).setId(ITEMS.key("stimulant_band"))));
 
-	public static final RegistryObject<Item> MOD_ITEM = ITEMS.register("mod_icon_item",
-			() -> new Item(new Item.Properties().stacksTo(1).setId(ITEMS.key("mod_icon_item"))));
-
 	public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = BandagezMod.CREATIVE_MODE_TABS.register(
 			"bandages_tab",
 			() -> CreativeModeTab.builder().title(Component.translatable(CREATIVE_TAB_NAME))
-					.withTabsBefore(CreativeModeTabs.FOOD_AND_DRINKS).icon(() -> MOD_ITEM.get().getDefaultInstance())
+					.withTabsBefore(CreativeModeTabs.FOOD_AND_DRINKS)
+					.icon(() -> SMALL_BAND_ITEM.get().getDefaultInstance())
 					.displayItems((parameters, output) -> {
 						output.accept(FLORAL_STRING_ITEM.get());
 						output.accept(EMPTY_BAND_ITEM.get());
@@ -78,7 +76,6 @@ public class Items {
 		ANTI_BIOTIC_BAND_ITEM.hashCode();
 		MAGIC_BAND_ITEM.hashCode();
 		STIMULANT_BAND_ITEM.hashCode();
-		MOD_ITEM.hashCode();
 		EXAMPLE_TAB.hashCode();
 	}
 
