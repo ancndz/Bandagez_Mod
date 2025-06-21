@@ -10,6 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.eventbus.api.bus.BusGroup;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -42,6 +43,8 @@ public class BandagezMod {
 
     public BandagezMod(final FMLJavaModLoadingContext context) {
         final BusGroup modEventBus = context.getModBusGroup();
+
+        context.registerConfig(ModConfig.Type.CLIENT, BandagezModConfig.clientSpec);
 
         Effects.init();
         Sounds.init();
