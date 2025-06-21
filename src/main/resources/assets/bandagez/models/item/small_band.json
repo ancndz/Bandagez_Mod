@@ -1,7 +1,6 @@
 {
   "format_version": "1.21.6",
-  "parent": "minecraft:item/generated",
-  "texture_size": [32, 32],
+  "parent": "bandagez:item/empty_band",
   "textures": {
     "0": "bandagez:item/small_patch",
     "1": "bandagez:item/base_band",
@@ -58,42 +57,9 @@
       }
     }
   ],
-  "display": {
-    "thirdperson_righthand": {
-      "rotation": [137.28, -34.66, 60.64],
-      "translation": [0, 0.5, 0],
-      "scale": [0.7, 0.7, 0.7]
-    },
-    "thirdperson_lefthand": {
-      "rotation": [137.28, -34.66, 60.64],
-      "translation": [0, 0.5, 0],
-      "scale": [0.7, 0.7, 0.7]
-    },
-    "firstperson_righthand": {
-      "rotation": [-81.23, 39.75, 84.37],
-      "scale": [0.7, 0.7, 0.7]
-    },
-    "firstperson_lefthand": {
-      "rotation": [-81.23, 39.75, 84.37],
-      "scale": [0.7, 0.7, 0.7]
-    },
-    "ground": {
-      "rotation": [102, 0, 0]
-    },
-    "gui": {
-      "rotation": [90, -45, 0],
-      "scale": [1.2, 1.2, 1.2]
-    },
-    "head": {
-      "translation": [0, 6.5, 0]
-    },
-    "fixed": {
-      "rotation": [-90, 0, 0]
-    }
-  },
   "groups": [
     {
-      "name": "group",
+      "name": "base",
       "origin": [13, 0, 13],
       "color": 0,
       "children": [0, 1, 2]

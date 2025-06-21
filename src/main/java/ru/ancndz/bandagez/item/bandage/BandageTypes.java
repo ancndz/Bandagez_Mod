@@ -39,6 +39,8 @@ public enum BandageTypes implements BandageType {
 
     ;
 
+	public static final List<BandageType> HEALING_BANDAGE_TYPES = List.of(SMALL, MEDIUM, LARGE);
+
     private static void handleHardBleeding(LivingEntity livingEntity) {
 		livingEntity.addEffect(new MobEffectInstance(Effects.FRESH_BANDAGE.getHolder().orElseThrow(), 800));
 	}
