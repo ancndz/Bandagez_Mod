@@ -10,8 +10,8 @@
   "item.bandagez.stimulant_band": "Стимулирующая повязка",
 
   "bandagez.bandages_tab": "Бинты",
-  "bandagez.tooltip.bandage_healing": "Лечит",
-  "bandagez.item.bandage.tooltip.removing_effects": "Снимает:",
+  "bandagez.tooltip.healing": "Лечит: {0}",
+  "bandagez.tooltip.removing_effects": "Снимает:",
 
   "effect.bandagez.bleed": "Кровотечение",
   "effect.bandagez.hard_bleed": "Сильное кровотечение",

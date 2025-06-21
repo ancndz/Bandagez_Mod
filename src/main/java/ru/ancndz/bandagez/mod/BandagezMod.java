@@ -37,23 +37,23 @@ public class BandagezMod {
     public static final DeferredRegister<MobEffect> EFFECTS =
             DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, MODID);
 
-	public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = DeferredRegister
-			.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, MODID);
+    public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> LOOT_MODIFIERS =
+            DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, MODID);
 
-	public BandagezMod(final FMLJavaModLoadingContext context) {
-		final BusGroup modEventBus = context.getModBusGroup();
+    public BandagezMod(final FMLJavaModLoadingContext context) {
+        final BusGroup modEventBus = context.getModBusGroup();
 
-		Effects.init();
-		Sounds.init();
-		Items.init();
+        Effects.init();
+        Sounds.init();
+        Items.init();
 
-		LOOT_MODIFIERS.register("grass_drop_modifier", GrassDropModifier.CODEC_SUPPLIER);
+        LOOT_MODIFIERS.register("grass_drop_modifier", GrassDropModifier.CODEC_SUPPLIER);
 
         SOUNDS.register(modEventBus);
         ITEMS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
         EFFECTS.register(modEventBus);
-		LOOT_MODIFIERS.register(modEventBus);
+        LOOT_MODIFIERS.register(modEventBus);
     }
 
 }
