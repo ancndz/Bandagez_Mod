@@ -30,7 +30,7 @@ public class Bleeding extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(ServerLevel level, LivingEntity entity, int food) {
+    public boolean applyEffectTick(@NotNull ServerLevel level, LivingEntity entity, int food) {
         entity.hurtServer(level, entity.damageSources().genericKill(), hard ? 1.5F : 1.0F);
         return true;
     }
@@ -42,9 +42,9 @@ public class Bleeding extends MobEffect {
     }
 
     @Override
-    public ParticleOptions createParticleOptions(MobEffectInstance p_332465_) {
+    public @NotNull ParticleOptions createParticleOptions(@NotNull MobEffectInstance effectInstance) {
         if (BandagezModConfig.CLIENT.showParticles.get()) {
-            return super.createParticleOptions(p_332465_);
+            return super.createParticleOptions(effectInstance);
         } else {
             return () -> ParticleTypes.EFFECT;
         }
