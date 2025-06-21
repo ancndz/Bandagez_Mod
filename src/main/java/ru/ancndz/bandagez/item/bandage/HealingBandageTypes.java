@@ -10,18 +10,17 @@ import ru.ancndz.bandagez.item.Healing;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public enum HealingBandageTypes implements BandageType, Healing {
 
-    SMALL("small_band", 40, 100, 0, 2F, Collections.singletonList(Effects.BLEEDING.getHolder().orElseThrow())),
+    SMALL(40, 100, 0, 2F, Collections.singletonList(Effects.BLEEDING.getHolder().orElseThrow())),
 
-    MEDIUM("medium_band", 70, 100, 1, 4F, Collections.singletonList(Effects.BLEEDING.getHolder().orElseThrow())),
+    MEDIUM(70, 100, 1, 4F, Collections.singletonList(Effects.BLEEDING.getHolder().orElseThrow())),
 
-    LARGE("large_band", 100, 100, 2, 8F, Collections.singletonList(Effects.BLEEDING.getHolder().orElseThrow()))
+    LARGE(100, 100, 2, 8F, Collections.singletonList(Effects.BLEEDING.getHolder().orElseThrow()))
 
     ;
-
-    private final String name;
 
     private final int itemUseDuration;
 
@@ -33,13 +32,11 @@ public enum HealingBandageTypes implements BandageType, Healing {
 
     private final List<Holder<MobEffect>> removingEffects;
 
-    HealingBandageTypes(String name,
-            int itemUseDuration,
+    HealingBandageTypes(int itemUseDuration,
             int healingDuration,
             int amplifier,
             float maxHeal,
             List<Holder<MobEffect>> removingEffects) {
-        this.name = name;
         this.itemUseDuration = itemUseDuration;
         this.healingDuration = healingDuration;
         this.amplifier = amplifier;
@@ -70,7 +67,7 @@ public enum HealingBandageTypes implements BandageType, Healing {
 
     @Override
     public String getName() {
-        return name;
+        return name().toLowerCase(Locale.ROOT);
     }
 
     @Override

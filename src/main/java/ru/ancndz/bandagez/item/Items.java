@@ -14,42 +14,58 @@ import ru.ancndz.bandagez.mod.BandagezMod;
 
 public class Items {
 
+    public static final String EMPTY_BAND_NAME = "empty_band";
+
+    public static final String HEMOSTATIC_BAND_NAME = "hemostatic_band";
+
+    public static final String SMALL_BAND_NAME = "small_band";
+
+    public static final String MEDIUM_BAND_NAME = "medium_band";
+
+    public static final String LARGE_BAND_NAME = "large_band";
+
+    public static final String ANTIBIOTIC_BAND_NAME = "antibiotic_band";
+
+    public static final String MAGIC_BAND_NAME = "magic_band";
+
+    public static final String STIMULANT_BAND_NAME = "stimulant_band";
+
     public static final String FLORAL_STRING_NAME = "floral_string";
 
     public static final RegistryObject<Item> FLORAL_STRING_ITEM = ITEMS.register(FLORAL_STRING_NAME,
             () -> new Item(new Item.Properties().setId(ITEMS.key(FLORAL_STRING_NAME))));
 
-    public static final RegistryObject<Item> EMPTY_BAND_ITEM = ITEMS.register(BandageTypes.EMPTY.getName(),
+    public static final RegistryObject<Item> EMPTY_BAND_ITEM = ITEMS.register(EMPTY_BAND_NAME,
             () -> new BandageItem(BandageTypes.EMPTY,
-                    new Item.Properties().stacksTo(8).setId(ITEMS.key(BandageTypes.EMPTY.getName()))));
+                    new Item.Properties().stacksTo(8).setId(ITEMS.key(EMPTY_BAND_NAME))));
 
-    public static final RegistryObject<Item> HEMOSTATIC_BAND_ITEM = ITEMS.register(BandageTypes.HEMOSTATIC.getName(),
+    public static final RegistryObject<Item> HEMOSTATIC_BAND_ITEM = ITEMS.register(HEMOSTATIC_BAND_NAME,
             () -> new BandageItem(BandageTypes.HEMOSTATIC,
-                    new Item.Properties().stacksTo(4).setId(ITEMS.key(BandageTypes.HEMOSTATIC.getName()))));
+                    new Item.Properties().stacksTo(4).setId(ITEMS.key(HEMOSTATIC_BAND_NAME))));
 
-    public static final RegistryObject<Item> SMALL_BAND_ITEM = ITEMS.register(HealingBandageTypes.SMALL.getName(),
+    public static final RegistryObject<Item> SMALL_BAND_ITEM = ITEMS.register(SMALL_BAND_NAME,
             () -> new BandageItem(HealingBandageTypes.SMALL,
-                    new Item.Properties().stacksTo(16).setId(ITEMS.key(HealingBandageTypes.SMALL.getName()))));
+                    new Item.Properties().stacksTo(16).setId(ITEMS.key(SMALL_BAND_NAME))));
 
-    public static final RegistryObject<Item> MEDIUM_BAND_ITEM = ITEMS.register(HealingBandageTypes.MEDIUM.getName(),
+    public static final RegistryObject<Item> MEDIUM_BAND_ITEM = ITEMS.register(MEDIUM_BAND_NAME,
             () -> new BandageItem(HealingBandageTypes.MEDIUM,
-                    new Item.Properties().stacksTo(8).setId(ITEMS.key(HealingBandageTypes.MEDIUM.getName()))));
+                    new Item.Properties().stacksTo(8).setId(ITEMS.key(MEDIUM_BAND_NAME))));
 
-    public static final RegistryObject<Item> LARGE_BAND_ITEM = ITEMS.register(HealingBandageTypes.LARGE.getName(),
+    public static final RegistryObject<Item> LARGE_BAND_ITEM = ITEMS.register(LARGE_BAND_NAME,
             () -> new BandageItem(HealingBandageTypes.LARGE,
-                    new Item.Properties().stacksTo(4).setId(ITEMS.key(HealingBandageTypes.LARGE.getName()))));
+                    new Item.Properties().stacksTo(4).setId(ITEMS.key(LARGE_BAND_NAME))));
 
-    public static final RegistryObject<Item> ANTI_BIOTIC_BAND_ITEM = ITEMS.register(BandageTypes.ANTI_BIOTIC.getName(),
+    public static final RegistryObject<Item> ANTI_BIOTIC_BAND_ITEM = ITEMS.register(ANTIBIOTIC_BAND_NAME,
             () -> new BandageItem(BandageTypes.ANTI_BIOTIC,
-                    new Item.Properties().stacksTo(4).setId(ITEMS.key(BandageTypes.ANTI_BIOTIC.getName()))));
+                    new Item.Properties().stacksTo(4).setId(ITEMS.key(ANTIBIOTIC_BAND_NAME))));
 
-    public static final RegistryObject<Item> MAGIC_BAND_ITEM = ITEMS.register(BandageTypes.MAGIC.getName(),
+    public static final RegistryObject<Item> MAGIC_BAND_ITEM = ITEMS.register(MAGIC_BAND_NAME,
             () -> new BandageItem(BandageTypes.MAGIC,
-                    new Item.Properties().stacksTo(4).setId(ITEMS.key(BandageTypes.MAGIC.getName()))));
+                    new Item.Properties().stacksTo(4).setId(ITEMS.key(MAGIC_BAND_NAME))));
 
-    public static final RegistryObject<Item> STIMULANT_BAND_ITEM = ITEMS.register(BandageTypes.STIMULANT.getName(),
+    public static final RegistryObject<Item> STIMULANT_BAND_ITEM = ITEMS.register(STIMULANT_BAND_NAME,
             () -> new BandageItem(BandageTypes.STIMULANT,
-                    new Item.Properties().stacksTo(4).setId(ITEMS.key(BandageTypes.STIMULANT.getName()))));
+                    new Item.Properties().stacksTo(4).setId(ITEMS.key(STIMULANT_BAND_NAME))));
 
     public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB =
             BandagezMod.CREATIVE_MODE_TABS.register("bandages_tab",

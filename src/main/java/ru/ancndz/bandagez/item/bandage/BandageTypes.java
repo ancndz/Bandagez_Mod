@@ -9,29 +9,28 @@ import ru.ancndz.bandagez.effect.Effects;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public enum BandageTypes implements BandageType {
 
-    EMPTY("empty_band", 20, Collections.singletonList(Effects.BLEEDING.getHolder().orElseThrow())),
+    EMPTY(20, Collections.singletonList(Effects.BLEEDING.getHolder().orElseThrow())),
 
-    HEMOSTATIC("hemostatic_band", 40, BandageTypes::handleHardBleeding,
+    HEMOSTATIC(40, BandageTypes::handleHardBleeding,
             Collections.singletonList(Effects.HARD_BLEEDING.getHolder().orElseThrow())),
 
-    ANTI_BIOTIC("antibiotic_band", 50, List.of(MobEffects.POISON)),
+    ANTI_BIOTIC(50, List.of(MobEffects.POISON)),
 
-    MAGIC("magic_band", 50, List.of(MobEffects.WITHER)),
+    MAGIC(50, List.of(MobEffects.WITHER)),
 
-    STIMULANT("stimulant_band", 50, List.of(MobEffects.MINING_FATIGUE, MobEffects.SLOWNESS)),
+    STIMULANT(50, List.of(MobEffects.MINING_FATIGUE, MobEffects.SLOWNESS)),
 
     ;
 
     private static void handleHardBleeding(LivingEntity livingEntity) {
         livingEntity.addEffect(new MobEffectInstance(Effects.FRESH_BANDAGE.getHolder().orElseThrow(), 800));
     }
-
-    private final String name;
 
     private final int itemUseDuration;
 
@@ -41,31 +40,25 @@ public enum BandageTypes implements BandageType {
 
     private final List<Holder<MobEffect>> removingEffects;
 
-    BandageTypes(String name,
-            int itemUseDuration,
+    BandageTypes(int itemUseDuration,
             Predicate<LivingEntity> canUseItem,
             Consumer<LivingEntity> applyEffect,
             List<Holder<MobEffect>> removingEffects) {
-        this.name = name;
         this.itemUseDuration = itemUseDuration;
         this.canUseItem = canUseItem;
         this.applyEffect = applyEffect;
         this.removingEffects = removingEffects;
     }
 
-    BandageTypes(String name,
-            int itemUseDuration,
-            Consumer<LivingEntity> applyEffect,
-            List<Holder<MobEffect>> removingEffects) {
-        this(name,
-                itemUseDuration,
+    BandageTypes(int itemUseDuration, Consumer<LivingEntity> applyEffect, List<Holder<MobEffect>> removingEffects) {
+        this(itemUseDuration,
                 livingEntity -> removingEffects.stream().anyMatch(livingEntity::hasEffect),
                 applyEffect,
                 removingEffects);
     }
 
-    BandageTypes(String name, int itemUseDuration, List<Holder<MobEffect>> removingEffects) {
-        this(name, itemUseDuration, livingEntity -> {
+    BandageTypes(int itemUseDuration, List<Holder<MobEffect>> removingEffects) {
+        this(itemUseDuration, livingEntity -> {
         }, removingEffects);
     }
 
@@ -92,7 +85,7 @@ public enum BandageTypes implements BandageType {
 
     @Override
     public String getName() {
-        return name;
+        return name().toLowerCase(Locale.ROOT);
     }
 
 }
