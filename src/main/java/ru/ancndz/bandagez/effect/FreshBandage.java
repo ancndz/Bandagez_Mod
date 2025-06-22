@@ -29,7 +29,7 @@ public class FreshBandage extends MobEffect {
     }
 
     @Override
-	public boolean applyEffectTick(@NotNull ServerLevel level, LivingEntity entity, int food) {
+	public boolean applyEffectTick(@NotNull ServerLevel level, @NotNull LivingEntity entity, int food) {
         if (entity.isSprinting() && entity.getRandom().nextFloat() < CHANCE_TO_BLEED) {
 			entity.addEffect(new MobEffectInstance(Effects.BLEEDING.getHolder().orElseThrow(), 400));
 			entity.removeEffect(Effects.FRESH_BANDAGE.getHolder().orElseThrow());

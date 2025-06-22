@@ -15,35 +15,35 @@ import ru.ancndz.bandagez.mod.BandagezModConfig;
 
 import javax.annotation.Nullable;
 
-public class Bleeding extends MobEffect {
+public class BleedingMobEffect extends MobEffect {
 
-    public static final int TICK_RATE = 40;
+    public static final int DAMAGE_INTERVAL = 40;
 
     private final boolean hard;
 
     @Nullable
     private String descriptionId;
 
-    public Bleeding(boolean hard, MobEffectCategory category, int color) {
+    public BleedingMobEffect(boolean hard, MobEffectCategory category, int color) {
         super(category, color, ParticleTypes.FALLING_LAVA);
         this.hard = hard;
     }
 
     @Override
-    public boolean applyEffectTick(@NotNull ServerLevel level, LivingEntity entity, int food) {
+    public boolean applyEffectTick(@NotNull ServerLevel level, @NotNull LivingEntity entity, int food) {
         entity.hurtServer(level, entity.damageSources().genericKill(), hard ? 1.5F : 1.0F);
         return true;
     }
 
     @Override
     public boolean shouldApplyEffectTickThisTick(int tick, int amplifier) {
-        int j = TICK_RATE >> amplifier;
+        int j = DAMAGE_INTERVAL >> amplifier;
         return j == 0 || tick % j == 0;
     }
 
     @Override
     public @NotNull ParticleOptions createParticleOptions(@NotNull MobEffectInstance effectInstance) {
-        if (BandagezModConfig.CLIENT.showParticles.get()) {
+        if (Boolean.TRUE.equals(BandagezModConfig.CLIENT.showParticles.get())) {
             return super.createParticleOptions(effectInstance);
         } else {
             return () -> ParticleTypes.EFFECT;
