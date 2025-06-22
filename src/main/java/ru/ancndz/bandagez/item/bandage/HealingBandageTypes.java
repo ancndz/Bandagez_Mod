@@ -1,7 +1,9 @@
 package ru.ancndz.bandagez.item.bandage;
 
 import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public enum HealingBandageTypes implements BandageType, Healing {
+public enum HealingBandageTypes implements HealingBandageType {
 
     SMALL(40, 100, 0, 2F, Collections.singletonList(Effects.BLEEDING.getHolder().orElseThrow())),
 
@@ -58,6 +60,13 @@ public enum HealingBandageTypes implements BandageType, Healing {
     public void applyEffects(LivingEntity livingEntity) {
         removingEffects.stream().filter(livingEntity::hasEffect).forEach(livingEntity::removeEffect);
         livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, healingDuration, amplifier));
+    }
+
+    @Override
+    public Component getTooltipComponent() {
+        return Component.translatable("bandagez.tooltip.healing", getMaxHeal())
+            .withStyle(MobEffectCategory.BENEFICIAL.getTooltipFormatting())
+            .append(Component.empty());
     }
 
     @Override

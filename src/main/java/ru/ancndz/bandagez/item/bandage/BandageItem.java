@@ -16,13 +16,14 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+import ru.ancndz.bandagez.item.Typed;
 import ru.ancndz.bandagez.sound.Sounds;
 
-public class BandageItem extends Item {
+public class BandageItem<T extends BandageType> extends Item implements Typed<T> {
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private final BandageType bandageType;
+    private final T bandageType;
 
     private boolean startSoundPlayed = false;
 
@@ -30,7 +31,7 @@ public class BandageItem extends Item {
 
     private boolean midLateSoundPlayed = false;
 
-    public BandageItem(BandageType bandageType, Properties properties) {
+    public BandageItem(T bandageType, Properties properties) {
         super(properties);
         this.bandageType = bandageType;
     }
@@ -130,7 +131,8 @@ public class BandageItem extends Item {
         return ItemUseAnimation.NONE;
     }
 
-    public BandageType getBandageType() {
+    @Override
+    public T getType() {
         return bandageType;
     }
 }

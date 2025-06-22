@@ -7,6 +7,8 @@ import ru.ancndz.bandagez.mod.BandagezMod;
 
 public class Effects {
 
+	public static void init() {}
+
 	public static final RegistryObject<MobEffect> BLEEDING = BandagezMod.EFFECTS.register("bleeding",
             () -> new BleedingMobEffect(false, MobEffectCategory.HARMFUL, 13458603));
 
@@ -24,15 +26,6 @@ public class Effects {
 
 	public static final RegistryObject<MobEffect> FRESH_BANDAGE = BandagezMod.EFFECTS.register("fresh_bandage",
 			() -> new FreshBandage(MobEffectCategory.NEUTRAL, 13458603));
-
-	public static void init() {
-		BLEEDING.hashCode();
-		HARD_BLEEDING.hashCode();
-		FRESH_BANDAGE.hashCode();
-        BONE_BREAK_LEG.hashCode();
-        BONE_BREAK_ARM_MAIN.hashCode();
-        BONE_BREAK_ARM.hashCode();
-	}
 
 	private Effects() {
 	}

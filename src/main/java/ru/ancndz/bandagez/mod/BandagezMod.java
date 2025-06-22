@@ -1,5 +1,7 @@
 package ru.ancndz.bandagez.mod;
 
+import static ru.ancndz.bandagez.item.GrassDropModifier.GRASS_DROP_MODIFIER;
+
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.registries.Registries;
@@ -50,7 +52,7 @@ public class BandagezMod {
         Sounds.init();
         Items.init();
 
-        LOOT_MODIFIERS.register("grass_drop_modifier", GrassDropModifier.CODEC_SUPPLIER);
+        LOOT_MODIFIERS.register(GRASS_DROP_MODIFIER, GrassDropModifier.CODEC_SUPPLIER);
 
         SOUNDS.register(modEventBus);
         ITEMS.register(modEventBus);
