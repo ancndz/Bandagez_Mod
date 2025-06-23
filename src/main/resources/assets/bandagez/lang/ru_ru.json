@@ -26,5 +26,7 @@
   "bandagez.advancements.adventure.bandage_used.title": "Так-то лучше.",
   "bandagez.advancements.adventure.bandage_used.description": "Вылечить себя с помощью повязки",
   "bandagez.advancements.adventure.leg_broken.title": "Больно!",
-  "bandagez.advancements.adventure.leg_broken.description": "Могу ли я сделать повязку на это?.."
+  "bandagez.advancements.adventure.leg_broken.description": "Могу ли я сделать повязку на это?..",
+
+  "bandagez.config.show_bleeding_particles": "Показывать частицы при кровотечении"
 }

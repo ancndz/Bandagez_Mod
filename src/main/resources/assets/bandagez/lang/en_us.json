@@ -26,5 +26,7 @@
   "bandagez.advancements.adventure.bandage_used.title": "That's better.",
   "bandagez.advancements.adventure.bandage_used.description": "Heal yourself with a bandage",
   "bandagez.advancements.adventure.leg_broken.title": "That's hurt!",
-  "bandagez.advancements.adventure.leg_broken.description": "Can i make a bandage for that?.."
+  "bandagez.advancements.adventure.leg_broken.description": "Can i make a bandage for that?..",
+
+  "bandagez.config.show_bleeding_particles": "Show particles on bleeding effects"
 }
