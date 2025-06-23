@@ -13,34 +13,31 @@ import ru.ancndz.bandagez.mod.BandagezMod;
 
 import javax.annotation.Nullable;
 
-public class Bleeding extends MobEffect {
+public class BleedingMobEffect extends MobEffect {
 
-	public static final int TICK_RATE = 40;
+    public static final int DAMAGE_INTERVAL = 40;
 
-	private final boolean hard;
-	@Nullable
-	private String descriptionId;
+    private final boolean hard;
 
-	public Bleeding(boolean hard, MobEffectCategory category, int color) {
-		super(category, color);
-		this.hard = hard;
-	}
+    @Nullable
+    private String descriptionId;
 
-	@Override
-	public void applyEffectTick(LivingEntity entity, int food) {
-		entity.hurt(entity.damageSources().genericKill(), hard ? 1.5F : 1.0F);
-		addParticles(entity, ParticleTypes.FALLING_LAVA, hard ? 5 : 3);
-	}
+    public BleedingMobEffect(boolean hard, MobEffectCategory category, int color) {
+        super(category, color);
+        this.hard = hard;
+    }
 
-	@Override
-	public boolean isDurationEffectTick(int tick, int amplifier) {
-		int j = TICK_RATE >> amplifier;
-		if (j > 0) {
-			return tick % j == 0;
-		} else {
-			return true;
-		}
-	}
+    @Override
+    public void applyEffectTick(@NotNull LivingEntity entity, int food) {
+        entity.hurt(entity.damageSources().genericKill(), hard ? 1.5F : 1.0F);
+        addParticles(entity, ParticleTypes.FALLING_LAVA, hard ? 5 : 3);
+    }
+
+    @Override
+    public boolean isDurationEffectTick(int tick, int amplifier) {
+        int j = DAMAGE_INTERVAL >> amplifier;
+        return j == 0 || tick % j == 0;
+    }
 
 	@Override
 	protected @NotNull String getOrCreateDescriptionId() {

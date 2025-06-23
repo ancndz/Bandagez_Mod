@@ -32,32 +32,35 @@ public class Items {
 
     public static final String FLORAL_STRING_NAME = "floral_string";
 
+    public static void init() {
+    }
+
     public static final RegistryObject<Item> FLORAL_STRING_ITEM =
             ITEMS.register(FLORAL_STRING_NAME, () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> EMPTY_BAND_ITEM = ITEMS.register(EMPTY_BAND_NAME,
-            () -> new BandageItem(BandageTypes.EMPTY, new Item.Properties().stacksTo(8)));
+            () -> new BandageItem<>(BandageTypes.EMPTY, new Item.Properties().stacksTo(8)));
 
     public static final RegistryObject<Item> HEMOSTATIC_BAND_ITEM = ITEMS.register(HEMOSTATIC_BAND_NAME,
-            () -> new BandageItem(BandageTypes.HEMOSTATIC, new Item.Properties().stacksTo(4)));
+            () -> new BandageItem<>(BandageTypes.HEMOSTATIC, new Item.Properties().stacksTo(4)));
 
     public static final RegistryObject<Item> SMALL_BAND_ITEM = ITEMS.register(SMALL_BAND_NAME,
-            () -> new BandageItem(HealingBandageTypes.SMALL, new Item.Properties().stacksTo(16)));
+            () -> new BandageItem<>(HealingBandageTypes.SMALL, new Item.Properties().stacksTo(16)));
 
     public static final RegistryObject<Item> MEDIUM_BAND_ITEM = ITEMS.register(MEDIUM_BAND_NAME,
-            () -> new BandageItem(HealingBandageTypes.MEDIUM, new Item.Properties().stacksTo(8)));
+            () -> new BandageItem<>(HealingBandageTypes.MEDIUM, new Item.Properties().stacksTo(8)));
 
     public static final RegistryObject<Item> LARGE_BAND_ITEM = ITEMS.register(LARGE_BAND_NAME,
-            () -> new BandageItem(HealingBandageTypes.LARGE, new Item.Properties().stacksTo(4)));
+            () -> new BandageItem<>(HealingBandageTypes.LARGE, new Item.Properties().stacksTo(4)));
 
     public static final RegistryObject<Item> ANTI_BIOTIC_BAND_ITEM = ITEMS.register(ANTIBIOTIC_BAND_NAME,
-            () -> new BandageItem(BandageTypes.ANTI_BIOTIC, new Item.Properties().stacksTo(4)));
+            () -> new BandageItem<>(BandageTypes.ANTI_BIOTIC, new Item.Properties().stacksTo(4)));
 
     public static final RegistryObject<Item> MAGIC_BAND_ITEM = ITEMS.register(MAGIC_BAND_NAME,
-            () -> new BandageItem(BandageTypes.MAGIC, new Item.Properties().stacksTo(4)));
+            () -> new BandageItem<>(BandageTypes.MAGIC, new Item.Properties().stacksTo(4)));
 
     public static final RegistryObject<Item> STIMULANT_BAND_ITEM = ITEMS.register(STIMULANT_BAND_NAME,
-            () -> new BandageItem(BandageTypes.STIMULANT, new Item.Properties().stacksTo(4)));
+            () -> new BandageItem<>(BandageTypes.STIMULANT, new Item.Properties().stacksTo(4)));
 
     public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB =
             BandagezMod.CREATIVE_MODE_TABS.register("bandages_tab",
@@ -77,19 +80,6 @@ public class Items {
                                 output.accept(STIMULANT_BAND_ITEM.get());
                             })
                             .build());
-
-    public static void init() {
-        FLORAL_STRING_ITEM.hashCode();
-        EMPTY_BAND_ITEM.hashCode();
-        HEMOSTATIC_BAND_ITEM.hashCode();
-        SMALL_BAND_ITEM.hashCode();
-        MEDIUM_BAND_ITEM.hashCode();
-        LARGE_BAND_ITEM.hashCode();
-        ANTI_BIOTIC_BAND_ITEM.hashCode();
-        MAGIC_BAND_ITEM.hashCode();
-        STIMULANT_BAND_ITEM.hashCode();
-        EXAMPLE_TAB.hashCode();
-    }
 
     private Items() {
     }

@@ -19,6 +19,8 @@ import java.util.function.Supplier;
 
 public class GrassDropModifier extends LootModifier {
 
+    public static final String GRASS_DROP_MODIFIER = "grass_drop_modifier";
+
 	public static final Supplier<Codec<GrassDropModifier>> CODEC = Suppliers
 			.memoize(() -> RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, GrassDropModifier::new)));
 

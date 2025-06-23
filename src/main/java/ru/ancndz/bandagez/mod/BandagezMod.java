@@ -1,5 +1,7 @@
 package ru.ancndz.bandagez.mod;
 
+import static ru.ancndz.bandagez.item.GrassDropModifier.GRASS_DROP_MODIFIER;
+
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.registries.Registries;
@@ -11,6 +13,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -44,11 +47,13 @@ public class BandagezMod {
     public BandagezMod(FMLJavaModLoadingContext context) {
         final IEventBus modEventBus = context.getModEventBus();
 
+        context.registerConfig(ModConfig.Type.CLIENT, BandagezModConfig.clientSpec);
+
         Effects.init();
         Sounds.init();
         Items.init();
 
-        LOOT_MODIFIERS.register("grass_drop_modifier", GrassDropModifier.CODEC);
+        LOOT_MODIFIERS.register(GRASS_DROP_MODIFIER, GrassDropModifier.CODEC);
 
         SOUNDS.register(modEventBus);
         ITEMS.register(modEventBus);
