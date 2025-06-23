@@ -10,6 +10,7 @@ import net.minecraftforge.registries.RegistryObject;
 import ru.ancndz.bandagez.item.bandage.BandageItem;
 import ru.ancndz.bandagez.item.bandage.BandageTypes;
 import ru.ancndz.bandagez.item.bandage.HealingBandageTypes;
+import ru.ancndz.bandagez.item.splint.SplintItem;
 import ru.ancndz.bandagez.mod.BandagezMod;
 
 public class Items {
@@ -31,6 +32,8 @@ public class Items {
     public static final String STIMULANT_BAND_NAME = "stimulant_band";
 
     public static final String FLORAL_STRING_NAME = "floral_string";
+
+    public static final String SPLINT_NAME = "splint";
 
     public static void init() {
     }
@@ -70,6 +73,9 @@ public class Items {
             () -> new BandageItem<>(BandageTypes.STIMULANT,
                     new Item.Properties().stacksTo(4).setId(ITEMS.key(STIMULANT_BAND_NAME))));
 
+    public static final RegistryObject<Item> SPLINT_ITEM = ITEMS.register(SPLINT_NAME,
+            () -> new SplintItem(new Item.Properties().stacksTo(2).setId(ITEMS.key(SPLINT_NAME))));
+
     public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB =
             BandagezMod.CREATIVE_MODE_TABS.register("bandages_tab",
                     () -> CreativeModeTab.builder()
@@ -86,6 +92,7 @@ public class Items {
                                 output.accept(ANTI_BIOTIC_BAND_ITEM.get());
                                 output.accept(MAGIC_BAND_ITEM.get());
                                 output.accept(STIMULANT_BAND_ITEM.get());
+                                output.accept(SPLINT_ITEM.get());
                             })
                             .build());
 

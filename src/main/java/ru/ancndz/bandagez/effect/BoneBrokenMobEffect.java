@@ -1,5 +1,9 @@
 package ru.ancndz.bandagez.effect;
 
+import static ru.ancndz.bandagez.effect.Effects.ARM_BROKEN_EFFECT_NAME;
+import static ru.ancndz.bandagez.effect.Effects.ARM_MAIN_BROKEN_EFFECT_NAME;
+import static ru.ancndz.bandagez.effect.Effects.LEG_BROKEN_EFFECT_NAME;
+
 import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -13,7 +17,10 @@ import ru.ancndz.bandagez.mod.BandagezMod;
 
 import javax.annotation.Nullable;
 
-public class BoneBrokenMobEffect extends MobEffect {
+public class BoneBrokenMobEffect extends MobEffect implements EffectPriority {
+
+    public static final ResourceLocation BROKEN_BONE_ATTACK_DAMAGE =
+            ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, "broken_bone_attack_damage");
 
     public static final int DAMAGE_INTERVAL = 80;
 
@@ -26,18 +33,23 @@ public class BoneBrokenMobEffect extends MobEffect {
         super(category, color);
         this.bodyPart = bodyPart;
 
-        if (bodyPart == BodyPart.LEG) {
-            this.addAttributeModifier(Attributes.MOVEMENT_SPEED,
+        switch (bodyPart) {
+            case LEG -> this.addAttributeModifier(Attributes.MOVEMENT_SPEED,
                     ResourceLocation.withDefaultNamespace("effect.slowness"),
                     -0.45F,
                     AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+
+            case ARM_MAIN -> this.addAttributeModifier(Attributes.ATTACK_DAMAGE,
+                    BROKEN_BONE_ATTACK_DAMAGE,
+                    -0.4F,
+                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
         }
     }
 
     @Override
     public boolean applyEffectTick(@NotNull ServerLevel level, @NotNull LivingEntity entity, int food) {
         if (bodyPart == BodyPart.LEG && entity.isSprinting()) {
-            entity.hurtServer(level, entity.damageSources().genericKill(), 0.5F);
+            entity.hurtServer(level, entity.damageSources().magic(), 0.5F);
         }
         return true;
     }
@@ -52,9 +64,9 @@ public class BoneBrokenMobEffect extends MobEffect {
     protected @NotNull String getOrCreateDescriptionId() {
         if (this.descriptionId == null) {
             final String path = switch (bodyPart) {
-                case ARM -> "arm_broken";
-                case ARM_MAIN -> "arm_main_broken";
-                default -> "leg_broken";
+                case ARM -> ARM_BROKEN_EFFECT_NAME;
+                case ARM_MAIN -> ARM_MAIN_BROKEN_EFFECT_NAME;
+                default -> LEG_BROKEN_EFFECT_NAME;
             };
             this.descriptionId =
                     Util.makeDescriptionId("effect", ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, path));
@@ -62,7 +74,17 @@ public class BoneBrokenMobEffect extends MobEffect {
         return this.descriptionId;
     }
 
+    @Override
+    public EffectPriorities getPriority() {
+        return switch (bodyPart) {
+            case LEG -> EffectPriorities.LEG_BREAK;
+            case ARM -> EffectPriorities.ARM_BREAK;
+            case ARM_MAIN -> EffectPriorities.MAIN_ARM_BREAK;
+        };
+    }
+
     public enum BodyPart {
         LEG, ARM, ARM_MAIN
     }
+
 }
