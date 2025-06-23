@@ -1,22 +1,18 @@
 package ru.ancndz.bandagez.item.bandage;
 
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.LivingEntity;
+import ru.ancndz.bandagez.item.RemovingEffects;
 
-import java.util.List;
+public interface BandageType extends RemovingEffects {
 
-public interface BandageType {
+    int getUseDuration();
 
-	int getUseDuration();
+    boolean canUse(LivingEntity livingEntity);
 
-	boolean canUse(LivingEntity livingEntity);
+    void applyEffects(LivingEntity livingEntity);
 
-	void applyEffects(LivingEntity livingEntity);
-
-	default void applyAfterEffects(LivingEntity livingEntity) {
+    default void applyAfterEffects(LivingEntity livingEntity) {
     }
 
-	List<MobEffect> getRemovingEffects();
-
-	String getName();
+    String getName();
 }

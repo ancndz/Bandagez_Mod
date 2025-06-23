@@ -10,7 +10,8 @@
   "item.bandagez.stimulant_band": "Стимулирующая повязка",
 
   "bandagez.bandages_tab": "Бинты",
-  "bandagez.item.bandage.tooltip.removing_effects": "Лечит:",
+  "bandagez.tooltip.healing": "Лечит: {0}",
+  "bandagez.tooltip.removing_effects": "Снимает:",
 
   "effect.bandagez.bleed": "Кровотечение",
   "effect.bandagez.hard_bleed": "Сильное кровотечение",
@@ -19,5 +20,5 @@
   "bandagez.advancements.adventure.no_food_regen.title": "Новый способ лечения",
   "bandagez.advancements.adventure.no_food_regen.description": "Никакого больше лечения едой!™",
   "bandagez.advancements.adventure.bandage_used.title": "Так-то лучше.",
-  "bandagez.advancements.adventure.bandage_used.description": ""
+  "bandagez.advancements.adventure.bandage_used.description": "Вылечить себя с помощью повязки"
 }

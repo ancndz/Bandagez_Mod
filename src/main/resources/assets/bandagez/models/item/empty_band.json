@@ -5,6 +5,7 @@
     "1": "bandagez:item/base_band",
     "particle": "bandagez:item/small_patch"
   },
+  "gui_light": "front",
   "elements": [
     {
       "from": [6, 7.75, 2],
