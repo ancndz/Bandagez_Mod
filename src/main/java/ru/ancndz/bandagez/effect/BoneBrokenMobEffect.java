@@ -18,7 +18,9 @@ import javax.annotation.Nullable;
 
 public class BoneBrokenMobEffect extends MobEffect implements EffectPriority {
 
-    public static final String BROKEN_BONE_ATTACK_DAMAGE = "broken_bone_attack_damage";
+    public static final String BROKEN_BONE_ATTACK_DAMAGE = "2ec606e1-fbe7-4956-97ae-a76fb5018fbc";
+
+    public static final String SLOWNESS = "7107DE5E-7CE8-4030-940E-514C1F160890";
 
     public static final int DAMAGE_INTERVAL = 80;
 
@@ -33,7 +35,7 @@ public class BoneBrokenMobEffect extends MobEffect implements EffectPriority {
 
         switch (bodyPart) {
             case LEG -> this.addAttributeModifier(Attributes.MOVEMENT_SPEED,
-                    "7107DE5E-7CE8-4030-940E-514C1F160890",
+                    SLOWNESS,
                     -0.45F,
                     AttributeModifier.Operation.MULTIPLY_TOTAL);
 

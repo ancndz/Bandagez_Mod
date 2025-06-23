@@ -11,7 +11,7 @@ public class BandagezModConfig {
 
         Client(final ForgeConfigSpec.Builder builder) {
             showParticles = builder.comment("Show particles on bleeding effects")
-                    .translation("bandagez.config.showBleedingParticles")
+                    .translation("bandagez.config.show_bleeding_particles")
                     .define("showParticles", true);
         }
     }

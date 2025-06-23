@@ -20,13 +20,12 @@ import ru.ancndz.bandagez.effect.Effects;
 import ru.ancndz.bandagez.item.RemovingEffects;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class SplintItem extends Item implements RemovingEffects {
 
     private static final Logger LOGGER = LogUtils.getLogger();
-
-    public static final List<MobEffect> REMOVING_EFFECTS =
-            List.of(Effects.BONE_BREAK_ARM_MAIN.get(), Effects.BONE_BREAK_LEG.get(), Effects.BONE_BREAK_ARM.get());
 
     public SplintItem(Properties itemProperties) {
         super(itemProperties);
@@ -43,7 +42,14 @@ public class SplintItem extends Item implements RemovingEffects {
         if (getRemovingEffects().stream().noneMatch(player::hasEffect)) {
             return InteractionResultHolder.fail(player.getItemInHand(hand));
         }
-        LOGGER.debug("Player {} ({} hp) is using splint", player.getName().getString(), player.getHealth());
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Player {} ({} effects) is using splint",
+                    player.getName().getString(),
+                    getRemovingEffects().stream()
+                            .filter(player::hasEffect)
+                            .map(Objects::toString)
+                            .collect(Collectors.joining(", ")));
+        }
         return ItemUtils.startUsingInstantly(level, player, hand);
     }
 
@@ -60,9 +66,9 @@ public class SplintItem extends Item implements RemovingEffects {
                 .filter(EffectPriority.class::isInstance)
                 .sorted()
                 .findFirst()
-                .ifPresent(effectHolder -> {
-                    entityLiving.removeEffect(effectHolder);
-                    LOGGER.debug("Removed effect {} from {}", effectHolder, entityLiving.getName().getString());
+                .ifPresent(effect -> {
+                    entityLiving.removeEffect(effect);
+                    LOGGER.debug("Removed effect {} from {}", effect, entityLiving.getName().getString());
                 });
 
         if (entityLiving instanceof Player player) {
@@ -76,6 +82,6 @@ public class SplintItem extends Item implements RemovingEffects {
 
     @Override
     public List<MobEffect> getRemovingEffects() {
-        return REMOVING_EFFECTS;
+        return List.of(Effects.BONE_BREAK_ARM_MAIN.get(), Effects.BONE_BREAK_LEG.get(), Effects.BONE_BREAK_ARM.get());
     }
 }

@@ -36,7 +36,7 @@ public class FreshBandage extends MobEffect implements EffectPriority {
 			entity.addEffect(new MobEffectInstance(Effects.BLEEDING.get(), 400, 0, false, false, true));
 			entity.removeEffect(Effects.FRESH_BANDAGE.get());
         }
-		addParticles(entity, new BlockParticleOption(ParticleTypes.FALLING_DUST, Blocks.COBWEB.defaultBlockState()), 3);
+        addParticles(entity, new BlockParticleOption(ParticleTypes.FALLING_DUST, Blocks.COBWEB.defaultBlockState()));
     }
 
     @Override

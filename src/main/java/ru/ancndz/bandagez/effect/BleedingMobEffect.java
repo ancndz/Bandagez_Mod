@@ -12,6 +12,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 import ru.ancndz.bandagez.mod.BandagezMod;
+import ru.ancndz.bandagez.mod.BandagezModConfig;
 
 import javax.annotation.Nullable;
 
@@ -32,7 +33,9 @@ public class BleedingMobEffect extends MobEffect implements EffectPriority {
     @Override
     public void applyEffectTick(@NotNull LivingEntity entity, int food) {
         entity.hurt(entity.damageSources().magic(), hard ? 1.5F : 1.0F);
-        addParticles(entity, ParticleTypes.FALLING_LAVA, hard ? 5 : 3);
+        if (Boolean.TRUE.equals(BandagezModConfig.CLIENT.showParticles.get())) {
+            addParticles(entity, ParticleTypes.FALLING_LAVA);
+        }
     }
 
     @Override
