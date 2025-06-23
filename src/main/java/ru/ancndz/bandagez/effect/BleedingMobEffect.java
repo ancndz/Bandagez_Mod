@@ -1,6 +1,8 @@
 package ru.ancndz.bandagez.effect;
 
 import static ru.ancndz.bandagez.effect.EffectParticlesHelper.addParticles;
+import static ru.ancndz.bandagez.effect.Effects.BLEEDING_EFFECT_NAME;
+import static ru.ancndz.bandagez.effect.Effects.HARD_BLEEDING_EFFECT_NAME;
 
 import net.minecraft.Util;
 import net.minecraft.core.particles.ParticleTypes;
@@ -13,7 +15,7 @@ import ru.ancndz.bandagez.mod.BandagezMod;
 
 import javax.annotation.Nullable;
 
-public class BleedingMobEffect extends MobEffect {
+public class BleedingMobEffect extends MobEffect implements EffectPriority {
 
     public static final int DAMAGE_INTERVAL = 40;
 
@@ -29,7 +31,7 @@ public class BleedingMobEffect extends MobEffect {
 
     @Override
     public void applyEffectTick(@NotNull LivingEntity entity, int food) {
-        entity.hurt(entity.damageSources().genericKill(), hard ? 1.5F : 1.0F);
+        entity.hurt(entity.damageSources().magic(), hard ? 1.5F : 1.0F);
         addParticles(entity, ParticleTypes.FALLING_LAVA, hard ? 5 : 3);
     }
 
@@ -43,9 +45,14 @@ public class BleedingMobEffect extends MobEffect {
 	protected @NotNull String getOrCreateDescriptionId() {
 		if (this.descriptionId == null) {
 			this.descriptionId = Util.makeDescriptionId("effect",
-					ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, hard ? "hard_bleed" : "bleed"));
+                    ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID,
+                            hard ? HARD_BLEEDING_EFFECT_NAME : BLEEDING_EFFECT_NAME));
 		}
 		return this.descriptionId;
 	}
 
+    @Override
+    public EffectPriorities getPriority() {
+        return hard ? EffectPriorities.HARD_BLEEDING : EffectPriorities.BLEEDING;
+    }
 }

@@ -8,6 +8,7 @@
   "item.bandagez.antibiotic_band": "Antibiotic Bandage",
   "item.bandagez.magic_band": "Magic Bandage",
   "item.bandagez.stimulant_band": "Stimulant Bandage",
+  "item.bandagez.splint": "Splint",
 
   "bandagez.bandages_tab": "Bandages",
   "bandagez.tooltip.healing": "Heals: {0}",
