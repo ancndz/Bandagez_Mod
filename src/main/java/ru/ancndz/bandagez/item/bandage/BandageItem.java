@@ -128,7 +128,7 @@ public class BandageItem<T extends BandageType> extends Item implements Typed<T>
 
     @Override
     public @NotNull ItemUseAnimation getUseAnimation(@NotNull ItemStack stack) {
-        return ItemUseAnimation.NONE;
+        return ItemUseAnimation.BOW;
     }
 
     @Override

@@ -1,8 +1,10 @@
 package ru.ancndz.bandagez.item.splint;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -12,6 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -19,17 +22,13 @@ import org.slf4j.Logger;
 import ru.ancndz.bandagez.effect.EffectPriority;
 import ru.ancndz.bandagez.effect.Effects;
 import ru.ancndz.bandagez.item.RemovingEffects;
+import ru.ancndz.bandagez.item.SupplyCustomTooltip;
 
 import java.util.List;
 
-public class SplintItem extends Item implements RemovingEffects {
+public class SplintItem extends Item implements RemovingEffects, SupplyCustomTooltip {
 
     private static final Logger LOGGER = LogUtils.getLogger();
-
-    public static final List<@NotNull Holder<MobEffect>> REMOVING_EFFECTS =
-            List.of(Effects.BONE_BREAK_ARM_MAIN.getHolder().orElseThrow(),
-                    Effects.BONE_BREAK_LEG.getHolder().orElseThrow(),
-                    Effects.BONE_BREAK_ARM.getHolder().orElseThrow());
 
     public SplintItem(Properties itemProperties) {
         super(itemProperties);
@@ -58,8 +57,7 @@ public class SplintItem extends Item implements RemovingEffects {
         }
 
         getRemovingEffects().stream()
-                .filter(entityLiving::hasEffect)
-                .filter(EffectPriority.class::isInstance)
+                .filter(holder -> entityLiving.hasEffect(holder) && holder.get() instanceof EffectPriority)
                 .sorted()
                 .findFirst()
                 .ifPresent(effectHolder -> {
@@ -78,6 +76,19 @@ public class SplintItem extends Item implements RemovingEffects {
 
     @Override
     public List<Holder<MobEffect>> getRemovingEffects() {
-        return REMOVING_EFFECTS;
+        return List.of(Effects.BONE_FRACTURE_ARM_MAIN.getHolder().orElseThrow(),
+                Effects.BONE_FRACTURE_LEG.getHolder().orElseThrow(),
+                Effects.BONE_FRACTURE_ARM.getHolder().orElseThrow());
+    }
+
+    @Override
+    public void addCustomTooltip(List<Component> components) {
+        components.add(Component.translatable("bandagez.tooltip.removing_effects"));
+        components.add(Component.translatable("effect.bandagez.fractured").withStyle(ChatFormatting.RED));
+    }
+
+    @Override
+    public @NotNull ItemUseAnimation getUseAnimation(@NotNull ItemStack itemStack) {
+        return ItemUseAnimation.BOW;
     }
 }

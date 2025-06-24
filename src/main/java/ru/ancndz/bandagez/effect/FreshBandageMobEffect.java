@@ -17,7 +17,7 @@ import ru.ancndz.bandagez.mod.BandagezMod;
 
 import javax.annotation.Nullable;
 
-public class FreshBandage extends MobEffect implements EffectPriority {
+public class FreshBandageMobEffect extends MobEffect implements EffectPriority {
 
 	public static final int TICK_RATE = 40;
 
@@ -26,7 +26,7 @@ public class FreshBandage extends MobEffect implements EffectPriority {
     @Nullable
     private String descriptionId;
 
-    public FreshBandage(MobEffectCategory category, int color) {
+    public FreshBandageMobEffect(MobEffectCategory category, int color) {
 		super(category, color, new BlockParticleOption(ParticleTypes.FALLING_DUST, Blocks.COBWEB.defaultBlockState()));
     }
 

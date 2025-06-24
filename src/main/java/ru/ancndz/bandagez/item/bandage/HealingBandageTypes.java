@@ -1,14 +1,13 @@
 package ru.ancndz.bandagez.item.bandage;
 
 import net.minecraft.core.Holder;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import ru.ancndz.bandagez.effect.Effects;
 import ru.ancndz.bandagez.item.Healing;
+import ru.ancndz.bandagez.item.RemovingEffects;
 
 import java.util.Collections;
 import java.util.List;
@@ -53,20 +52,13 @@ public enum HealingBandageTypes implements HealingBandageType {
 
     @Override
     public boolean canUse(LivingEntity livingEntity) {
-        return Healing.isNotFullHealth(livingEntity);
+        return Healing.isNotFullHealth(livingEntity) || RemovingEffects.hasAnyOf(livingEntity, removingEffects);
     }
 
     @Override
     public void applyEffects(LivingEntity livingEntity) {
         removingEffects.stream().filter(livingEntity::hasEffect).forEach(livingEntity::removeEffect);
         livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, healingDuration, amplifier));
-    }
-
-    @Override
-    public Component getTooltipComponent() {
-        return Component.translatable("bandagez.tooltip.healing", getMaxHeal())
-            .withStyle(MobEffectCategory.BENEFICIAL.getTooltipFormatting())
-            .append(Component.empty());
     }
 
     @Override

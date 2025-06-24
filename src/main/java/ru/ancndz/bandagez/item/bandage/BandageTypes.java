@@ -1,11 +1,13 @@
 package ru.ancndz.bandagez.item.bandage;
 
 import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import ru.ancndz.bandagez.effect.Effects;
+import ru.ancndz.bandagez.item.RemovingEffects;
 
 import java.util.Collections;
 import java.util.List;
@@ -52,7 +54,7 @@ public enum BandageTypes implements BandageType {
 
     BandageTypes(int itemUseDuration, Consumer<LivingEntity> applyEffect, List<Holder<MobEffect>> removingEffects) {
         this(itemUseDuration,
-                livingEntity -> removingEffects.stream().anyMatch(livingEntity::hasEffect),
+                livingEntity -> RemovingEffects.hasAnyOf(livingEntity, removingEffects),
                 applyEffect,
                 removingEffects);
     }
