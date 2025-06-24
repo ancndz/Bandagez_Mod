@@ -27,10 +27,7 @@ public class ForgeEventHandler {
     static void onItemTooltipEvent(ItemTooltipEvent event) {
         final Item item = event.getItemStack().getItem();
         final List<Component> component = event.getToolTip();
-        if (!(item instanceof Typed<?> typed)) {
-            return;
-        }
-        final var itemType = typed.getType();
+        final Object itemType = item instanceof Typed<?> typed ? typed.getType() : item;
         if (itemType instanceof Healing healing) {
             component.add(healing.getTooltipComponent());
         }

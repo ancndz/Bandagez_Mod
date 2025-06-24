@@ -6,6 +6,4 @@ public interface ApplyingEffects {
 
     void applyEffects(LivingEntity livingEntity);
 
-    default void applyAfterEffects(LivingEntity livingEntity) {
-    }
 }
