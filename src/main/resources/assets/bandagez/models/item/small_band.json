@@ -1,6 +1,69 @@
 {
-  "parent": "minecraft:item/generated",
+  "format_version": "1.21.6",
+  "parent": "bandagez:item/empty_band",
   "textures": {
-    "layer0": "bandagez:item/small_band"
-  }
+    "0": "bandagez:item/small_patch",
+    "1": "bandagez:item/base_band",
+    "particle": "bandagez:item/small_patch"
+  },
+  "elements": [
+    {
+      "from": [6, 7.75, 2],
+      "to": [10, 8.25, 3],
+      "rotation": {"angle": 0, "axis": "y", "origin": [13, 7.25, 2]},
+      "faces": {
+        "north": {"uv": [12, 14, 16, 15], "texture": "#1"},
+        "east": {"uv": [15, 11, 16, 12], "texture": "#1"},
+        "west": {"uv": [14, 11, 15, 12], "texture": "#1"},
+        "up": {"uv": [12, 12, 16, 13], "texture": "#1"},
+        "down": {"uv": [12, 13, 16, 14], "texture": "#1"}
+      }
+    },
+    {
+      "from": [5, 7.75, 3],
+      "to": [11, 8.25, 13],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7, 7.25, 3]},
+      "faces": {
+        "north": {"uv": [10, 4, 16, 5], "texture": "#1"},
+        "east": {"uv": [0, 4, 10, 5], "texture": "#1"},
+        "south": {"uv": [10, 5, 16, 6], "texture": "#1"},
+        "west": {"uv": [0, 5, 10, 6], "texture": "#1"},
+        "up": {"uv": [0, 6, 6, 16], "texture": "#1"},
+        "down": {"uv": [6, 6, 12, 16], "texture": "#1"}
+      }
+    },
+    {
+      "from": [6, 7.75, 13],
+      "to": [10, 8.25, 14],
+      "rotation": {"angle": 0, "axis": "y", "origin": [13, 7.25, 13]},
+      "faces": {
+        "east": {"uv": [13, 10, 14, 11], "texture": "#1"},
+        "south": {"uv": [12, 9, 16, 10], "texture": "#1"},
+        "west": {"uv": [12, 10, 13, 11], "texture": "#1"},
+        "up": {"uv": [12, 6, 16, 7], "texture": "#1"},
+        "down": {"uv": [12, 7, 16, 8], "texture": "#1"}
+      }
+    },
+    {
+      "from": [6, 8.25, 6],
+      "to": [10, 8.75, 10],
+      "rotation": {"angle": 0, "axis": "y", "origin": [6, 7.75, 5]},
+      "faces": {
+        "north": {"uv": [4, 0, 8, 1], "texture": "#0"},
+        "east": {"uv": [4, 1, 8, 2], "texture": "#0"},
+        "south": {"uv": [4, 2, 8, 3], "texture": "#0"},
+        "west": {"uv": [4, 3, 8, 4], "texture": "#0"},
+        "up": {"uv": [4, 4, 0, 0], "texture": "#0"}
+      }
+    }
+  ],
+  "groups": [
+    {
+      "name": "base",
+      "origin": [13, 0, 13],
+      "color": 0,
+      "children": [0, 1, 2]
+    },
+    3
+  ]
 }

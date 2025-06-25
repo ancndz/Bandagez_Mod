@@ -1,5 +1,7 @@
 package ru.ancndz.bandagez.mod;
 
+import static ru.ancndz.bandagez.item.GrassDropModifier.GRASS_DROP_MODIFIER;
+
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.registries.Registries;
@@ -10,6 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.eventbus.api.bus.BusGroup;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -37,23 +40,26 @@ public class BandagezMod {
     public static final DeferredRegister<MobEffect> EFFECTS =
             DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, MODID);
 
-	public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = DeferredRegister
-			.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, MODID);
+    public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> LOOT_MODIFIERS =
+            DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, MODID);
 
-	public BandagezMod(final FMLJavaModLoadingContext context) {
-		final BusGroup modEventBus = context.getModBusGroup();
+    public BandagezMod(final FMLJavaModLoadingContext context) {
+        final BusGroup modEventBus = context.getModBusGroup();
 
-		Effects.init();
-		Sounds.init();
-		Items.init();
+        context.registerConfig(ModConfig.Type.CLIENT, BandagezModConfig.clientSpec);
 
-		LOOT_MODIFIERS.register("grass_drop_modifier", GrassDropModifier.CODEC_SUPPLIER);
+        Effects.init();
+        Sounds.init();
+        Items.init();
 
+        LOOT_MODIFIERS.register(GRASS_DROP_MODIFIER, GrassDropModifier.CODEC_SUPPLIER);
+
+        LOOT_MODIFIERS.register(modEventBus);
         SOUNDS.register(modEventBus);
         ITEMS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
         EFFECTS.register(modEventBus);
-		LOOT_MODIFIERS.register(modEventBus);
+        LOOT_MODIFIERS.register(modEventBus);
     }
 
 }

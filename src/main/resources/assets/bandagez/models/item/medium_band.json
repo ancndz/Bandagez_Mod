@@ -1,6 +1,18 @@
 {
-  "parent": "minecraft:item/generated",
+  "format_version": "1.21.6",
+  "parent": "bandagez:item/small_band",
   "textures": {
-    "layer0": "bandagez:item/medium_band"
-  }
+    "0": "bandagez:item/medium_patch",
+    "1": "bandagez:item/base_band",
+    "particle": "bandagez:item/medium_patch"
+  },
+  "groups": [
+    {
+      "name": "base",
+      "origin": [13, 0, 13],
+      "color": 0,
+      "children": [0, 1, 2]
+    },
+    3
+  ]
 }

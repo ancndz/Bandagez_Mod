@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "equipment",
+    "ingredients": [
+        "#minecraft:planks",
+        "#minecraft:planks",
+        "#minecraft:wool",
+        "minecraft:string"
+    ],
+    "result": {
+        "id": "bandagez:splint",
+        "count": 1,
+        "data": 0
+    },
+    "show_notification": true
+}
