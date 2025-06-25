@@ -24,6 +24,7 @@ import ru.ancndz.bandagez.effect.Effects;
 import ru.ancndz.bandagez.item.RemovingEffects;
 import ru.ancndz.bandagez.item.SupplyCustomTooltip;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class SplintItem extends Item implements RemovingEffects, SupplyCustomTooltip {
@@ -59,8 +60,7 @@ public class SplintItem extends Item implements RemovingEffects, SupplyCustomToo
 
         getRemovingEffects().stream()
                 .filter(holder -> entityLiving.hasEffect(holder) && holder.get() instanceof EffectPriority)
-                .sorted()
-                .findFirst()
+                .min(Comparator.comparing(mobEffectHolder -> ((EffectPriority) mobEffectHolder.get()).getPriority()))
                 .ifPresent(effectHolder -> {
                     entityLiving.removeEffect(effectHolder);
                     LOGGER.debug("Removed effect {} from {}", effectHolder, entityLiving.getName().getString());
