@@ -54,6 +54,7 @@ public class BandagezMod {
 
         LOOT_MODIFIERS.register(GRASS_DROP_MODIFIER, GrassDropModifier.CODEC_SUPPLIER);
 
+        LOOT_MODIFIERS.register(modEventBus);
         SOUNDS.register(modEventBus);
         ITEMS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
