@@ -10,7 +10,8 @@
       "term": {
         "condition": "minecraft:match_tool",
         "predicate": {
-          "items": "#c:tools/shear"
+          "items": [],
+          "tag": "forge:shears"
         }
       }
     },
@@ -19,7 +20,7 @@
       "terms": [
         {
           "condition": "forge:loot_table_id",
-          "loot_table_id": "minecraft:blocks/short_grass"
+          "loot_table_id": "minecraft:blocks/grass"
         },
         {
           "condition": "forge:loot_table_id",
