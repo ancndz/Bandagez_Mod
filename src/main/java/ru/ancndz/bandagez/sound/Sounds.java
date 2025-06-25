@@ -7,6 +7,8 @@ import ru.ancndz.bandagez.mod.BandagezMod;
 
 public class Sounds {
 
+    public static void init() {
+    }
 	public static final RegistryObject<SoundEvent> SMALL_BANDAGE_USE = BandagezMod.SOUNDS
 			.register("item.band.small_bandage_inuse", () -> SoundEvent.createVariableRangeEvent(
 					ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, "item.band.small_bandage_inuse")));
@@ -26,14 +28,6 @@ public class Sounds {
 	public static final RegistryObject<SoundEvent> BANDAGE_USE_END = BandagezMod.SOUNDS
 			.register("item.band.bandage_use_end", () -> SoundEvent.createVariableRangeEvent(
 					ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, "item.band.bandage_use_end")));
-
-	public static void init() {
-		SMALL_BANDAGE_USE.hashCode();
-		MEDIUM_BANDAGE_USE.hashCode();
-		BANDAGE_USE_START.hashCode();
-		BANDAGE_USE_MID.hashCode();
-		BANDAGE_USE_END.hashCode();
-	}
 
 	private Sounds() {
 	}

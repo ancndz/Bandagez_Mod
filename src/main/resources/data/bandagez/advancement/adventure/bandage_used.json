@@ -5,7 +5,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "tag": "bandagez:bandage"
+          "items": "#bandagez:bandage"
         }
       }
     }
