@@ -5,6 +5,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import ru.ancndz.bandagez.effect.Effects;
+import ru.ancndz.bandagez.item.RemovingEffects;
 
 import java.util.Collections;
 import java.util.List;
@@ -51,7 +52,7 @@ public enum BandageTypes implements BandageType {
 
     BandageTypes(int itemUseDuration, Consumer<LivingEntity> applyEffect, List<MobEffect> removingEffects) {
         this(itemUseDuration,
-                livingEntity -> removingEffects.stream().anyMatch(livingEntity::hasEffect),
+                livingEntity -> RemovingEffects.hasAnyOf(livingEntity, removingEffects),
                 applyEffect,
                 removingEffects);
     }
@@ -73,7 +74,7 @@ public enum BandageTypes implements BandageType {
 
     @Override
     public void applyEffects(LivingEntity livingEntity) {
-        removingEffects.stream().filter(livingEntity::hasEffect).forEach(livingEntity::removeEffect);
+        BandageType.super.removeEffects(livingEntity);
         applyEffect.accept(livingEntity);
     }
 

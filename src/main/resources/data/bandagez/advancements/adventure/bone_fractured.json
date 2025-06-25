@@ -1,10 +1,10 @@
 {
   "parent": "bandagez:adventure/no_food_regen",
   "criteria": {
-    "bone_broken": {
+    "bone_fractured": {
       "conditions": {
         "effects": {
-          "bandagez:leg_broken": {}
+          "bandagez:leg_fractured": {}
         }
       },
       "trigger": "minecraft:effects_changed"
@@ -13,7 +13,7 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "bandagez.advancements.adventure.leg_broken.description"
+      "translate": "bandagez.advancements.adventure.leg_fractured.description"
     },
     "frame": "task",
     "hidden": true,
@@ -23,12 +23,12 @@
     },
     "show_toast": true,
     "title": {
-      "translate": "bandagez.advancements.adventure.leg_broken.title"
+      "translate": "bandagez.advancements.adventure.leg_fractured.title"
     }
   },
   "requirements": [
     [
-      "bone_broken"
+      "bone_fractured"
     ]
   ]
 }

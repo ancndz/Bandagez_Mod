@@ -1,7 +1,9 @@
 package ru.ancndz.bandagez.item.splint;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -12,18 +14,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import ru.ancndz.bandagez.effect.EffectPriority;
 import ru.ancndz.bandagez.effect.Effects;
 import ru.ancndz.bandagez.item.RemovingEffects;
+import ru.ancndz.bandagez.item.SupplyCustomTooltip;
 
+import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
-public class SplintItem extends Item implements RemovingEffects {
+public class SplintItem extends Item implements RemovingEffects, SupplyCustomTooltip {
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -42,14 +45,7 @@ public class SplintItem extends Item implements RemovingEffects {
         if (getRemovingEffects().stream().noneMatch(player::hasEffect)) {
             return InteractionResultHolder.fail(player.getItemInHand(hand));
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Player {} ({} effects) is using splint",
-                    player.getName().getString(),
-                    getRemovingEffects().stream()
-                            .filter(player::hasEffect)
-                            .map(Objects::toString)
-                            .collect(Collectors.joining(", ")));
-        }
+        LOGGER.debug("Player {} ({} hp) is using splint", player.getName().getString(), player.getHealth());
         return ItemUtils.startUsingInstantly(level, player, hand);
     }
 
@@ -62,10 +58,8 @@ public class SplintItem extends Item implements RemovingEffects {
         }
 
         getRemovingEffects().stream()
-                .filter(entityLiving::hasEffect)
-                .filter(EffectPriority.class::isInstance)
-                .sorted()
-                .findFirst()
+                .filter(effect -> entityLiving.hasEffect(effect) && effect instanceof EffectPriority)
+                .min(Comparator.comparing(effect -> ((EffectPriority) effect).getPriority()))
                 .ifPresent(effect -> {
                     entityLiving.removeEffect(effect);
                     LOGGER.debug("Removed effect {} from {}", effect, entityLiving.getName().getString());
@@ -82,6 +76,19 @@ public class SplintItem extends Item implements RemovingEffects {
 
     @Override
     public List<MobEffect> getRemovingEffects() {
-        return List.of(Effects.BONE_BREAK_ARM_MAIN.get(), Effects.BONE_BREAK_LEG.get(), Effects.BONE_BREAK_ARM.get());
+        return List.of(Effects.BONE_FRACTURE_ARM_MAIN.get(),
+                Effects.BONE_FRACTURE_LEG.get(),
+                Effects.BONE_FRACTURE_ARM.get());
+    }
+
+    @Override
+    public void addCustomTooltip(List<Component> components) {
+        components.add(Component.translatable("bandagez.tooltip.removing_effects"));
+        components.add(Component.translatable("effect.bandagez.fractured").withStyle(ChatFormatting.RED));
+    }
+
+    @Override
+    public @NotNull UseAnim getUseAnimation(@NotNull ItemStack itemStack) {
+        return UseAnim.BOW;
     }
 }

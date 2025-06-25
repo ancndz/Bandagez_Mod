@@ -1,8 +1,8 @@
 package ru.ancndz.bandagez.effect;
 
-import static ru.ancndz.bandagez.effect.Effects.ARM_BROKEN_EFFECT_NAME;
-import static ru.ancndz.bandagez.effect.Effects.ARM_MAIN_BROKEN_EFFECT_NAME;
-import static ru.ancndz.bandagez.effect.Effects.LEG_BROKEN_EFFECT_NAME;
+import static ru.ancndz.bandagez.effect.Effects.ARM_FRACTURE_EFFECT_NAME;
+import static ru.ancndz.bandagez.effect.Effects.ARM_MAIN_FRACTURE_EFFECT_NAME;
+import static ru.ancndz.bandagez.effect.Effects.LEG_FRACTURE_EFFECT_NAME;
 
 import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +16,7 @@ import ru.ancndz.bandagez.mod.BandagezMod;
 
 import javax.annotation.Nullable;
 
-public class BoneBrokenMobEffect extends MobEffect implements EffectPriority {
+public class BoneFracturedMobEffect extends MobEffect implements EffectPriority {
 
     public static final String BROKEN_BONE_ATTACK_DAMAGE = "2ec606e1-fbe7-4956-97ae-a76fb5018fbc";
 
@@ -29,7 +29,7 @@ public class BoneBrokenMobEffect extends MobEffect implements EffectPriority {
     @Nullable
     private String descriptionId;
 
-    protected BoneBrokenMobEffect(BodyPart bodyPart, MobEffectCategory category, int color) {
+    protected BoneFracturedMobEffect(BodyPart bodyPart, MobEffectCategory category, int color) {
         super(category, color);
         this.bodyPart = bodyPart;
 
@@ -63,9 +63,9 @@ public class BoneBrokenMobEffect extends MobEffect implements EffectPriority {
     protected @NotNull String getOrCreateDescriptionId() {
         if (this.descriptionId == null) {
             final String path = switch (bodyPart) {
-                case ARM -> ARM_BROKEN_EFFECT_NAME;
-                case ARM_MAIN -> ARM_MAIN_BROKEN_EFFECT_NAME;
-                default -> LEG_BROKEN_EFFECT_NAME;
+                case ARM -> ARM_FRACTURE_EFFECT_NAME;
+                case ARM_MAIN -> ARM_MAIN_FRACTURE_EFFECT_NAME;
+                default -> LEG_FRACTURE_EFFECT_NAME;
             };
             this.descriptionId =
                     Util.makeDescriptionId("effect", ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, path));
@@ -76,9 +76,9 @@ public class BoneBrokenMobEffect extends MobEffect implements EffectPriority {
     @Override
     public EffectPriorities getPriority() {
         return switch (bodyPart) {
-            case LEG -> EffectPriorities.LEG_BREAK;
-            case ARM -> EffectPriorities.ARM_BREAK;
-            case ARM_MAIN -> EffectPriorities.MAIN_ARM_BREAK;
+            case LEG -> EffectPriorities.LEG_FRACTURE;
+            case ARM -> EffectPriorities.ARM_FRACTURE;
+            case ARM_MAIN -> EffectPriorities.MAIN_ARM_FRACTURE;
         };
     }
 

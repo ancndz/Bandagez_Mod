@@ -101,29 +101,35 @@ public class BandageItem<T extends BandageType> extends Item implements Typed<T>
     public @NotNull ItemStack
             finishUsingItem(@NotNull ItemStack stack, @NotNull Level worldIn, @NotNull LivingEntity entityLiving) {
 		if (entityLiving instanceof ServerPlayer serverPlayer) {
-			LOGGER.debug("Player {} finished using bandage, health before: {}.", serverPlayer.getName().getString(),
+            LOGGER.debug("Player {} finished using bandage, health before: {}.",
+                    serverPlayer.getName().getString(),
 					entityLiving.getHealth());
 			CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
 		}
 
-		LOGGER.debug("Player {} applying bandage {}.", entityLiving.getName().getString(), bandageType.getName());
-		bandageType.applyEffects(entityLiving);
+        LOGGER.debug("Player {} applying bandage {}.", entityLiving.getName().getString(), bandageType.getName());
+        bandageType.removeEffects(entityLiving);
+        bandageType.applyEffects(entityLiving);
 
-		worldIn.playSound(null, entityLiving.getOnPos(), Sounds.BANDAGE_USE_END.get(), SoundSource.PLAYERS, 0.5F,
-				worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
+        worldIn.playSound(null,
+                entityLiving.getOnPos(),
+                Sounds.BANDAGE_USE_END.get(),
+                SoundSource.PLAYERS,
+                0.5F,
+                worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
 
-		if (entityLiving instanceof Player player) {
-			player.awardStat(Stats.ITEM_USED.get(this));
-			if (!player.getAbilities().instabuild) {
-				stack.shrink(1);
-			}
+        if (entityLiving instanceof Player player) {
+            player.awardStat(Stats.ITEM_USED.get(this));
+            if (!player.getAbilities().instabuild) {
+                stack.shrink(1);
+            }
         }
         return stack;
     }
 
     @Override
     public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
-		return UseAnim.NONE;
+        return UseAnim.BOW;
     }
 
     @Override

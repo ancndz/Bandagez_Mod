@@ -14,11 +14,11 @@ public class Effects {
 
     public static final String HARD_BLEEDING_EFFECT_NAME = "hard_bleeding";
 
-    public static final String LEG_BROKEN_EFFECT_NAME = "leg_broken";
+    public static final String LEG_FRACTURE_EFFECT_NAME = "leg_fractured";
 
-    public static final String ARM_MAIN_BROKEN_EFFECT_NAME = "arm_main_broken";
+    public static final String ARM_MAIN_FRACTURE_EFFECT_NAME = "arm_main_fractured";
 
-    public static final String ARM_BROKEN_EFFECT_NAME = "arm_broken";
+    public static final String ARM_FRACTURE_EFFECT_NAME = "arm_fractured";
 
     public static final String FRESH_BANDAGE_EFFECT_NAME = "fresh_bandage";
 
@@ -29,19 +29,23 @@ public class Effects {
             BandagezMod.EFFECTS.register(HARD_BLEEDING_EFFECT_NAME,
             () -> new BleedingMobEffect(true, MobEffectCategory.HARMFUL, 13458603));
 
-    public static final RegistryObject<MobEffect> BONE_BREAK_LEG = BandagezMod.EFFECTS.register(LEG_BROKEN_EFFECT_NAME,
-            () -> new BoneBrokenMobEffect(BoneBrokenMobEffect.BodyPart.LEG, MobEffectCategory.HARMFUL, 13458603));
+    public static final RegistryObject<MobEffect> BONE_FRACTURE_LEG = BandagezMod.EFFECTS.register(
+            LEG_FRACTURE_EFFECT_NAME,
+            () -> new BoneFracturedMobEffect(BoneFracturedMobEffect.BodyPart.LEG, MobEffectCategory.HARMFUL, 13458603));
 
-    public static final RegistryObject<MobEffect> BONE_BREAK_ARM_MAIN = BandagezMod.EFFECTS.register(
-            ARM_MAIN_BROKEN_EFFECT_NAME,
-            () -> new BoneBrokenMobEffect(BoneBrokenMobEffect.BodyPart.ARM_MAIN, MobEffectCategory.HARMFUL, 13458603));
+    public static final RegistryObject<MobEffect> BONE_FRACTURE_ARM_MAIN =
+            BandagezMod.EFFECTS.register(ARM_MAIN_FRACTURE_EFFECT_NAME,
+                    () -> new BoneFracturedMobEffect(BoneFracturedMobEffect.BodyPart.ARM_MAIN,
+                            MobEffectCategory.HARMFUL,
+                            13458603));
 
-    public static final RegistryObject<MobEffect> BONE_BREAK_ARM = BandagezMod.EFFECTS.register(ARM_BROKEN_EFFECT_NAME,
-            () -> new BoneBrokenMobEffect(BoneBrokenMobEffect.BodyPart.ARM, MobEffectCategory.HARMFUL, 13458603));
+    public static final RegistryObject<MobEffect> BONE_FRACTURE_ARM = BandagezMod.EFFECTS.register(
+            ARM_FRACTURE_EFFECT_NAME,
+            () -> new BoneFracturedMobEffect(BoneFracturedMobEffect.BodyPart.ARM, MobEffectCategory.HARMFUL, 13458603));
 
     public static final RegistryObject<MobEffect> FRESH_BANDAGE = BandagezMod.EFFECTS
             .register(FRESH_BANDAGE_EFFECT_NAME,
-			() -> new FreshBandage(MobEffectCategory.NEUTRAL, 13458603));
+                    () -> new FreshBandageMobEffect(MobEffectCategory.NEUTRAL, 13458603));
 
 	private Effects() {
 	}
