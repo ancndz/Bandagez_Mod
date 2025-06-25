@@ -56,9 +56,8 @@ public enum HealingBandageTypes implements HealingBandageType {
     }
 
     @Override
-    public void applyEffects(LivingEntity livingEntity) {
-        removingEffects.stream().filter(livingEntity::hasEffect).forEach(livingEntity::removeEffect);
-        livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, healingDuration, amplifier));
+    public MobEffectInstance getHealingInstance() {
+        return new MobEffectInstance(MobEffects.REGENERATION, healingDuration, amplifier);
     }
 
     @Override

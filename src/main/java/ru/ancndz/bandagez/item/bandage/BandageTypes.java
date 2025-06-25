@@ -1,7 +1,6 @@
 package ru.ancndz.bandagez.item.bandage;
 
 import net.minecraft.core.Holder;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -75,8 +74,8 @@ public enum BandageTypes implements BandageType {
     }
 
     @Override
-    public void applyEffects(LivingEntity livingEntity) {
-        removingEffects.stream().filter(livingEntity::hasEffect).forEach(livingEntity::removeEffect);
+    public void apply(LivingEntity livingEntity) {
+        BandageType.super.removeEffects(livingEntity);
         applyEffect.accept(livingEntity);
     }
 

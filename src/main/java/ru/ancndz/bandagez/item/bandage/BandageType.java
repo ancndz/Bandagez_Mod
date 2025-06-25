@@ -3,13 +3,13 @@ package ru.ancndz.bandagez.item.bandage;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.LivingEntity;
-import ru.ancndz.bandagez.item.ApplyingEffects;
+import ru.ancndz.bandagez.item.EffectProvider;
 import ru.ancndz.bandagez.item.RemovingEffects;
 import ru.ancndz.bandagez.item.SupplyCustomTooltip;
 
 import java.util.List;
 
-public interface BandageType extends RemovingEffects, ApplyingEffects, SupplyCustomTooltip {
+public interface BandageType extends RemovingEffects, EffectProvider, SupplyCustomTooltip {
 
     int getUseDuration();
 

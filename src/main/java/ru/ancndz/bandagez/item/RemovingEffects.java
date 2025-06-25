@@ -12,5 +12,9 @@ public interface RemovingEffects {
         return removingEffects.stream().anyMatch(livingEntity::hasEffect);
     }
 
+    default void removeEffects(LivingEntity livingEntity) {
+        getRemovingEffects().stream().filter(livingEntity::hasEffect).forEach(livingEntity::removeEffect);
+    }
+
     List<Holder<MobEffect>> getRemovingEffects();
 }

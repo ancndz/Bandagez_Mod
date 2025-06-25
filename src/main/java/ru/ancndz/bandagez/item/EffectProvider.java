@@ -2,8 +2,8 @@ package ru.ancndz.bandagez.item;
 
 import net.minecraft.world.entity.LivingEntity;
 
-public interface ApplyingEffects {
+public interface EffectProvider {
 
-    void applyEffects(LivingEntity livingEntity);
+    void apply(LivingEntity livingEntity);
 
 }
