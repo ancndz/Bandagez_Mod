@@ -73,7 +73,7 @@ public enum BandageTypes implements BandageType {
     }
 
     @Override
-    public void applyEffects(LivingEntity livingEntity) {
+    public void apply(LivingEntity livingEntity) {
         BandageType.super.removeEffects(livingEntity);
         applyEffect.accept(livingEntity);
     }

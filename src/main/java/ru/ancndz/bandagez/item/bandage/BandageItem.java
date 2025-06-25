@@ -109,7 +109,7 @@ public class BandageItem<T extends BandageType> extends Item implements Typed<T>
 
         LOGGER.debug("Player {} applying bandage {}.", entityLiving.getName().getString(), bandageType.getName());
         bandageType.removeEffects(entityLiving);
-        bandageType.applyEffects(entityLiving);
+        bandageType.apply(entityLiving);
 
         worldIn.playSound(null,
                 entityLiving.getOnPos(),
