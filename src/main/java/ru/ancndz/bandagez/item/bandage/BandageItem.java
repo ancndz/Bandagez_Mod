@@ -1,35 +1,29 @@
 package ru.ancndz.bandagez.item.bandage;
 
-import static ru.ancndz.bandagez.mod.LocalizationPath.BANDAGE_TOOLTIP_REMOVING_EFFECTS;
-
 import com.mojang.logging.LogUtils;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+import ru.ancndz.bandagez.item.Typed;
 import ru.ancndz.bandagez.sound.Sounds;
 
-import java.util.List;
-
-public class Bandage extends Item {
+public class BandageItem<T extends BandageType> extends Item implements Typed<T> {
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private final BandageType bandageType;
+    private final T bandageType;
 
     private boolean startSoundPlayed = false;
 
@@ -37,7 +31,7 @@ public class Bandage extends Item {
 
     private boolean midLateSoundPlayed = false;
 
-    public Bandage(BandageType bandageType, Properties properties) {
+    public BandageItem(T bandageType, Properties properties) {
         super(properties);
         this.bandageType = bandageType;
     }
@@ -45,23 +39,6 @@ public class Bandage extends Item {
     @Override
     public int getUseDuration(@NotNull ItemStack itemstack) {
         return bandageType.getUseDuration();
-    }
-
-    @Override
-	public void appendHoverText(@NotNull ItemStack itemStack, Item.@NotNull TooltipContext tooltipContext,
-			@NotNull List<Component> mainComponent, @NotNull TooltipFlag flag) {
-		if (bandageType == BandageTypes.SMALL || bandageType == BandageTypes.MEDIUM
-				|| bandageType == BandageTypes.LARGE) {
-			mainComponent.add(Component.translatable("bandagez.tooltip.bandage_healing"));
-		}
-        if (!bandageType.getRemovingEffects().isEmpty()) {
-			mainComponent.add(Component.translatable(BANDAGE_TOOLTIP_REMOVING_EFFECTS));
-            for (var effect : bandageType.getRemovingEffects()) {
-				final MobEffect mobEffect = effect.get();
-				mainComponent.add(Component.translatable(mobEffect.getDescriptionId())
-						.withStyle(mobEffect.getCategory().getTooltipFormatting()));
-            }
-        }
     }
 
     @Override
@@ -130,7 +107,8 @@ public class Bandage extends Item {
 		}
 
 		LOGGER.debug("Player {} applying bandage {}.", entityLiving.getName().getString(), bandageType.getName());
-		bandageType.applyEffects(entityLiving);
+        bandageType.removeEffects(entityLiving);
+        bandageType.apply(entityLiving);
 
 		worldIn.playSound(null, entityLiving.getOnPos(), Sounds.BANDAGE_USE_END.get(), SoundSource.PLAYERS, 0.5F,
 				worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
@@ -149,4 +127,8 @@ public class Bandage extends Item {
 		return UseAnim.NONE;
     }
 
+    @Override
+    public T getType() {
+        return bandageType;
+    }
 }
