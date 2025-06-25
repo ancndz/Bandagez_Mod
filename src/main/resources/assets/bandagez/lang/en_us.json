@@ -8,17 +8,26 @@
   "item.bandagez.antibiotic_band": "Antibiotic Bandage",
   "item.bandagez.magic_band": "Magic Bandage",
   "item.bandagez.stimulant_band": "Stimulant Bandage",
+  "item.bandagez.splint": "Splint",
 
   "bandagez.bandages_tab": "Bandages",
-  "bandagez.tooltip.bandage_healing": "Heals",
-  "bandagez.item.bandage.tooltip.removing_effects": "Removes:",
+  "bandagez.tooltip.healing": "Heals: {0}",
+  "bandagez.tooltip.removing_effects": "Removes:",
 
-  "effect.bandagez.bleed": "Bleeding",
-  "effect.bandagez.hard_bleed": "Hard Bleeding",
+  "effect.bandagez.bleeding": "Bleeding",
+  "effect.bandagez.hard_bleeding": "Hard Bleeding",
   "effect.bandagez.fresh_bandage": "Fresh Bandage",
+  "effect.bandagez.fractured": "Fractures",
+  "effect.bandagez.arm_fractured": "Hand Fractured",
+  "effect.bandagez.arm_main_fractured": "Main Hand Fractured",
+  "effect.bandagez.leg_fractured": "Leg Fractured",
 
   "bandagez.advancements.adventure.no_food_regen.title": "New way of healing",
   "bandagez.advancements.adventure.no_food_regen.description": "No more food regen!™",
   "bandagez.advancements.adventure.bandage_used.title": "That's better.",
-  "bandagez.advancements.adventure.bandage_used.description": "Heal yourself with a bandage"
+  "bandagez.advancements.adventure.bandage_used.description": "Heal yourself with a bandage",
+  "bandagez.advancements.adventure.leg_fractured.title": "That's hurt!",
+  "bandagez.advancements.adventure.leg_fractured.description": "Can i make a bandage for that?..",
+
+  "bandagez.config.show_bleeding_particles": "Show particles on bleeding effects"
 }
