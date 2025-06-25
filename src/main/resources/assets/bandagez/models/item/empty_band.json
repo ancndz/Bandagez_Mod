@@ -1,10 +1,11 @@
 {
-  "format_version": "1.20.6",
+  "format_version": "1.20.1",
   "texture_size": [32, 32],
   "textures": {
     "1": "bandagez:item/base_band",
     "particle": "bandagez:item/small_patch"
   },
+  "gui_light": "front",
   "elements": [
     {
       "from": [6, 7.75, 2],
@@ -64,7 +65,8 @@
       "scale": [0.7, 0.7, 0.7]
     },
     "ground": {
-      "rotation": [102, 0, 0]
+      "rotation": [102, 0, 0],
+      "scale": [0.5, 0.5, 0.5]
     },
     "gui": {
       "rotation": [90, -45, 0],

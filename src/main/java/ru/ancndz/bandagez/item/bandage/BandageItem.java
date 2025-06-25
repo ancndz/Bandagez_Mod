@@ -1,10 +1,7 @@
 package ru.ancndz.bandagez.item.bandage;
 
-import static ru.ancndz.bandagez.mod.LocalizationPath.BANDAGE_TOOLTIP_REMOVING_EFFECTS;
-
 import com.mojang.logging.LogUtils;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -15,21 +12,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
+import ru.ancndz.bandagez.item.Typed;
 import ru.ancndz.bandagez.sound.Sounds;
 
-import java.util.List;
-
-public class Bandage extends Item {
+public class BandageItem<T extends BandageType> extends Item implements Typed<T> {
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private final BandageType bandageType;
+    private final T bandageType;
 
     private boolean startSoundPlayed = false;
 
@@ -37,7 +31,7 @@ public class Bandage extends Item {
 
     private boolean midLateSoundPlayed = false;
 
-    public Bandage(BandageType bandageType, Properties properties) {
+    public BandageItem(T bandageType, Properties properties) {
         super(properties);
         this.bandageType = bandageType;
     }
@@ -45,20 +39,6 @@ public class Bandage extends Item {
     @Override
     public int getUseDuration(@NotNull ItemStack itemstack) {
         return bandageType.getUseDuration();
-    }
-
-    @Override
-    public void appendHoverText(@NotNull ItemStack itemStack,
-            @Nullable Level level,
-            @NotNull List<Component> mainComponent,
-            @NotNull TooltipFlag flag) {
-        if (!bandageType.getRemovingEffects().isEmpty()) {
-			mainComponent.add(Component.translatable(BANDAGE_TOOLTIP_REMOVING_EFFECTS));
-            for (var effect : bandageType.getRemovingEffects()) {
-				mainComponent.add(Component.translatable(effect.getDescriptionId())
-						.withStyle(effect.getCategory().getTooltipFormatting()));
-            }
-        }
     }
 
     @Override
@@ -121,29 +101,39 @@ public class Bandage extends Item {
     public @NotNull ItemStack
             finishUsingItem(@NotNull ItemStack stack, @NotNull Level worldIn, @NotNull LivingEntity entityLiving) {
 		if (entityLiving instanceof ServerPlayer serverPlayer) {
-			LOGGER.debug("Player {} finished using bandage, health before: {}.", serverPlayer.getName().getString(),
+            LOGGER.debug("Player {} finished using bandage, health before: {}.",
+                    serverPlayer.getName().getString(),
 					entityLiving.getHealth());
 			CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
 		}
 
-		LOGGER.debug("Player {} applying bandage {}.", entityLiving.getName().getString(), bandageType.getName());
-		bandageType.applyEffects(entityLiving);
+        LOGGER.debug("Player {} applying bandage {}.", entityLiving.getName().getString(), bandageType.getName());
+        bandageType.removeEffects(entityLiving);
+        bandageType.apply(entityLiving);
 
-		worldIn.playSound(null, entityLiving.getOnPos(), Sounds.BANDAGE_USE_END.get(), SoundSource.PLAYERS, 0.5F,
-				worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
+        worldIn.playSound(null,
+                entityLiving.getOnPos(),
+                Sounds.BANDAGE_USE_END.get(),
+                SoundSource.PLAYERS,
+                0.5F,
+                worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
 
-		if (entityLiving instanceof Player player) {
-			player.awardStat(Stats.ITEM_USED.get(this));
-			if (!player.getAbilities().instabuild) {
-				stack.shrink(1);
-			}
+        if (entityLiving instanceof Player player) {
+            player.awardStat(Stats.ITEM_USED.get(this));
+            if (!player.getAbilities().instabuild) {
+                stack.shrink(1);
+            }
         }
         return stack;
     }
 
     @Override
     public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
-		return UseAnim.NONE;
+        return UseAnim.BOW;
     }
 
+    @Override
+    public T getType() {
+        return bandageType;
+    }
 }

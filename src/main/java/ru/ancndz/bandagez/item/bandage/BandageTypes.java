@@ -5,28 +5,17 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import ru.ancndz.bandagez.effect.Effects;
+import ru.ancndz.bandagez.item.RemovingEffects;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public enum BandageTypes implements BandageType {
 
 	EMPTY(20, Collections.singletonList(Effects.BLEEDING.get())),
-
-	SMALL(40, BandageTypes::isNotFullHealth, livingEntity -> {
-        EMPTY.applyEffects(livingEntity);
-        livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 0));
-    }),
-	MEDIUM(70, BandageTypes::isNotFullHealth, livingEntity -> {
-        EMPTY.applyEffects(livingEntity);
-        livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 1));
-    }),
-	LARGE(100, BandageTypes::isNotFullHealth, livingEntity -> {
-        EMPTY.applyEffects(livingEntity);
-        livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 2));
-    }),
 
 	HEMOSTATIC(40, BandageTypes::handleHardBleeding, Collections.singletonList(Effects.HARD_BLEEDING
 			.get())),
@@ -43,10 +32,6 @@ public enum BandageTypes implements BandageType {
 		livingEntity.addEffect(new MobEffectInstance(Effects.FRESH_BANDAGE.get(), 800));
 	}
 
-	private static boolean isNotFullHealth(LivingEntity livingEntity) {
-		return livingEntity.getHealth() < livingEntity.getMaxHealth();
-    }
-
     private final int itemUseDuration;
 
     private final Predicate<LivingEntity> canUseItem;
@@ -54,13 +39,6 @@ public enum BandageTypes implements BandageType {
     private final Consumer<LivingEntity> applyEffect;
 
     private final List<MobEffect> removingEffects;
-
-    BandageTypes(int itemUseDuration, Predicate<LivingEntity> canUseItem, Consumer<LivingEntity> applyEffect) {
-        this.itemUseDuration = itemUseDuration;
-        this.canUseItem = canUseItem;
-        this.applyEffect = applyEffect;
-        this.removingEffects = Collections.emptyList();
-    }
 
     BandageTypes(int itemUseDuration,
             Predicate<LivingEntity> canUseItem,
@@ -72,20 +50,16 @@ public enum BandageTypes implements BandageType {
         this.removingEffects = removingEffects;
     }
 
-    BandageTypes(int itemUseDuration, List<MobEffect> removingEffects) {
-        this.itemUseDuration = itemUseDuration;
-        this.canUseItem = livingEntity -> removingEffects.stream().anyMatch(livingEntity::hasEffect);
-        this.applyEffect = livingEntity -> {
-        };
-        this.removingEffects = removingEffects;
+    BandageTypes(int itemUseDuration, Consumer<LivingEntity> applyEffect, List<MobEffect> removingEffects) {
+        this(itemUseDuration,
+                livingEntity -> RemovingEffects.hasAnyOf(livingEntity, removingEffects),
+                applyEffect,
+                removingEffects);
     }
 
-    BandageTypes(int itemUseDuration,
-                 Consumer<LivingEntity> applyEffect, List<MobEffect> removingEffects) {
-        this.itemUseDuration = itemUseDuration;
-        this.canUseItem = livingEntity -> removingEffects.stream().anyMatch(livingEntity::hasEffect);
-        this.applyEffect = applyEffect;
-        this.removingEffects = removingEffects;
+    BandageTypes(int itemUseDuration, List<MobEffect> removingEffects) {
+        this(itemUseDuration, livingEntity -> {
+        }, removingEffects);
     }
 
     @Override
@@ -99,8 +73,8 @@ public enum BandageTypes implements BandageType {
     }
 
     @Override
-    public void applyEffects(LivingEntity livingEntity) {
-        removingEffects.stream().filter(livingEntity::hasEffect).forEach(livingEntity::removeEffect);
+    public void apply(LivingEntity livingEntity) {
+        BandageType.super.removeEffects(livingEntity);
         applyEffect.accept(livingEntity);
     }
 
@@ -109,8 +83,9 @@ public enum BandageTypes implements BandageType {
         return removingEffects;
     }
 
-	@Override
-	public String getName() {
-		return name().toLowerCase();
-	}
+    @Override
+    public String getName() {
+        return name().toLowerCase(Locale.ROOT);
+    }
+
 }

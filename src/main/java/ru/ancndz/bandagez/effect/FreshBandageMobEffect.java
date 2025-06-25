@@ -1,6 +1,7 @@
 package ru.ancndz.bandagez.effect;
 
 import static ru.ancndz.bandagez.effect.EffectParticlesHelper.addParticles;
+import static ru.ancndz.bandagez.effect.Effects.FRESH_BANDAGE_EFFECT_NAME;
 
 import net.minecraft.Util;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -16,7 +17,7 @@ import ru.ancndz.bandagez.mod.BandagezMod;
 
 import javax.annotation.Nullable;
 
-public class FreshBandage extends MobEffect {
+public class FreshBandageMobEffect extends MobEffect implements EffectPriority {
 
 	public static final int TICK_RATE = 40;
 
@@ -25,7 +26,7 @@ public class FreshBandage extends MobEffect {
     @Nullable
     private String descriptionId;
 
-    public FreshBandage(MobEffectCategory category, int color) {
+    public FreshBandageMobEffect(MobEffectCategory category, int color) {
 		super(category, color);
     }
 
@@ -35,7 +36,7 @@ public class FreshBandage extends MobEffect {
 			entity.addEffect(new MobEffectInstance(Effects.BLEEDING.get(), 400, 0, false, false, true));
 			entity.removeEffect(Effects.FRESH_BANDAGE.get());
         }
-		addParticles(entity, new BlockParticleOption(ParticleTypes.FALLING_DUST, Blocks.COBWEB.defaultBlockState()), 3);
+        addParticles(entity, new BlockParticleOption(ParticleTypes.FALLING_DUST, Blocks.COBWEB.defaultBlockState()));
     }
 
     @Override
@@ -48,8 +49,13 @@ public class FreshBandage extends MobEffect {
     protected @NotNull String getOrCreateDescriptionId() {
         if (this.descriptionId == null) {
             this.descriptionId = Util.makeDescriptionId("effect",
-                    ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, "fresh_bandage"));
+                    ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, FRESH_BANDAGE_EFFECT_NAME));
         }
         return this.descriptionId;
+    }
+
+    @Override
+    public EffectPriorities getPriority() {
+        return EffectPriorities.FRESH_BANDAGE;
     }
 }
