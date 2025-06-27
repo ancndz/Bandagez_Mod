@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import ru.ancndz.bandagez.item.Typed;
-import ru.ancndz.bandagez.sound.Sounds;
+import ru.ancndz.bandagez.sound.ModSoundEvents;
 
 public class BandageItem<T extends BandageType> extends Item implements Typed<T> {
 
@@ -69,7 +69,7 @@ public class BandageItem<T extends BandageType> extends Item implements Typed<T>
                 this.startSoundPlayed = true;
                 worldIn.playSound(null,
                         entityLiving.getOnPos(),
-						Sounds.BANDAGE_USE_START.get(),
+						ModSoundEvents.BANDAGE_USE_START.get(),
                         SoundSource.PLAYERS,
                         0.5F,
                         worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
@@ -79,7 +79,7 @@ public class BandageItem<T extends BandageType> extends Item implements Typed<T>
                 this.midSoundPlayed = true;
                 worldIn.playSound(null,
                         entityLiving.getOnPos(),
-						Sounds.BANDAGE_USE_MID.get(),
+						ModSoundEvents.BANDAGE_USE_MID.get(),
                         SoundSource.PLAYERS,
                         0.5F,
                         worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
@@ -89,7 +89,7 @@ public class BandageItem<T extends BandageType> extends Item implements Typed<T>
                 this.midLateSoundPlayed = true;
                 worldIn.playSound(null,
                         entityLiving.getOnPos(),
-						Sounds.MEDIUM_BANDAGE_USE.get(),
+						ModSoundEvents.MEDIUM_BANDAGE_USE.get(),
                         SoundSource.PLAYERS,
                         0.5F,
                         worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
@@ -113,7 +113,7 @@ public class BandageItem<T extends BandageType> extends Item implements Typed<T>
 
         worldIn.playSound(null,
                 entityLiving.getOnPos(),
-                Sounds.BANDAGE_USE_END.get(),
+                ModSoundEvents.BANDAGE_USE_END.get(),
                 SoundSource.PLAYERS,
                 0.5F,
                 worldIn.getRandom().nextFloat() * 0.1F + 0.9F);

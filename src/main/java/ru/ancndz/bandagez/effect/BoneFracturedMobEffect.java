@@ -1,8 +1,8 @@
 package ru.ancndz.bandagez.effect;
 
-import static ru.ancndz.bandagez.effect.Effects.ARM_FRACTURE_EFFECT_NAME;
-import static ru.ancndz.bandagez.effect.Effects.ARM_MAIN_FRACTURE_EFFECT_NAME;
-import static ru.ancndz.bandagez.effect.Effects.LEG_FRACTURE_EFFECT_NAME;
+import static ru.ancndz.bandagez.effect.ModMobEffects.ARM_FRACTURE_EFFECT_NAME;
+import static ru.ancndz.bandagez.effect.ModMobEffects.ARM_MAIN_FRACTURE_EFFECT_NAME;
+import static ru.ancndz.bandagez.effect.ModMobEffects.LEG_FRACTURE_EFFECT_NAME;
 
 import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;

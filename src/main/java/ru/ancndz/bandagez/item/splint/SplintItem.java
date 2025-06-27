@@ -16,10 +16,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import ru.ancndz.bandagez.effect.EffectPriority;
-import ru.ancndz.bandagez.effect.Effects;
+import ru.ancndz.bandagez.effect.ModMobEffects;
 import ru.ancndz.bandagez.item.RemovingEffects;
 import ru.ancndz.bandagez.item.SupplyCustomTooltip;
 
@@ -42,7 +43,7 @@ public class SplintItem extends Item implements RemovingEffects, SupplyCustomToo
     @Override
     public @NotNull InteractionResultHolder<ItemStack>
             use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
-        if (getRemovingEffects().stream().noneMatch(player::hasEffect)) {
+        if (getRemovingEffects().stream().map(RegistryObject::get).noneMatch(player::hasEffect)) {
             return InteractionResultHolder.fail(player.getItemInHand(hand));
         }
         LOGGER.debug("Player {} ({} hp) is using splint", player.getName().getString(), player.getHealth());
@@ -58,6 +59,7 @@ public class SplintItem extends Item implements RemovingEffects, SupplyCustomToo
         }
 
         getRemovingEffects().stream()
+                .map(RegistryObject::get)
                 .filter(effect -> entityLiving.hasEffect(effect) && effect instanceof EffectPriority)
                 .min(Comparator.comparing(effect -> ((EffectPriority) effect).getPriority()))
                 .ifPresent(effect -> {
@@ -75,10 +77,8 @@ public class SplintItem extends Item implements RemovingEffects, SupplyCustomToo
     }
 
     @Override
-    public List<MobEffect> getRemovingEffects() {
-        return List.of(Effects.BONE_FRACTURE_ARM_MAIN.get(),
-                Effects.BONE_FRACTURE_LEG.get(),
-                Effects.BONE_FRACTURE_ARM.get());
+    public List<RegistryObject<MobEffect>> getRemovingEffects() {
+        return List.of(ModMobEffects.BONE_FRACTURE_ARM_MAIN, ModMobEffects.BONE_FRACTURE_LEG, ModMobEffects.BONE_FRACTURE_ARM);
     }
 
     @Override

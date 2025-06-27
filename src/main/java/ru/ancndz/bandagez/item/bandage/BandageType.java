@@ -20,8 +20,8 @@ public interface BandageType extends RemovingEffects, EffectProvider, SupplyCust
     default void addCustomTooltip(List<Component> components) {
         components.add(Component.translatable("bandagez.tooltip.removing_effects"));
         for (var effect : getRemovingEffects()) {
-            components.add(Component.translatable(effect.getDescriptionId())
-                    .withStyle(effect.getCategory().getTooltipFormatting()));
+            components.add(Component.translatable(effect.get().getDescriptionId())
+                    .withStyle(effect.get().getCategory().getTooltipFormatting()));
         }
     }
 }

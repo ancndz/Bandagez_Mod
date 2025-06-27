@@ -4,7 +4,8 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import ru.ancndz.bandagez.effect.Effects;
+import net.minecraftforge.registries.RegistryObject;
+import ru.ancndz.bandagez.effect.ModMobEffects;
 import ru.ancndz.bandagez.item.Healing;
 import ru.ancndz.bandagez.item.RemovingEffects;
 
@@ -14,11 +15,11 @@ import java.util.Locale;
 
 public enum HealingBandageTypes implements HealingBandageType {
 
-    SMALL(40, 100, 0, 2F, Collections.singletonList(Effects.BLEEDING.get())),
+    SMALL(40, 100, 0, 2F, Collections.singletonList(ModMobEffects.BLEEDING)),
 
-    MEDIUM(70, 100, 1, 4F, Collections.singletonList(Effects.BLEEDING.get())),
+    MEDIUM(70, 100, 1, 4F, Collections.singletonList(ModMobEffects.BLEEDING)),
 
-    LARGE(100, 100, 2, 8F, Collections.singletonList(Effects.BLEEDING.get()))
+    LARGE(100, 100, 2, 8F, Collections.singletonList(ModMobEffects.BLEEDING))
 
     ;
 
@@ -30,13 +31,13 @@ public enum HealingBandageTypes implements HealingBandageType {
 
     private final float maxHeal;
 
-    private final List<MobEffect> removingEffects;
+    private final List<RegistryObject<MobEffect>> removingEffects;
 
     HealingBandageTypes(int itemUseDuration,
             int healingDuration,
             int amplifier,
             float maxHeal,
-            List<MobEffect> removingEffects) {
+            List<RegistryObject<MobEffect>> removingEffects) {
         this.itemUseDuration = itemUseDuration;
         this.healingDuration = healingDuration;
         this.amplifier = amplifier;
@@ -60,7 +61,7 @@ public enum HealingBandageTypes implements HealingBandageType {
     }
 
     @Override
-    public List<MobEffect> getRemovingEffects() {
+    public List<RegistryObject<MobEffect>> getRemovingEffects() {
         return removingEffects;
     }
 
