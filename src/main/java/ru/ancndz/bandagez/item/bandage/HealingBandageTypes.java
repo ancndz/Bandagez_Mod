@@ -1,10 +1,10 @@
 package ru.ancndz.bandagez.item.bandage;
 
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.LivingEntity;
-import ru.ancndz.bandagez.effect.Effects;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraftforge.fml.RegistryObject;
+import ru.ancndz.bandagez.effect.ModEffects;
 import ru.ancndz.bandagez.item.Healing;
 import ru.ancndz.bandagez.item.RemovingEffects;
 
@@ -14,11 +14,11 @@ import java.util.Locale;
 
 public enum HealingBandageTypes implements HealingBandageType {
 
-    SMALL(40, 100, 0, 2F, Collections.singletonList(Effects.BLEEDING.get())),
+    SMALL(40, 100, 0, 2F, Collections.singletonList(ModEffects.BLEEDING)),
 
-    MEDIUM(70, 100, 1, 4F, Collections.singletonList(Effects.BLEEDING.get())),
+    MEDIUM(70, 100, 1, 4F, Collections.singletonList(ModEffects.BLEEDING)),
 
-    LARGE(100, 100, 2, 8F, Collections.singletonList(Effects.BLEEDING.get()))
+    LARGE(100, 100, 2, 8F, Collections.singletonList(ModEffects.BLEEDING))
 
     ;
 
@@ -30,13 +30,13 @@ public enum HealingBandageTypes implements HealingBandageType {
 
     private final float maxHeal;
 
-    private final List<MobEffect> removingEffects;
+    private final List<RegistryObject<Effect>> removingEffects;
 
     HealingBandageTypes(int itemUseDuration,
             int healingDuration,
             int amplifier,
             float maxHeal,
-            List<MobEffect> removingEffects) {
+            List<RegistryObject<Effect>> removingEffects) {
         this.itemUseDuration = itemUseDuration;
         this.healingDuration = healingDuration;
         this.amplifier = amplifier;
@@ -50,17 +50,17 @@ public enum HealingBandageTypes implements HealingBandageType {
     }
 
     @Override
-    public boolean canUse(LivingEntity livingEntity) {
+    public boolean canUse(PlayerEntity livingEntity) {
         return Healing.isNotFullHealth(livingEntity) || RemovingEffects.hasAnyOf(livingEntity, removingEffects);
     }
 
     @Override
-    public MobEffectInstance getHealingInstance() {
-        return new MobEffectInstance(MobEffects.REGENERATION, healingDuration, amplifier);
+    public EffectInstance getHealingInstance() {
+        return new EffectInstance(net.minecraft.potion.Effects.REGENERATION, healingDuration, amplifier);
     }
 
     @Override
-    public List<MobEffect> getRemovingEffects() {
+    public List<RegistryObject<Effect>> getRemovingEffects() {
         return removingEffects;
     }
 

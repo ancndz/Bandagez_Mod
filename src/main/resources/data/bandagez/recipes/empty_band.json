@@ -1,6 +1,5 @@
 {
     "type": "minecraft:crafting_shapeless",
-    "category": "equipment",
     "ingredients": [
         [
             {
@@ -23,9 +22,7 @@
         }
     ],
     "result": {
-        "item": "bandagez:empty_band",
-        "count": 1,
-        "data": 0
+        "item": "bandagez:empty_band"
     },
     "show_notification": true
 }

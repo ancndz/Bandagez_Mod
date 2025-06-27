@@ -1,27 +1,25 @@
 package ru.ancndz.bandagez.item.bandage;
 
-import com.mojang.logging.LogUtils;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.UseAction;
 import net.minecraft.stats.Stats;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUtils;
-import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.world.World;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.ancndz.bandagez.item.Typed;
-import ru.ancndz.bandagez.sound.Sounds;
+import ru.ancndz.bandagez.sound.ModSoundEvent;
 
 public class BandageItem<T extends BandageType> extends Item implements Typed<T> {
 
-    private static final Logger LOGGER = LogUtils.getLogger();
+    private static final Logger LOGGER = LoggerFactory.getLogger(BandageItem.class);
 
     private final T bandageType;
 
@@ -31,30 +29,29 @@ public class BandageItem<T extends BandageType> extends Item implements Typed<T>
 
     private boolean midLateSoundPlayed = false;
 
-    public BandageItem(T bandageType, Properties properties) {
+    public BandageItem(T bandageType, Item.Properties properties) {
         super(properties);
         this.bandageType = bandageType;
+        LOGGER.debug("Created bandage with type {}", bandageType.getName());
     }
 
     @Override
-    public int getUseDuration(@NotNull ItemStack itemstack) {
+    public int getUseDuration(ItemStack itemstack) {
         return bandageType.getUseDuration();
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack>
-            use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
+    public ActionResult<ItemStack> use(World level, PlayerEntity player, Hand hand) {
         if (!bandageType.canUse(player)) {
-            return InteractionResultHolder.fail(player.getItemInHand(hand));
+            return ActionResult.fail(player.getItemInHand(hand));
         }
         LOGGER.debug("Player {} ({} hp) is using bandage", player.getName().getString(), player.getHealth());
-        return ItemUtils.startUsingInstantly(level, player, hand);
+        player.startUsingItem(hand);
+        return ActionResult.consume(player.getItemInHand(hand));
     }
 
     @Override
-    public void onUseTick(@NotNull Level worldIn,
-            @NotNull LivingEntity entityLiving,
-            @NotNull ItemStack itemStack,
+    public void onUseTick(World worldIn, LivingEntity entityLiving, ItemStack itemStack,
             int count) {
         if (!worldIn.isClientSide()) {
             float f = (float) (itemStack.getUseDuration() - count) / (itemStack.getUseDuration() - 12);
@@ -68,9 +65,11 @@ public class BandageItem<T extends BandageType> extends Item implements Typed<T>
                 LOGGER.debug("Start playing startSound, f = {}", f);
                 this.startSoundPlayed = true;
                 worldIn.playSound(null,
-                        entityLiving.getOnPos(),
-						Sounds.BANDAGE_USE_START.get(),
-                        SoundSource.PLAYERS,
+                        entityLiving.getX(),
+                        entityLiving.getY(),
+                        entityLiving.getZ(),
+                        ModSoundEvent.BANDAGE_USE_START.get(),
+                        SoundCategory.PLAYERS,
                         0.5F,
                         worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
             }
@@ -78,9 +77,11 @@ public class BandageItem<T extends BandageType> extends Item implements Typed<T>
                 LOGGER.debug("Start playing midSound, f = {}", f);
                 this.midSoundPlayed = true;
                 worldIn.playSound(null,
-                        entityLiving.getOnPos(),
-						Sounds.BANDAGE_USE_MID.get(),
-                        SoundSource.PLAYERS,
+                        entityLiving.getX(),
+                        entityLiving.getY(),
+                        entityLiving.getZ(),
+                        ModSoundEvent.BANDAGE_USE_MID.get(),
+                        SoundCategory.PLAYERS,
                         0.5F,
                         worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
             }
@@ -88,9 +89,11 @@ public class BandageItem<T extends BandageType> extends Item implements Typed<T>
                 LOGGER.debug("Start playing midLateSound, f = {}", f);
                 this.midLateSoundPlayed = true;
                 worldIn.playSound(null,
-                        entityLiving.getOnPos(),
-						Sounds.MEDIUM_BANDAGE_USE.get(),
-                        SoundSource.PLAYERS,
+                        entityLiving.getX(),
+                        entityLiving.getY(),
+                        entityLiving.getZ(),
+                        ModSoundEvent.MEDIUM_BANDAGE_USE.get(),
+                        SoundCategory.PLAYERS,
                         0.5F,
                         worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
             }
@@ -98,13 +101,12 @@ public class BandageItem<T extends BandageType> extends Item implements Typed<T>
     }
 
     @Override
-    public @NotNull ItemStack
-            finishUsingItem(@NotNull ItemStack stack, @NotNull Level worldIn, @NotNull LivingEntity entityLiving) {
-		if (entityLiving instanceof ServerPlayer serverPlayer) {
+    public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+        if (entityLiving instanceof ServerPlayerEntity) {
             LOGGER.debug("Player {} finished using bandage, health before: {}.",
-                    serverPlayer.getName().getString(),
+                    entityLiving.getName().getString(),
 					entityLiving.getHealth());
-			CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
+            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) entityLiving, stack);
 		}
 
         LOGGER.debug("Player {} applying bandage {}.", entityLiving.getName().getString(), bandageType.getName());
@@ -112,15 +114,17 @@ public class BandageItem<T extends BandageType> extends Item implements Typed<T>
         bandageType.apply(entityLiving);
 
         worldIn.playSound(null,
-                entityLiving.getOnPos(),
-                Sounds.BANDAGE_USE_END.get(),
-                SoundSource.PLAYERS,
+                entityLiving.getX(),
+                entityLiving.getY(),
+                entityLiving.getZ(),
+                ModSoundEvent.BANDAGE_USE_END.get(),
+                SoundCategory.PLAYERS,
                 0.5F,
                 worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
 
-        if (entityLiving instanceof Player player) {
-            player.awardStat(Stats.ITEM_USED.get(this));
-            if (!player.getAbilities().instabuild) {
+        if (entityLiving instanceof PlayerEntity) {
+            ((PlayerEntity) entityLiving).awardStat(Stats.ITEM_USED.get(this));
+            if (!((PlayerEntity) entityLiving).abilities.instabuild) {
                 stack.shrink(1);
             }
         }
@@ -128,8 +132,8 @@ public class BandageItem<T extends BandageType> extends Item implements Typed<T>
     }
 
     @Override
-    public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
-        return UseAnim.BOW;
+    public UseAction getUseAnimation(ItemStack stack) {
+        return UseAction.BOW;
     }
 
     @Override

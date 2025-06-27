@@ -1,6 +1,5 @@
 {
     "type": "minecraft:crafting_shapeless",
-    "category": "equipment",
     "ingredients": [
         {
             "tag": "forge:string"
@@ -16,9 +15,7 @@
         }
     ],
     "result": {
-        "item": "bandagez:stimulant_band",
-        "count": 1,
-        "data": 0
+        "item": "bandagez:stimulant_band"
     },
     "show_notification": true
 }

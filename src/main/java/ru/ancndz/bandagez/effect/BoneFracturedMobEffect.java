@@ -1,22 +1,23 @@
 package ru.ancndz.bandagez.effect;
 
-import static ru.ancndz.bandagez.effect.Effects.ARM_FRACTURE_EFFECT_NAME;
-import static ru.ancndz.bandagez.effect.Effects.ARM_MAIN_FRACTURE_EFFECT_NAME;
-import static ru.ancndz.bandagez.effect.Effects.LEG_FRACTURE_EFFECT_NAME;
+import static ru.ancndz.bandagez.effect.ModEffects.ARM_FRACTURE_EFFECT_NAME;
+import static ru.ancndz.bandagez.effect.ModEffects.ARM_MAIN_FRACTURE_EFFECT_NAME;
+import static ru.ancndz.bandagez.effect.ModEffects.LEG_FRACTURE_EFFECT_NAME;
 
-import net.minecraft.Util;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectType;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
 import ru.ancndz.bandagez.mod.BandagezMod;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class BoneFracturedMobEffect extends MobEffect implements EffectPriority {
+public class BoneFracturedMobEffect extends Effect implements EffectPriority {
 
     public static final String BROKEN_BONE_ATTACK_DAMAGE = "2ec606e1-fbe7-4956-97ae-a76fb5018fbc";
 
@@ -29,27 +30,33 @@ public class BoneFracturedMobEffect extends MobEffect implements EffectPriority 
     @Nullable
     private String descriptionId;
 
-    protected BoneFracturedMobEffect(BodyPart bodyPart, MobEffectCategory category, int color) {
+    protected BoneFracturedMobEffect(BodyPart bodyPart, EffectType category, int color) {
         super(category, color);
         this.bodyPart = bodyPart;
 
         switch (bodyPart) {
-            case LEG -> this.addAttributeModifier(Attributes.MOVEMENT_SPEED,
+            case LEG: {
+                this.addAttributeModifier(Attributes.MOVEMENT_SPEED,
                     SLOWNESS,
                     -0.45F,
                     AttributeModifier.Operation.MULTIPLY_TOTAL);
+                break;
+            }
 
-            case ARM_MAIN -> this.addAttributeModifier(Attributes.ATTACK_DAMAGE,
+            case ARM_MAIN: {
+                this.addAttributeModifier(Attributes.ATTACK_DAMAGE,
                     BROKEN_BONE_ATTACK_DAMAGE,
                     -0.4F,
                     AttributeModifier.Operation.MULTIPLY_BASE);
+                break;
+            }
         }
     }
 
     @Override
-    public void applyEffectTick(@NotNull LivingEntity entity, int food) {
+    public void applyEffectTick(@Nonnull LivingEntity entity, int food) {
         if (bodyPart == BodyPart.LEG && entity.isSprinting()) {
-            entity.hurt(entity.damageSources().magic(), 0.5F);
+            entity.hurt(DamageSource.MAGIC, 0.5F);
         }
     }
 
@@ -60,26 +67,37 @@ public class BoneFracturedMobEffect extends MobEffect implements EffectPriority 
     }
 
     @Override
-    protected @NotNull String getOrCreateDescriptionId() {
+    protected @Nonnull String getOrCreateDescriptionId() {
         if (this.descriptionId == null) {
-            final String path = switch (bodyPart) {
-                case ARM -> ARM_FRACTURE_EFFECT_NAME;
-                case ARM_MAIN -> ARM_MAIN_FRACTURE_EFFECT_NAME;
-                default -> LEG_FRACTURE_EFFECT_NAME;
-            };
+            final String path;
+            switch (bodyPart) {
+                case ARM:
+                    path = ARM_FRACTURE_EFFECT_NAME;
+                    break;
+                case ARM_MAIN:
+                    path = ARM_MAIN_FRACTURE_EFFECT_NAME;
+                    break;
+                default:
+                    path = LEG_FRACTURE_EFFECT_NAME;
+                    break;
+            }
+
             this.descriptionId =
-                    Util.makeDescriptionId("effect", ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, path));
+                    Util.makeDescriptionId("effect", new ResourceLocation(BandagezMod.MODID, path));
         }
         return this.descriptionId;
     }
 
     @Override
     public EffectPriorities getPriority() {
-        return switch (bodyPart) {
-            case LEG -> EffectPriorities.LEG_FRACTURE;
-            case ARM -> EffectPriorities.ARM_FRACTURE;
-            case ARM_MAIN -> EffectPriorities.MAIN_ARM_FRACTURE;
-        };
+        switch (bodyPart) {
+            case ARM:
+                return EffectPriorities.ARM_FRACTURE;
+            case ARM_MAIN:
+                return EffectPriorities.MAIN_ARM_FRACTURE;
+            default:
+                return EffectPriorities.LEG_FRACTURE;
+        }
     }
 
     public enum BodyPart {

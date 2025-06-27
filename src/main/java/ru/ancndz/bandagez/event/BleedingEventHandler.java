@@ -1,22 +1,18 @@
 package ru.ancndz.bandagez.event;
 
-import static java.util.Map.entry;
-
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import ru.ancndz.bandagez.effect.Effects;
+import ru.ancndz.bandagez.effect.ModEffects;
 import ru.ancndz.bandagez.mod.BandagezMod;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -24,76 +20,61 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Mod.EventBusSubscriber(modid = BandagezMod.MODID)
 public class BleedingEventHandler {
 
-    private static final Map<ResourceKey<DamageType>,
-            Double> DAMAGE_TYPES_FOR_BLEEDING = Map.ofEntries(entry(DamageTypes.ARROW, 0.5D),
-                    entry(DamageTypes.CACTUS, 0.2D),
-                    entry(DamageTypes.EXPLOSION, 0.2D),
-                    entry(DamageTypes.FALLING_STALACTITE, 0.5D),
-                    entry(DamageTypes.STALAGMITE, 0.5D),
-                    entry(DamageTypes.SWEET_BERRY_BUSH, 0.1D),
-                    entry(DamageTypes.THORNS, 0.3D),
-                    entry(DamageTypes.TRIDENT, 0.6D));
-
-    private static final Map<ResourceKey<DamageType>,
-            Double> DAMAGE_TYPES_FOR_HARD_BLEEDING = Map.ofEntries(entry(DamageTypes.ARROW, 0.2D),
-                    entry(DamageTypes.EXPLOSION, 0.1D),
-                    entry(DamageTypes.FALLING_STALACTITE, 0.1D),
-                    entry(DamageTypes.STALAGMITE, 0.1D),
-                    entry(DamageTypes.TRIDENT, 0.4D));
+    @SuppressWarnings("rawtypes")
+    private static final Map<DamageSource, Double> DAMAGE_SOURCES_FOR_BLEEDING = new HashMap<>();
+    static {
+        DAMAGE_SOURCES_FOR_BLEEDING.put(DamageSource.CACTUS, 0.1D);
+        DAMAGE_SOURCES_FOR_BLEEDING.put(DamageSource.SWEET_BERRY_BUSH, 0.1D);
+    }
 
     @SuppressWarnings("rawtypes")
-    private static final Map<EntityType,
-            Double> ENTITY_TYPES_FOR_BLEEDING = Map.ofEntries(entry(EntityType.ZOMBIE, 0.3D),
-                    entry(EntityType.ZOMBIE_VILLAGER, 0.3D),
-                    entry(EntityType.ZOGLIN, 0.3D),
-                    entry(EntityType.CAVE_SPIDER, 0.2D),
-                    entry(EntityType.SPIDER, 0.2D),
-                    entry(EntityType.ENDERMAN, 0.2D),
-                    entry(EntityType.PIGLIN, 0.2D),
-                    entry(EntityType.PIGLIN_BRUTE, 0.2D),
-                    entry(EntityType.ZOMBIFIED_PIGLIN, 0.2D),
-                    entry(EntityType.PILLAGER, 0.2D),
-                    entry(EntityType.POLAR_BEAR, 0.2D),
-                    entry(EntityType.WITHER_SKELETON, 0.2D)
-
-    );
+    private static final Map<EntityType, Double> ENTITY_TYPES_FOR_BLEEDING = new HashMap<>();
+    static {
+        ENTITY_TYPES_FOR_BLEEDING.put(EntityType.SKELETON, 0.4D);
+        ENTITY_TYPES_FOR_BLEEDING.put(EntityType.ZOMBIE, 0.3D);
+        ENTITY_TYPES_FOR_BLEEDING.put(EntityType.ZOMBIE_VILLAGER, 0.3D);
+        ENTITY_TYPES_FOR_BLEEDING.put(EntityType.ZOGLIN, 0.3D);
+        ENTITY_TYPES_FOR_BLEEDING.put(EntityType.CAVE_SPIDER, 0.2D);
+        ENTITY_TYPES_FOR_BLEEDING.put(EntityType.SPIDER, 0.2D);
+        ENTITY_TYPES_FOR_BLEEDING.put(EntityType.ENDERMAN, 0.2D);
+        ENTITY_TYPES_FOR_BLEEDING.put(EntityType.PIGLIN, 0.2D);
+        ENTITY_TYPES_FOR_BLEEDING.put(EntityType.PIGLIN_BRUTE, 0.2D);
+        ENTITY_TYPES_FOR_BLEEDING.put(EntityType.ZOMBIFIED_PIGLIN, 0.2D);
+        ENTITY_TYPES_FOR_BLEEDING.put(EntityType.PILLAGER, 0.2D);
+        ENTITY_TYPES_FOR_BLEEDING.put(EntityType.POLAR_BEAR, 0.2D);
+        ENTITY_TYPES_FOR_BLEEDING.put(EntityType.WITHER_SKELETON, 0.2D);
+    }
 
     @SuppressWarnings("rawtypes")
-    private static final Map<EntityType,
-            Double> ENTITY_TYPES_FOR_HARD_BLEEDING = Map.ofEntries(entry(EntityType.ZOMBIE, 0.1D),
-                    entry(EntityType.CAVE_SPIDER, 0.1D),
-                    entry(EntityType.SPIDER, 0.1D),
-                    entry(EntityType.PIGLIN, 0.1D),
-                    entry(EntityType.PIGLIN_BRUTE, 0.1D),
-                    entry(EntityType.ZOMBIFIED_PIGLIN, 0.1D),
-                    entry(EntityType.PILLAGER, 0.1D),
-                    entry(EntityType.POLAR_BEAR, 0.2D),
-                    entry(EntityType.WITHER_SKELETON, 0.2D));
+    private static final Map<EntityType, Double> ENTITY_TYPES_FOR_HARD_BLEEDING = new HashMap<>();
+    static {
+        ENTITY_TYPES_FOR_BLEEDING.put(EntityType.SKELETON, 0.1D);
+        ENTITY_TYPES_FOR_HARD_BLEEDING.put(EntityType.ZOMBIE, 0.1D);
+        ENTITY_TYPES_FOR_HARD_BLEEDING.put(EntityType.CAVE_SPIDER, 0.1D);
+        ENTITY_TYPES_FOR_HARD_BLEEDING.put(EntityType.SPIDER, 0.1D);
+        ENTITY_TYPES_FOR_HARD_BLEEDING.put(EntityType.PIGLIN, 0.1D);
+        ENTITY_TYPES_FOR_HARD_BLEEDING.put(EntityType.PIGLIN_BRUTE, 0.1D);
+        ENTITY_TYPES_FOR_HARD_BLEEDING.put(EntityType.ZOMBIFIED_PIGLIN, 0.1D);
+        ENTITY_TYPES_FOR_HARD_BLEEDING.put(EntityType.PILLAGER, 0.1D);
+        ENTITY_TYPES_FOR_HARD_BLEEDING.put(EntityType.POLAR_BEAR, 0.2D);
+        ENTITY_TYPES_FOR_HARD_BLEEDING.put(EntityType.WITHER_SKELETON, 0.2D);
+    }
 
     @SubscribeEvent
     static void onPlayerTakesDamage(LivingDamageEvent event) {
         final DamageSource source = event.getSource();
         final AtomicBoolean atomicBoolean = new AtomicBoolean(false);
-        DAMAGE_TYPES_FOR_BLEEDING.keySet()
-                .stream()
-                .filter(source::is)
-                .findFirst()
-                .ifPresent(type -> atomicBoolean.set(applyEffect(event.getEntity(),
-                        DAMAGE_TYPES_FOR_BLEEDING.get(type),
-                        Effects.BLEEDING.get(),
-                        source)));
-        if (atomicBoolean.get()) {
+        Entity entity = event.getEntity();
+        if (!(entity instanceof LivingEntity)) {
             return;
         }
-
-        DAMAGE_TYPES_FOR_HARD_BLEEDING.keySet()
+        DAMAGE_SOURCES_FOR_BLEEDING.keySet()
                 .stream()
-                .filter(source::is)
+                .filter(source::equals)
                 .findFirst()
-                .ifPresent(type -> atomicBoolean.set(applyEffect(event.getEntity(),
-                        DAMAGE_TYPES_FOR_HARD_BLEEDING.get(type),
-                        Effects.HARD_BLEEDING.get(),
-                        source)));
+                .ifPresent(type -> atomicBoolean.set(applyEffect((LivingEntity) entity,
+                        DAMAGE_SOURCES_FOR_BLEEDING.get(type),
+                        ModEffects.BLEEDING.get())));
         if (atomicBoolean.get()) {
             return;
         }
@@ -104,20 +85,20 @@ public class BleedingEventHandler {
         }
         Optional.ofNullable(ENTITY_TYPES_FOR_BLEEDING.get(damageSourceEntity.getType()))
                 .ifPresent(bleedingChance -> atomicBoolean
-                        .set(applyEffect(event.getEntity(), bleedingChance, Effects.BLEEDING.get(), source)));
+                        .set(applyEffect((LivingEntity) entity, bleedingChance, ModEffects.BLEEDING.get())));
         if (atomicBoolean.get()) {
             return;
         }
 
         Optional.ofNullable(ENTITY_TYPES_FOR_HARD_BLEEDING.get(damageSourceEntity.getType()))
                 .ifPresent(bleedingChance -> atomicBoolean
-                        .set(applyEffect(event.getEntity(), bleedingChance, Effects.HARD_BLEEDING.get(), source)));
+                        .set(applyEffect((LivingEntity) entity, bleedingChance, ModEffects.HARD_BLEEDING.get())));
     }
 
     private static boolean
-            applyEffect(LivingEntity entity, Double bleedingChance, MobEffect effect, DamageSource source) {
-        if (entity.level().getRandom().nextFloat() < bleedingChance) {
-            entity.addEffect(new MobEffectInstance(effect, MobEffectInstance.INFINITE_DURATION), source.getEntity());
+            applyEffect(LivingEntity entity, Double bleedingChance, Effect effect) {
+        if (entity.level.getRandom().nextFloat() < bleedingChance) {
+            entity.addEffect(new EffectInstance(effect, -1));
             return true;
         }
         return false;

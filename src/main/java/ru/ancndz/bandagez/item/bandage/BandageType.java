@@ -1,7 +1,10 @@
 package ru.ancndz.bandagez.item.bandage;
 
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.Effect;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.fml.RegistryObject;
 import ru.ancndz.bandagez.item.EffectProvider;
 import ru.ancndz.bandagez.item.RemovingEffects;
 import ru.ancndz.bandagez.item.SupplyCustomTooltip;
@@ -12,16 +15,16 @@ public interface BandageType extends RemovingEffects, EffectProvider, SupplyCust
 
     int getUseDuration();
 
-    boolean canUse(LivingEntity livingEntity);
+    boolean canUse(PlayerEntity livingEntity);
 
     String getName();
 
     @Override
-    default void addCustomTooltip(List<Component> components) {
-        components.add(Component.translatable("bandagez.tooltip.removing_effects"));
-        for (var effect : getRemovingEffects()) {
-            components.add(Component.translatable(effect.getDescriptionId())
-                    .withStyle(effect.getCategory().getTooltipFormatting()));
+    default void addCustomTooltip(List<ITextComponent> components) {
+        components.add(new TranslationTextComponent("bandagez.tooltip.removing_effects"));
+        for (RegistryObject<Effect> effect : getRemovingEffects()) {
+            components.add(new TranslationTextComponent(effect.get().getDescriptionId())
+                    .withStyle(effect.get().getCategory().getTooltipFormatting()));
         }
     }
 }

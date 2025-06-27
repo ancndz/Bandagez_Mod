@@ -1,6 +1,8 @@
 package ru.ancndz.bandagez.mod;
 
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class BandagezModConfig {
@@ -25,5 +27,9 @@ public class BandagezModConfig {
                 new ForgeConfigSpec.Builder().configure(BandagezModConfig.Client::new);
         clientSpec = specPair.getRight();
         CLIENT = specPair.getLeft();
+    }
+
+    public static void init() {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, clientSpec);
     }
 }

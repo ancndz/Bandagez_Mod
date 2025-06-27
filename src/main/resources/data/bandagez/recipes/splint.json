@@ -1,6 +1,5 @@
 {
     "type": "minecraft:crafting_shapeless",
-    "category": "equipment",
     "ingredients": [
         {
             "tag": "minecraft:planks"
@@ -16,9 +15,7 @@
         }
     ],
     "result": {
-        "item": "bandagez:splint",
-        "count": 1,
-        "data": 0
+        "item": "bandagez:splint"
     },
     "show_notification": true
 }

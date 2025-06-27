@@ -10,8 +10,8 @@
   "item.bandagez.stimulant_band": "Stimulant Bandage",
   "item.bandagez.splint": "Splint",
 
-  "bandagez.bandages_tab": "Bandages",
-  "bandagez.tooltip.healing": "Heals: {0}",
+  "itemGroup.bandagez": "Bandages",
+  "bandagez.tooltip.healing": "Heals: %s",
   "bandagez.tooltip.removing_effects": "Removes:",
 
   "effect.bandagez.bleeding": "Bleeding",

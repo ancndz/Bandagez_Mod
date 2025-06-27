@@ -1,7 +1,7 @@
 package ru.ancndz.bandagez.item;
 
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.potion.EffectInstance;
 
 public interface Healing extends EffectProvider {
 
@@ -11,7 +11,7 @@ public interface Healing extends EffectProvider {
 
     float getMaxHeal();
 
-    MobEffectInstance getHealingInstance();
+    EffectInstance getHealingInstance();
 
     @Override
     default void apply(LivingEntity livingEntity) {

@@ -1,23 +1,23 @@
 package ru.ancndz.bandagez.effect;
 
 import static ru.ancndz.bandagez.effect.EffectParticlesHelper.addParticles;
-import static ru.ancndz.bandagez.effect.Effects.FRESH_BANDAGE_EFFECT_NAME;
+import static ru.ancndz.bandagez.effect.ModEffects.FRESH_BANDAGE_EFFECT_NAME;
 
-import net.minecraft.Util;
-import net.minecraft.core.particles.BlockParticleOption;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.block.Blocks;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.particles.BlockParticleData;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.EffectType;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
 import ru.ancndz.bandagez.mod.BandagezMod;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class FreshBandageMobEffect extends MobEffect implements EffectPriority {
+public class FreshBandageMobEffect extends Effect implements EffectPriority {
 
 	public static final int TICK_RATE = 40;
 
@@ -26,17 +26,17 @@ public class FreshBandageMobEffect extends MobEffect implements EffectPriority {
     @Nullable
     private String descriptionId;
 
-    public FreshBandageMobEffect(MobEffectCategory category, int color) {
+    public FreshBandageMobEffect(EffectType category, int color) {
 		super(category, color);
     }
 
     @Override
     public void applyEffectTick(LivingEntity entity, int food) {
         if (entity.isSprinting() && entity.getRandom().nextFloat() < CHANCE_TO_BLEED) {
-			entity.addEffect(new MobEffectInstance(Effects.BLEEDING.get(), 400, 0, false, false, true));
-			entity.removeEffect(Effects.FRESH_BANDAGE.get());
+            entity.addEffect(new EffectInstance(ModEffects.BLEEDING.get(), 400, 0, false, false, true));
+			entity.removeEffect(ModEffects.FRESH_BANDAGE.get());
         }
-        addParticles(entity, new BlockParticleOption(ParticleTypes.FALLING_DUST, Blocks.COBWEB.defaultBlockState()));
+        addParticles(entity, new BlockParticleData(ParticleTypes.FALLING_DUST, Blocks.COBWEB.defaultBlockState()));
     }
 
     @Override
@@ -46,10 +46,10 @@ public class FreshBandageMobEffect extends MobEffect implements EffectPriority {
     }
 
     @Override
-    protected @NotNull String getOrCreateDescriptionId() {
+    protected @Nonnull String getOrCreateDescriptionId() {
         if (this.descriptionId == null) {
             this.descriptionId = Util.makeDescriptionId("effect",
-                    ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, FRESH_BANDAGE_EFFECT_NAME));
+                    new ResourceLocation(BandagezMod.MODID, FRESH_BANDAGE_EFFECT_NAME));
         }
         return this.descriptionId;
     }

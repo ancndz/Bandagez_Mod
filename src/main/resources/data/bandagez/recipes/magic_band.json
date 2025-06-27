@@ -1,6 +1,5 @@
 {
     "type": "minecraft:crafting_shaped",
-    "category": "equipment",
     "key": {
         "X": {
             "tag": "minecraft:wool"
@@ -21,9 +20,7 @@
         "Y Y"
     ],
     "result": {
-        "item": "bandagez:magic_band",
-        "count": 1,
-        "data": 0
+        "item": "bandagez:magic_band"
     },
     "show_notification": true
 }

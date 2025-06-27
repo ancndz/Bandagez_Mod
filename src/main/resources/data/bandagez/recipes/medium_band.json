@@ -1,6 +1,5 @@
 {
     "type": "minecraft:crafting_shaped",
-    "category": "equipment",
     "key": {
         "X": {
             "tag": "minecraft:wool"
@@ -18,9 +17,7 @@
         " Y "
     ],
     "result": {
-        "item": "bandagez:medium_band",
-        "count": 1,
-        "data": 0
+        "item": "bandagez:medium_band"
     },
     "show_notification": true
 }

@@ -1,6 +1,7 @@
 package ru.ancndz.bandagez.item;
 
-import net.minecraft.world.entity.LivingEntity;
+
+import net.minecraft.entity.LivingEntity;
 
 public interface EffectProvider {
 
