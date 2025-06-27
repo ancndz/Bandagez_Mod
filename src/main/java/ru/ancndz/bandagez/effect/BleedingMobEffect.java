@@ -1,7 +1,7 @@
 package ru.ancndz.bandagez.effect;
 
-import static ru.ancndz.bandagez.effect.Effects.BLEEDING_EFFECT_NAME;
-import static ru.ancndz.bandagez.effect.Effects.HARD_BLEEDING_EFFECT_NAME;
+import static ru.ancndz.bandagez.effect.ModMobEffects.BLEEDING_EFFECT_NAME;
+import static ru.ancndz.bandagez.effect.ModMobEffects.HARD_BLEEDING_EFFECT_NAME;
 
 import net.minecraft.Util;
 import net.minecraft.core.particles.ParticleOptions;

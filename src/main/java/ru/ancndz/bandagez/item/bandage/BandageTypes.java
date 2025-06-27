@@ -1,11 +1,13 @@
 package ru.ancndz.bandagez.item.bandage;
 
-import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import ru.ancndz.bandagez.effect.Effects;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+import ru.ancndz.bandagez.effect.ModMobEffects;
 import ru.ancndz.bandagez.item.RemovingEffects;
 
 import java.util.Collections;
@@ -16,21 +18,28 @@ import java.util.function.Predicate;
 
 public enum BandageTypes implements BandageType {
 
-    EMPTY(20, Collections.singletonList(Effects.BLEEDING.getHolder().orElseThrow())),
+    EMPTY(20, Collections.singletonList(ModMobEffects.BLEEDING)),
 
-    HEMOSTATIC(40, BandageTypes::handleHardBleeding,
-            Collections.singletonList(Effects.HARD_BLEEDING.getHolder().orElseThrow())),
+    HEMOSTATIC(40, BandageTypes::handleHardBleeding, Collections.singletonList(ModMobEffects.HARD_BLEEDING)),
 
-    ANTI_BIOTIC(50, List.of(MobEffects.POISON)),
+    ANTI_BIOTIC(50,
+            List.of(RegistryObject.create(ResourceLocation.parse(MobEffects.POISON.getRegisteredName()),
+                    ForgeRegistries.MOB_EFFECTS))),
 
-    MAGIC(50, List.of(MobEffects.WITHER)),
+    MAGIC(50,
+            List.of(RegistryObject.create(ResourceLocation.parse(MobEffects.WITHER.getRegisteredName()),
+                    ForgeRegistries.MOB_EFFECTS))),
 
-    STIMULANT(50, List.of(MobEffects.DIG_SLOWDOWN, MobEffects.MOVEMENT_SLOWDOWN)),
+    STIMULANT(50,
+            List.of(RegistryObject.create(ResourceLocation.parse(MobEffects.DIG_SLOWDOWN.getRegisteredName()),
+                    ForgeRegistries.MOB_EFFECTS),
+                    RegistryObject.create(ResourceLocation.parse(MobEffects.MOVEMENT_SLOWDOWN.getRegisteredName()),
+                            ForgeRegistries.MOB_EFFECTS))),
 
     ;
 
     private static void handleHardBleeding(LivingEntity livingEntity) {
-        livingEntity.addEffect(new MobEffectInstance(Effects.FRESH_BANDAGE.getHolder().orElseThrow(), 800));
+        livingEntity.addEffect(new MobEffectInstance(ModMobEffects.FRESH_BANDAGE.getHolder().orElseThrow(), 800));
     }
 
     private final int itemUseDuration;
@@ -39,26 +48,28 @@ public enum BandageTypes implements BandageType {
 
     private final Consumer<LivingEntity> applyEffect;
 
-    private final List<Holder<MobEffect>> removingEffects;
+    private final List<RegistryObject<MobEffect>> removingEffects;
 
     BandageTypes(int itemUseDuration,
             Predicate<LivingEntity> canUseItem,
             Consumer<LivingEntity> applyEffect,
-            List<Holder<MobEffect>> removingEffects) {
+            List<RegistryObject<MobEffect>> removingEffects) {
         this.itemUseDuration = itemUseDuration;
         this.canUseItem = canUseItem;
         this.applyEffect = applyEffect;
         this.removingEffects = removingEffects;
     }
 
-    BandageTypes(int itemUseDuration, Consumer<LivingEntity> applyEffect, List<Holder<MobEffect>> removingEffects) {
+    BandageTypes(int itemUseDuration,
+            Consumer<LivingEntity> applyEffect,
+            List<RegistryObject<MobEffect>> removingEffects) {
         this(itemUseDuration,
                 livingEntity -> RemovingEffects.hasAnyOf(livingEntity, removingEffects),
                 applyEffect,
                 removingEffects);
     }
 
-    BandageTypes(int itemUseDuration, List<Holder<MobEffect>> removingEffects) {
+    BandageTypes(int itemUseDuration, List<RegistryObject<MobEffect>> removingEffects) {
         this(itemUseDuration, livingEntity -> {
         }, removingEffects);
     }
@@ -80,7 +91,7 @@ public enum BandageTypes implements BandageType {
     }
 
     @Override
-    public List<Holder<MobEffect>> getRemovingEffects() {
+    public List<RegistryObject<MobEffect>> getRemovingEffects() {
         return removingEffects;
     }
 

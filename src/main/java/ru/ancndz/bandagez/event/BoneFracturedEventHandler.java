@@ -19,7 +19,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
-import ru.ancndz.bandagez.effect.Effects;
+import ru.ancndz.bandagez.effect.ModMobEffects;
 import ru.ancndz.bandagez.mod.BandagezMod;
 
 import java.util.Map;
@@ -44,7 +44,7 @@ public class BoneFracturedEventHandler {
     @SubscribeEvent
     static void onPlayerFall(LivingFallEvent event) {
         final LivingEntity entity = event.getEntity();
-        if (entity.hasEffect(Effects.BONE_FRACTURE_LEG.getHolder().orElseThrow())) {
+        if (entity.hasEffect(ModMobEffects.BONE_FRACTURE_LEG.getHolder().orElseThrow())) {
             event.setDamageMultiplier(event.getDamageMultiplier() + 0.5F);
         }
     }
@@ -57,7 +57,7 @@ public class BoneFracturedEventHandler {
             return;
         }
         if (event.getAmount() > 10F || player.getRandom().nextDouble() < 0.2D) {
-            player.addEffect(new MobEffectInstance(Effects.BONE_FRACTURE_LEG.getHolder()
+            player.addEffect(new MobEffectInstance(ModMobEffects.BONE_FRACTURE_LEG.getHolder()
                     .orElseThrow(), MobEffectInstance.INFINITE_DURATION, 0, false, false, true));
             LOG.debug("LivingEntity {} has broken leg from fall damage", player.getName().getString());
         }
@@ -89,12 +89,12 @@ public class BoneFracturedEventHandler {
         if (entity.level().getRandom().nextFloat() < bleedingChance) {
             if (entity.level().getRandom().nextFloat() < bleedingChance / 2) {
                 entity.addEffect(
-                        new MobEffectInstance(Effects.BONE_FRACTURE_ARM_MAIN.getHolder().orElseThrow(),
+                        new MobEffectInstance(ModMobEffects.BONE_FRACTURE_ARM_MAIN.getHolder().orElseThrow(),
                                 MobEffectInstance.INFINITE_DURATION),
                         source.getEntity());
             } else {
                 entity.addEffect(
-                        new MobEffectInstance(Effects.BONE_FRACTURE_ARM.getHolder().orElseThrow(),
+                        new MobEffectInstance(ModMobEffects.BONE_FRACTURE_ARM.getHolder().orElseThrow(),
                                 MobEffectInstance.INFINITE_DURATION),
                         source.getEntity());
             }
@@ -106,7 +106,7 @@ public class BoneFracturedEventHandler {
     @SubscribeEvent
     static boolean onPlayerUse(PlayerInteractEvent.RightClickBlock event) {
         if (event.getHand().equals(InteractionHand.OFF_HAND)
-                && event.getEntity().hasEffect(Effects.BONE_FRACTURE_ARM.getHolder().orElseThrow())) {
+                && event.getEntity().hasEffect(ModMobEffects.BONE_FRACTURE_ARM.getHolder().orElseThrow())) {
             LOG.debug("Player {} has broken arm, canceling right-click action",
                     event.getEntity().getName().getString());
             return true;

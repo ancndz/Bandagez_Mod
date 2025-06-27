@@ -1,6 +1,6 @@
 package ru.ancndz.bandagez.effect;
 
-import static ru.ancndz.bandagez.effect.Effects.FRESH_BANDAGE_EFFECT_NAME;
+import static ru.ancndz.bandagez.effect.ModMobEffects.FRESH_BANDAGE_EFFECT_NAME;
 
 import net.minecraft.Util;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -32,8 +32,8 @@ public class FreshBandageMobEffect extends MobEffect implements EffectPriority {
     @Override
     public boolean applyEffectTick(LivingEntity entity, int food) {
         if (entity.isSprinting() && entity.getRandom().nextFloat() < CHANCE_TO_BLEED) {
-			entity.addEffect(new MobEffectInstance(Effects.BLEEDING.getHolder().orElseThrow(), 400));
-			entity.removeEffect(Effects.FRESH_BANDAGE.getHolder().orElseThrow());
+            entity.addEffect(new MobEffectInstance(ModMobEffects.BLEEDING.getHolder().orElseThrow(), 400));
+            entity.removeEffect(ModMobEffects.FRESH_BANDAGE.getHolder().orElseThrow());
         }
         return true;
     }
