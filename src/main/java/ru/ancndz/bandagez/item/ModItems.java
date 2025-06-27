@@ -1,11 +1,12 @@
 package ru.ancndz.bandagez.item;
 
-import static ru.ancndz.bandagez.mod.BandagezMod.ITEMS;
-
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import ru.ancndz.bandagez.item.bandage.BandageItem;
 import ru.ancndz.bandagez.item.bandage.BandageTypes;
@@ -13,7 +14,13 @@ import ru.ancndz.bandagez.item.bandage.HealingBandageTypes;
 import ru.ancndz.bandagez.item.splint.SplintItem;
 import ru.ancndz.bandagez.mod.BandagezMod;
 
-public class Items {
+public class ModItems {
+
+    public static final DeferredRegister<Item> ITEMS =
+            DeferredRegister.create(ForgeRegistries.ITEMS, BandagezMod.MODID);
+
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
+            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, BandagezMod.MODID);
 
     public static final String EMPTY_BAND_NAME = "empty_band";
 
@@ -35,11 +42,8 @@ public class Items {
 
     public static final String SPLINT_NAME = "splint";
 
-    public static void init() {
-    }
-
-    public static final RegistryObject<Item> FLORAL_STRING_ITEM = ITEMS.register(FLORAL_STRING_NAME,
-            () -> new Item(new Item.Properties().setId(ITEMS.key(FLORAL_STRING_NAME))));
+    public static final RegistryObject<Item> FLORAL_STRING_ITEM =
+            ITEMS.register(FLORAL_STRING_NAME, () -> new Item(new Item.Properties().setId(ITEMS.key(FLORAL_STRING_NAME))));
 
     public static final RegistryObject<Item> EMPTY_BAND_ITEM = ITEMS.register(EMPTY_BAND_NAME,
             () -> new BandageItem<>(BandageTypes.EMPTY,
@@ -77,7 +81,7 @@ public class Items {
             () -> new SplintItem(new Item.Properties().stacksTo(2).setId(ITEMS.key(SPLINT_NAME))));
 
     public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB =
-            BandagezMod.CREATIVE_MODE_TABS.register("bandages_tab",
+            CREATIVE_MODE_TABS.register("bandages_tab",
                     () -> CreativeModeTab.builder()
                             .title(Component.translatable("bandagez.bandages_tab"))
                             .withTabsBefore(CreativeModeTabs.FOOD_AND_DRINKS)
@@ -96,6 +100,6 @@ public class Items {
                             })
                             .build());
 
-    private Items() {
+    private ModItems() {
     }
 }

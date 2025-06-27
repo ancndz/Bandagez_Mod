@@ -15,7 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import ru.ancndz.bandagez.effect.Effects;
+import ru.ancndz.bandagez.effect.ModMobEffects;
 import ru.ancndz.bandagez.mod.BandagezMod;
 
 import java.util.Map;
@@ -81,7 +81,7 @@ public class BleedingEventHandler {
                 .findFirst()
                 .ifPresent(type -> atomicBoolean.set(applyEffect(event.getEntity(),
                         DAMAGE_TYPES_FOR_BLEEDING.get(type),
-                        Effects.BLEEDING.getHolder().orElseThrow(),
+                        ModMobEffects.BLEEDING.getHolder().orElseThrow(),
                         source)));
         if (atomicBoolean.get()) {
             return;
@@ -93,7 +93,7 @@ public class BleedingEventHandler {
                 .findFirst()
                 .ifPresent(type -> atomicBoolean.set(applyEffect(event.getEntity(),
                         DAMAGE_TYPES_FOR_HARD_BLEEDING.get(type),
-                        Effects.HARD_BLEEDING.getHolder().orElseThrow(),
+                        ModMobEffects.HARD_BLEEDING.getHolder().orElseThrow(),
                         source)));
         if (atomicBoolean.get()) {
             return;
@@ -106,7 +106,7 @@ public class BleedingEventHandler {
         Optional.ofNullable(ENTITY_TYPES_FOR_BLEEDING.get(damageSourceEntity.getType()))
                 .ifPresent(bleedingChance -> atomicBoolean.set(applyEffect(event.getEntity(),
                         bleedingChance,
-                        Effects.BLEEDING.getHolder().orElseThrow(),
+                        ModMobEffects.BLEEDING.getHolder().orElseThrow(),
                         source)));
         if (atomicBoolean.get()) {
             return;
@@ -115,7 +115,7 @@ public class BleedingEventHandler {
         Optional.ofNullable(ENTITY_TYPES_FOR_HARD_BLEEDING.get(damageSourceEntity.getType()))
                 .ifPresent(bleedingChance -> atomicBoolean.set(applyEffect(event.getEntity(),
                         bleedingChance,
-                        Effects.HARD_BLEEDING.getHolder().orElseThrow(),
+                        ModMobEffects.HARD_BLEEDING.getHolder().orElseThrow(),
                         source)));
     }
 

@@ -1,9 +1,15 @@
 package ru.ancndz.bandagez.mod;
 
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class BandagezModConfig {
+
+    public static void init(FMLJavaModLoadingContext context) {
+        context.registerConfig(ModConfig.Type.CLIENT, BandagezModConfig.clientSpec);
+    }
 
     public static final class Client {
 
