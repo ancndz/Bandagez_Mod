@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "equipment",
+    "ingredients": [
+        [
+            "minecraft:string",
+            "bandagez:floral_string"
+        ],
+        [
+            "minecraft:string",
+            "bandagez:floral_string"
+        ],
+        "#minecraft:wool"
+    ],
+    "result": {
+        "id": "bandagez:empty_band",
+        "count": 1,
+        "data": 0
+    },
+    "show_notification": true
+}

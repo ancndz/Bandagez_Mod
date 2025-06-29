@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "equipment",
+    "ingredients": [
+        {
+            "tag": "forge:string"
+        },
+        {
+            "tag": "forge:string"
+        },
+        {
+            "tag": "minecraft:wool"
+        },
+        {
+            "item": "minecraft:sugar"
+        }
+    ],
+    "result": {
+        "id": "bandagez:stimulant_band",
+        "count": 1,
+        "data": 0
+    },
+    "show_notification": true
+}

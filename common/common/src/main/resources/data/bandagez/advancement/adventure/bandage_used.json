@@ -1,0 +1,33 @@
+{
+  "parent": "bandagez:adventure/no_food_regen",
+  "criteria": {
+    "bandage_used": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": "#bandagez:bandage"
+        }
+      }
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "bandagez.advancements.adventure.bandage_used.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "id": "bandagez:small_band"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "bandagez.advancements.adventure.bandage_used.title"
+    }
+  },
+  "requirements": [
+    [
+      "bandage_used"
+    ]
+  ]
+}

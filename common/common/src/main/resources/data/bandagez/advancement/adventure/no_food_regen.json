@@ -1,0 +1,28 @@
+{
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "take_damage": {
+      "trigger": "minecraft:entity_hurt_player"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "bandagez.advancements.adventure.no_food_regen.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "id": "bandagez:empty_band"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "bandagez.advancements.adventure.no_food_regen.title"
+    }
+  },
+  "requirements": [
+    [
+      "take_damage"
+    ]
+  ]
+}

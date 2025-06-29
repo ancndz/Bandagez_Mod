@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "key": {
+        "X": {
+            "tag": "minecraft:wool"
+        },
+        "Y": {
+            "tag": "forge:string"
+        },
+        "Z": {
+            "tag": "forge:ingots/gold"
+        },
+        "A": {
+            "item": "minecraft:lapis_lazuli"
+        }
+    },
+    "pattern": [
+        "YAY",
+        "XZX",
+        "YAY"
+    ],
+    "result": {
+        "id": "bandagez:large_band",
+        "count": 1,
+        "data": 0
+    },
+    "show_notification": true
+}
