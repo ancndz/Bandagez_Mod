@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "${mod_authors}"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "${license}",
+  "icon": "${mod_id}.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "ru.ancndz.bandagez.FabricBandagez"
+    ],
+    "fabric-datagen": [
+      "ru.ancndz.bandagez.loot.BandagezFabricDataGenerator"
+    ]
+  },
+  "mixins": [
+  ],
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}",
+    "java": ">=${java_version}"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
