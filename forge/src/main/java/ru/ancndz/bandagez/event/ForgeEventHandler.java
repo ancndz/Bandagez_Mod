@@ -1,16 +1,16 @@
-package ru.ancndz.bandagez;
+package ru.ancndz.bandagez.event;
 
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
-import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
-import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import ru.ancndz.bandagez.event.BleedingEventHandler;
-import ru.ancndz.bandagez.event.BoneFracturedEventHandler;
-import ru.ancndz.bandagez.event.WorldEventHandler;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import ru.ancndz.bandagez.BandagezMod;
 
-public class NeoForgeEventHandler {
+@Mod.EventBusSubscriber(modid = BandagezMod.MODID)
+public class ForgeEventHandler {
 
     @SubscribeEvent
     public static void onPlayerFall(LivingFallEvent event) {
@@ -19,12 +19,8 @@ public class NeoForgeEventHandler {
     }
 
     @SubscribeEvent
-    public static void onPlayerTakesFallDamage(LivingDamageEvent.Post event) {
-        BoneFracturedEventHandler.onPlayerTakesFallDamage(event.getSource(), event.getEntity(), event.getNewDamage());
-    }
-
-    @SubscribeEvent
-    public static void onPlayerTakesDamage(LivingDamageEvent.Pre event) {
+    public static void onPlayerTakesFallDamage(LivingDamageEvent event) {
+        BoneFracturedEventHandler.onPlayerTakesFallDamage(event.getSource(), event.getEntity(), event.getAmount());
         BleedingEventHandler.onPlayerTakesDamage(event.getSource(), event.getEntity());
         BoneFracturedEventHandler.onPlayerTakesDamage(event.getSource(), event.getEntity());
     }

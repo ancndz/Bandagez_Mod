@@ -5,6 +5,7 @@ import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import ru.ancndz.bandagez.loot.GrassDropModifier;
 
 @Mod(BandagezMod.MODID)
 public class BandagezForge {

@@ -1,4 +1,4 @@
-package ru.ancndz.bandagez;
+package ru.ancndz.bandagez.event;
 
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
@@ -6,9 +6,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
-import ru.ancndz.bandagez.event.BleedingEventHandler;
-import ru.ancndz.bandagez.event.BoneFracturedEventHandler;
-import ru.ancndz.bandagez.event.WorldEventHandler;
 
 public class FabricEventHandler {
 

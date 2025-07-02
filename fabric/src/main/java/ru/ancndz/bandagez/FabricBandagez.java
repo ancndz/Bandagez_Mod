@@ -2,6 +2,7 @@ package ru.ancndz.bandagez;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
+import ru.ancndz.bandagez.event.FabricEventHandler;
 
 public class FabricBandagez implements ModInitializer {
 

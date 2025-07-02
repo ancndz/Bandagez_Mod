@@ -6,6 +6,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
+import ru.ancndz.bandagez.loot.GrassDropModifier;
 
 @Mod(BandagezMod.MODID)
 public class BandagezNeoForge {

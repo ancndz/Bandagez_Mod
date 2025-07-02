@@ -19,7 +19,7 @@
       "ru.ancndz.bandagez.FabricBandagez"
     ],
     "fabric-datagen": [
-      "ru.ancndz.bandagez.BandagezFabricDataGenerator"
+      "ru.ancndz.bandagez.loot.BandagezFabricDataGenerator"
     ]
   },
   "mixins": [
