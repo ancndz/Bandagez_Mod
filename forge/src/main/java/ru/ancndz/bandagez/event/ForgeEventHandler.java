@@ -3,6 +3,7 @@ package ru.ancndz.bandagez.event;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
@@ -40,4 +41,8 @@ public class ForgeEventHandler {
         WorldEventHandler.onItemTooltipEvent(event.getItemStack(), event.getToolTip());
     }
 
+    @SubscribeEvent
+    public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        WorldEventHandler.onPlayerLoggedIn(event.getEntity());
+    }
 }

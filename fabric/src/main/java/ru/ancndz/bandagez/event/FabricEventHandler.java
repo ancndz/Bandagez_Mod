@@ -2,6 +2,7 @@ package ru.ancndz.bandagez.event;
 
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
@@ -29,6 +30,8 @@ public class FabricEventHandler {
 
         ItemTooltipCallback.EVENT.register((itemStack, tooltipContext, tooltipFlag, list) -> WorldEventHandler
                 .onItemTooltipEvent(itemStack, list));
+
+        ServerPlayerEvents.JOIN.register(WorldEventHandler::onPlayerLoggedIn);
 
         ServerLifecycleEvents.SERVER_STARTED.register(WorldEventHandler::onServerStarted);
     }
