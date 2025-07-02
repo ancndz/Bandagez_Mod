@@ -2,6 +2,7 @@ package ru.ancndz.bandagez;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.ancndz.bandagez.config.ModConfiguration;
 import ru.ancndz.bandagez.effect.ModMobEffects;
 import ru.ancndz.bandagez.item.ModItems;
 
@@ -17,7 +18,7 @@ public class BandagezMod {
     }
 
     public static void onLoadComplete() {
-        BandagezMod.LOG.info("showParticles: {}", ConfigHolder.getConfig().showParticles());
+        BandagezMod.LOG.info("showParticles: {}", ModConfiguration.getClientConfig().getShowParticles());
     }
 
 }
