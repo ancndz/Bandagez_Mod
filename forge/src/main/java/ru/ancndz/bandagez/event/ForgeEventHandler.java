@@ -4,7 +4,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import ru.ancndz.bandagez.BandagezMod;
@@ -31,8 +31,8 @@ public class ForgeEventHandler {
     }
 
     @SubscribeEvent
-    public static void onServerStarting(ServerStartingEvent event) {
-        WorldEventHandler.onServerStarting(event.getServer());
+    public static void onServerStarted(ServerStartedEvent event) {
+        WorldEventHandler.onServerStarted(event.getServer());
     }
 
     @SubscribeEvent

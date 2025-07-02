@@ -24,6 +24,15 @@ loom {
         defaultRefmapName.set("${mod_id}.refmap.json")
     }
     runs {
+        datagenClient {
+            client()
+            setConfigName("Data Generation")
+            vmArg("-Dfabric-api.datagen")
+            vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
+            vmArg("-Dfabric-api.datagen.modid=${mod_id}")
+
+            runDir("build/datagen")
+        }
         client {
             client()
             setConfigName('Fabric Client')
@@ -35,6 +44,15 @@ loom {
             setConfigName('Fabric Server')
             ideConfigGenerated(true)
             runDir('runs/server')
+        }
+    }
+}
+sourceSets {
+    main {
+        resources {
+            srcDirs += [
+                    'src/main/generated'
+            ]
         }
     }
 }

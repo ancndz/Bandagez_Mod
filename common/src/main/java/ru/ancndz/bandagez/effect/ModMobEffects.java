@@ -9,6 +9,8 @@ import ru.ancndz.bandagez.registration.RegistryObject;
 
 public class ModMobEffects {
 
+    public static void init() {
+    }
     /**
      * The provider for items
      */

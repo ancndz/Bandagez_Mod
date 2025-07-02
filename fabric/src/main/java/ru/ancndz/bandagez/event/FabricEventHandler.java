@@ -28,7 +28,7 @@ public class FabricEventHandler {
         ItemTooltipCallback.EVENT.register((itemStack, tooltipContext, tooltipFlag, list) -> WorldEventHandler
                 .onItemTooltipEvent(itemStack, list));
 
-        ServerLifecycleEvents.SERVER_STARTING.register(WorldEventHandler::onServerStarting);
+        ServerLifecycleEvents.SERVER_STARTED.register(WorldEventHandler::onServerStarted);
     }
 
 }
