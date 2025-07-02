@@ -66,7 +66,7 @@ public interface RegistrationProvider<T> {
     }
 
     default ResourceKey<T> key(String path) {
-        return ResourceKey.create(getRegistryKey(), ResourceLocation.fromNamespaceAndPath(getModId(), path));
+        return ResourceKey.create(getRegistryKey(), ResourceLocation.tryBuild(getModId(), path));
     }
 
     default ResourceKey<T> key(ResourceLocation resourceLocation) {

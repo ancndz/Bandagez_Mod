@@ -6,23 +6,21 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.minecraft.world.InteractionResultHolder;
 
 public class FabricEventHandler {
 
     public static void init() {
         UseItemCallback.EVENT
-                .register((player, world, hand) -> BoneFracturedEventHandler.onPlayerUseWithResult(hand, player));
+            .register((player, world, hand) -> new InteractionResultHolder<>(BoneFracturedEventHandler.onPlayerUseWithResult(hand, player), player.getItemInHand(hand)));
         UseBlockCallback.EVENT.register(
                 (player, world, hand, hitResult) -> BoneFracturedEventHandler.onPlayerUseWithResult(hand, player));
         UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> BoneFracturedEventHandler
                 .onPlayerUseWithResult(hand, player));
 
-        ServerLivingEntityEvents.AFTER_DAMAGE.register((livingEntity, damageSource, v, v1, b) -> {
+        ServerLivingEntityEvents.ALLOW_DAMAGE.register((livingEntity, damageSource, v) -> {
             BleedingEventHandler.onPlayerTakesDamage(damageSource, livingEntity);
             BoneFracturedEventHandler.onPlayerTakesDamage(damageSource, livingEntity);
-        });
-
-        ServerLivingEntityEvents.ALLOW_DAMAGE.register((livingEntity, damageSource, v) -> {
             BoneFracturedEventHandler.onPlayerTakesFallDamage(damageSource, livingEntity, v);
             return true;
         });

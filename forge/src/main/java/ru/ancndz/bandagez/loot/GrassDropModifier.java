@@ -13,6 +13,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import ru.ancndz.bandagez.BandagezMod;
+import ru.ancndz.bandagez.item.ModItems;
 
 import java.util.function.Supplier;
 

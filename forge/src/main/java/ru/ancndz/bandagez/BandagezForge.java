@@ -1,7 +1,7 @@
 package ru.ancndz.bandagez;
 
-import net.minecraftforge.eventbus.api.bus.BusGroup;
-import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -11,7 +11,7 @@ import ru.ancndz.bandagez.loot.GrassDropModifier;
 public class BandagezForge {
 
     public BandagezForge(FMLJavaModLoadingContext context) {
-        final BusGroup modEventBus = context.getModBusGroup();
+        final IEventBus modEventBus = context.getModEventBus();
         BandagezMod.init();
         ForgeConfigurationHandler.init(context);
         GrassDropModifier.LOOT_MODIFIERS.register(GrassDropModifier.GRASS_DROP_MODIFIER,

@@ -66,7 +66,7 @@ public class BoneFracturedMobEffect extends MobEffect implements EffectPriority 
                 default -> LEG_FRACTURE_EFFECT_NAME;
             };
             this.descriptionId =
-                    Util.makeDescriptionId("effect", ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, path));
+                    Util.makeDescriptionId("effect", ResourceLocation.tryBuild(BandagezMod.MODID, path));
         }
         return this.descriptionId;
     }

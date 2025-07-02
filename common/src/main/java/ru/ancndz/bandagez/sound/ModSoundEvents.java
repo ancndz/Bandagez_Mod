@@ -17,23 +17,23 @@ public class ModSoundEvents {
 
     public static final RegistryObject<SoundEvent> SMALL_BANDAGE_USE = SOUND_EVENTS
 			.register("item.band.small_bandage_inuse", () -> SoundEvent.createVariableRangeEvent(
-					ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, "item.band.small_bandage_inuse")));
+					ResourceLocation.tryBuild(BandagezMod.MODID, "item.band.small_bandage_inuse")));
 
     public static final RegistryObject<SoundEvent> MEDIUM_BANDAGE_USE = SOUND_EVENTS
 			.register("item.band.medium_bandage_inuse", () -> SoundEvent.createVariableRangeEvent(
-					ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, "item.band.medium_bandage_inuse")));
+					ResourceLocation.tryBuild(BandagezMod.MODID, "item.band.medium_bandage_inuse")));
 
     public static final RegistryObject<SoundEvent> BANDAGE_USE_START = SOUND_EVENTS
 			.register("item.band.bandage_use_start", () -> SoundEvent.createVariableRangeEvent(
-					ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, "item.band.bandage_use_start")));
+					ResourceLocation.tryBuild(BandagezMod.MODID, "item.band.bandage_use_start")));
 
     public static final RegistryObject<SoundEvent> BANDAGE_USE_MID = SOUND_EVENTS
 			.register("item.band.bandage_use_mid", () -> SoundEvent.createVariableRangeEvent(
-					ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, "item.band.bandage_use_mid")));
+					ResourceLocation.tryBuild(BandagezMod.MODID, "item.band.bandage_use_mid")));
 
     public static final RegistryObject<SoundEvent> BANDAGE_USE_END = SOUND_EVENTS
 			.register("item.band.bandage_use_end", () -> SoundEvent.createVariableRangeEvent(
-					ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, "item.band.bandage_use_end")));
+					ResourceLocation.tryBuild(BandagezMod.MODID, "item.band.bandage_use_end")));
 
     private ModSoundEvents() {
 	}

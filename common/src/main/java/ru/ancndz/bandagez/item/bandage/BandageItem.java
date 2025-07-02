@@ -69,7 +69,7 @@ public class BandageItem<T extends BandageType> extends Item implements Typed<T>
                 this.startSoundPlayed = true;
                 worldIn.playSound(null,
                         entityLiving.getOnPos(),
-                        ModSoundEvents.BANDAGE_USE_START,
+                    ModSoundEvents.BANDAGE_USE_START.get(),
                         SoundSource.PLAYERS,
                         0.5F,
                         worldIn.getRandom().nextFloat() * 0.1F + 0.9F);

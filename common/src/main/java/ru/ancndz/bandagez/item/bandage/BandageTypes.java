@@ -21,24 +21,17 @@ public enum BandageTypes implements BandageType {
 
     HEMOSTATIC(40, BandageTypes::handleHardBleeding, Collections.singletonList(ModMobEffects.HARD_BLEEDING)),
 
-    ANTI_BIOTIC(50,
-            List.of(RegistryObject.create(ResourceLocation.parse(MobEffects.POISON.getRegisteredName()),
-                    ForgeRegistries.MOB_EFFECTS))),
+    ANTI_BIOTIC(50, List.of(RegistryObject.of(BuiltInRegistries.MOB_EFFECT, MobEffects.POISON))),
 
-    MAGIC(50,
-            List.of(RegistryObject.create(ResourceLocation.parse(MobEffects.WITHER.getRegisteredName()),
-                    ForgeRegistries.MOB_EFFECTS))),
+    MAGIC(50, List.of(RegistryObject.of(BuiltInRegistries.MOB_EFFECT, MobEffects.WITHER))),
 
-    STIMULANT(50,
-            List.of(RegistryObject.create(ResourceLocation.parse(MobEffects.DIG_SLOWDOWN.getRegisteredName()),
-                    ForgeRegistries.MOB_EFFECTS),
-                    RegistryObject.create(ResourceLocation.parse(MobEffects.MOVEMENT_SLOWDOWN.getRegisteredName()),
-                            ForgeRegistries.MOB_EFFECTS))),
+    STIMULANT(50, List.of(RegistryObject.of(BuiltInRegistries.MOB_EFFECT, MobEffects.DIG_SLOWDOWN),
+        RegistryObject.of(BuiltInRegistries.MOB_EFFECT, MobEffects.MOVEMENT_SLOWDOWN))),
 
     ;
 
     private static void handleHardBleeding(LivingEntity livingEntity) {
-        livingEntity.addEffect(new MobEffectInstance(ModMobEffects.FRESH_BANDAGE.getHolder().orElseThrow(), 800));
+        livingEntity.addEffect(new MobEffectInstance(ModMobEffects.FRESH_BANDAGE.getHolder(), 800));
     }
 
     private final int itemUseDuration;

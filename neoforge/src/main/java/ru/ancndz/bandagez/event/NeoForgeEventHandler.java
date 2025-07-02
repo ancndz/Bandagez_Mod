@@ -16,12 +16,8 @@ public class NeoForgeEventHandler {
     }
 
     @SubscribeEvent
-    public static void onPlayerTakesFallDamage(LivingDamageEvent.Post event) {
-        BoneFracturedEventHandler.onPlayerTakesFallDamage(event.getSource(), event.getEntity(), event.getNewDamage());
-    }
-
-    @SubscribeEvent
-    public static void onPlayerTakesDamage(LivingDamageEvent.Pre event) {
+    public static void onPlayerTakesFallDamage(LivingDamageEvent event) {
+        BoneFracturedEventHandler.onPlayerTakesFallDamage(event.getSource(), event.getEntity(), event.getAmount());
         BleedingEventHandler.onPlayerTakesDamage(event.getSource(), event.getEntity());
         BoneFracturedEventHandler.onPlayerTakesDamage(event.getSource(), event.getEntity());
     }

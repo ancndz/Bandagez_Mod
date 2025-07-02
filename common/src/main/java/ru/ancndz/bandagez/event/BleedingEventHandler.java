@@ -12,17 +12,12 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import ru.ancndz.bandagez.effect.ModMobEffects;
-import ru.ancndz.bandagez.mod.BandagezMod;
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-@Mod.EventBusSubscriber(modid = BandagezMod.MODID)
 public class BleedingEventHandler {
 
     private static final Map<ResourceKey<DamageType>,

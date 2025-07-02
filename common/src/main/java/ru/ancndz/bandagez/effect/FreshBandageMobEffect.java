@@ -45,7 +45,7 @@ public class FreshBandageMobEffect extends MobEffect implements EffectPriority {
     protected @NotNull String getOrCreateDescriptionId() {
         if (this.descriptionId == null) {
             this.descriptionId = Util.makeDescriptionId("effect",
-                    ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, FRESH_BANDAGE_EFFECT_NAME));
+                    ResourceLocation.tryBuild(BandagezMod.MODID, FRESH_BANDAGE_EFFECT_NAME));
         }
         return this.descriptionId;
     }

@@ -53,7 +53,7 @@ public class BleedingMobEffect extends MobEffect implements EffectPriority {
     protected @NotNull String getOrCreateDescriptionId() {
         if (this.descriptionId == null) {
             this.descriptionId = Util.makeDescriptionId("effect",
-                    ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID,
+                    ResourceLocation.tryBuild(BandagezMod.MODID,
                             hard ? HARD_BLEEDING_EFFECT_NAME : BLEEDING_EFFECT_NAME));
         }
         return this.descriptionId;
