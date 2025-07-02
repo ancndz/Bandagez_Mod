@@ -4,6 +4,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
@@ -29,12 +30,17 @@ public class NeoForgeEventHandler {
 
     @SubscribeEvent
     public static void onServerStarting(ServerStartingEvent event) {
-        WorldEventHandler.onServerStarting(event.getServer());
+        WorldEventHandler.onServerStarted(event.getServer());
     }
 
     @SubscribeEvent
     public static void onItemTooltipEvent(ItemTooltipEvent event) {
         WorldEventHandler.onItemTooltipEvent(event.getItemStack(), event.getToolTip());
+    }
+
+    @SubscribeEvent
+    public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        WorldEventHandler.onPlayerLoggedIn(event.getEntity());
     }
 
 }

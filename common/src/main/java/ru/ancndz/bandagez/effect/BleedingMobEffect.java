@@ -4,16 +4,13 @@ import static ru.ancndz.bandagez.effect.ModMobEffects.BLEEDING_EFFECT_NAME;
 import static ru.ancndz.bandagez.effect.ModMobEffects.HARD_BLEEDING_EFFECT_NAME;
 
 import net.minecraft.Util;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 import ru.ancndz.bandagez.BandagezMod;
-import ru.ancndz.bandagez.ConfigHolder;
 
 public class BleedingMobEffect extends MobEffect implements EffectPriority {
 
@@ -38,15 +35,6 @@ public class BleedingMobEffect extends MobEffect implements EffectPriority {
     public boolean shouldApplyEffectTickThisTick(int tick, int amplifier) {
         int j = DAMAGE_INTERVAL >> amplifier;
         return j == 0 || tick % j == 0;
-    }
-
-    @Override
-    public @NotNull ParticleOptions createParticleOptions(@NotNull MobEffectInstance effectInstance) {
-        if (Boolean.TRUE.equals(ConfigHolder.getConfig().showParticles())) {
-            return super.createParticleOptions(effectInstance);
-        } else {
-            return () -> ParticleTypes.EFFECT;
-        }
     }
 
     @Override
