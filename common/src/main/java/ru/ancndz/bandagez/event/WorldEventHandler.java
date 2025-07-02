@@ -11,7 +11,7 @@ import java.util.List;
 
 public class WorldEventHandler {
 
-    public static void onServerStarting(MinecraftServer server) {
+    public static void onServerStarted(MinecraftServer server) {
         server.getGameRules().getRule(GameRules.RULE_NATURAL_REGENERATION).set(false, server);
     }
 
