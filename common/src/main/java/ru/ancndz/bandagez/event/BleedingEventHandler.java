@@ -12,17 +12,12 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import ru.ancndz.bandagez.effect.ModMobEffects;
-import ru.ancndz.bandagez.mod.BandagezMod;
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-@Mod.EventBusSubscriber(modid = BandagezMod.MODID)
 public class BleedingEventHandler {
 
     private static final Map<ResourceKey<DamageType>,
@@ -71,17 +66,15 @@ public class BleedingEventHandler {
                     entry(EntityType.POLAR_BEAR, 0.2D),
                     entry(EntityType.WITHER_SKELETON, 0.2D));
 
-    @SubscribeEvent
-    static void onPlayerTakesDamage(LivingDamageEvent event) {
-        final DamageSource source = event.getSource();
+    public static void onPlayerTakesDamage(DamageSource source, LivingEntity entity) {
         final AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         DAMAGE_TYPES_FOR_BLEEDING.keySet()
                 .stream()
                 .filter(source::is)
                 .findFirst()
-                .ifPresent(type -> atomicBoolean.set(applyEffect(event.getEntity(),
+                .ifPresent(type -> atomicBoolean.set(applyEffect(entity,
                         DAMAGE_TYPES_FOR_BLEEDING.get(type),
-                        ModMobEffects.BLEEDING.getHolder().orElseThrow(),
+                        ModMobEffects.BLEEDING.getHolder(),
                         source)));
         if (atomicBoolean.get()) {
             return;
@@ -91,9 +84,9 @@ public class BleedingEventHandler {
                 .stream()
                 .filter(source::is)
                 .findFirst()
-                .ifPresent(type -> atomicBoolean.set(applyEffect(event.getEntity(),
+                .ifPresent(type -> atomicBoolean.set(applyEffect(entity,
                         DAMAGE_TYPES_FOR_HARD_BLEEDING.get(type),
-                        ModMobEffects.HARD_BLEEDING.getHolder().orElseThrow(),
+                        ModMobEffects.HARD_BLEEDING.getHolder(),
                         source)));
         if (atomicBoolean.get()) {
             return;
@@ -104,18 +97,20 @@ public class BleedingEventHandler {
             return;
         }
         Optional.ofNullable(ENTITY_TYPES_FOR_BLEEDING.get(damageSourceEntity.getType()))
-                .ifPresent(bleedingChance -> atomicBoolean.set(applyEffect(event.getEntity(),
+                .ifPresent(bleedingChance -> atomicBoolean
+                        .set(applyEffect(entity,
                         bleedingChance,
-                        ModMobEffects.BLEEDING.getHolder().orElseThrow(),
+                                ModMobEffects.BLEEDING.getHolder(),
                         source)));
         if (atomicBoolean.get()) {
             return;
         }
 
         Optional.ofNullable(ENTITY_TYPES_FOR_HARD_BLEEDING.get(damageSourceEntity.getType()))
-                .ifPresent(bleedingChance -> atomicBoolean.set(applyEffect(event.getEntity(),
+                .ifPresent(bleedingChance -> atomicBoolean
+                        .set(applyEffect(entity,
                         bleedingChance,
-                        ModMobEffects.HARD_BLEEDING.getHolder().orElseThrow(),
+                                ModMobEffects.HARD_BLEEDING.getHolder(),
                         source)));
     }
 

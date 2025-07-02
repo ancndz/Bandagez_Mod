@@ -1,14 +1,13 @@
 package ru.ancndz.bandagez.item.bandage;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import ru.ancndz.bandagez.effect.ModMobEffects;
 import ru.ancndz.bandagez.item.RemovingEffects;
+import ru.ancndz.bandagez.registration.RegistryObject;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,23 +22,17 @@ public enum BandageTypes implements BandageType {
     HEMOSTATIC(40, BandageTypes::handleHardBleeding, Collections.singletonList(ModMobEffects.HARD_BLEEDING)),
 
     ANTI_BIOTIC(50,
-            List.of(RegistryObject.create(ResourceLocation.parse(MobEffects.POISON.getRegisteredName()),
-                    ForgeRegistries.MOB_EFFECTS))),
+            List.of(RegistryObject.of(BuiltInRegistries.MOB_EFFECT, MobEffects.POISON))),
 
-    MAGIC(50,
-            List.of(RegistryObject.create(ResourceLocation.parse(MobEffects.WITHER.getRegisteredName()),
-                    ForgeRegistries.MOB_EFFECTS))),
+    MAGIC(50, List.of(RegistryObject.of(BuiltInRegistries.MOB_EFFECT, MobEffects.WITHER))),
 
-    STIMULANT(50,
-            List.of(RegistryObject.create(ResourceLocation.parse(MobEffects.MINING_FATIGUE.getRegisteredName()),
-                    ForgeRegistries.MOB_EFFECTS),
-                    RegistryObject.create(ResourceLocation.parse(MobEffects.SLOWNESS.getRegisteredName()),
-                            ForgeRegistries.MOB_EFFECTS))),
+    STIMULANT(50, List.of(RegistryObject.of(BuiltInRegistries.MOB_EFFECT, MobEffects.MINING_FATIGUE),
+            RegistryObject.of(BuiltInRegistries.MOB_EFFECT, MobEffects.SLOWNESS))),
 
     ;
 
     private static void handleHardBleeding(LivingEntity livingEntity) {
-        livingEntity.addEffect(new MobEffectInstance(ModMobEffects.FRESH_BANDAGE.getHolder().orElseThrow(), 800));
+        livingEntity.addEffect(new MobEffectInstance(ModMobEffects.FRESH_BANDAGE.getHolder(), 800));
     }
 
     private final int itemUseDuration;

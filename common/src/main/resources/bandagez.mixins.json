@@ -1,12 +1,12 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "org.test.untitled.mixin",
+  "package": "ru.ancndz.bandagez.mixin",
   "refmap": "${mod_id}.refmap.json",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_18",
   "mixins": [],
   "client": [
-    "ru.ancndz.bandagez.mixin.MixinTitleScreen"
+    "MixinMinecraft"
   ],
   "server": [],
   "injectors": {

@@ -1,16 +1,19 @@
 package ru.ancndz.bandagez.effect;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
-import ru.ancndz.bandagez.mod.BandagezMod;
+import ru.ancndz.bandagez.BandagezMod;
+import ru.ancndz.bandagez.registration.RegistrationProvider;
+import ru.ancndz.bandagez.registration.RegistryObject;
 
 public class ModMobEffects {
 
-    public static final DeferredRegister<MobEffect> EFFECTS =
-            DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, BandagezMod.MODID);
+    /**
+     * The provider for items
+     */
+    public static final RegistrationProvider<MobEffect> EFFECTS =
+            RegistrationProvider.get(BuiltInRegistries.MOB_EFFECT, BandagezMod.MODID);
 
     public static final String BLEEDING_EFFECT_NAME = "bleeding";
 

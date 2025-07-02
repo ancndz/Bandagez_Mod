@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "id": "${mod_id}",
-  "version": "${version}",
+  "version": "${mod_version}",
   "name": "${mod_name}",
-  "description": "${description}",
+  "description": "${mod_description}",
   "authors": [
-    "${mod_author}"
+    "${mod_authors}"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
@@ -16,7 +16,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "ru.ancndz.bandagez.Untitled"
+      "ru.ancndz.bandagez.FabricBandagez"
+    ],
+    "fabric-datagen": [
+      "ru.ancndz.bandagez.BandagezFabricDataGenerator"
     ]
   },
   "mixins": [

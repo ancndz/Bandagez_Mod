@@ -1,4 +1,4 @@
-package ru.ancndz.bandagez.mod;
+package ru.ancndz.bandagez;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;

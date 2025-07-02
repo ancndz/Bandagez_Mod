@@ -1,4 +1,4 @@
-package ru.ancndz.bandagez.item;
+package ru.ancndz.bandagez;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.MapCodec;
@@ -13,34 +13,33 @@ import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
-import ru.ancndz.bandagez.mod.BandagezMod;
+import ru.ancndz.bandagez.loot.CommonGrassDropLogic;
 
 import java.util.function.Supplier;
 
 public class GrassDropModifier extends LootModifier {
 
-	public static final String GRASS_DROP_MODIFIER = "grass_drop_modifier";
+    public static final String GRASS_DROP_MODIFIER = "grass_drop_modifier";
 
     public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> LOOT_MODIFIERS =
             DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, BandagezMod.MODID);
 
     public static final Supplier<MapCodec<GrassDropModifier>> CODEC_SUPPLIER = Suppliers
-			.memoize(() -> RecordCodecBuilder.mapCodec(inst -> codecStart(inst).apply(inst, GrassDropModifier::new)));
+            .memoize(() -> RecordCodecBuilder.mapCodec(inst -> codecStart(inst).apply(inst, GrassDropModifier::new)));
 
-	protected GrassDropModifier(LootItemCondition[] conditionsIn) {
-		super(conditionsIn);
-	}
+    protected GrassDropModifier(LootItemCondition[] conditionsIn) {
+        super(conditionsIn);
+    }
 
-	@Override
-	protected @NotNull ObjectArrayList<ItemStack> doApply(LootTable table, ObjectArrayList<ItemStack> generatedLoot,
-			LootContext context) {
-        generatedLoot.add(new ItemStack(ModItems.FLORAL_STRING_ITEM.get()));
-		return generatedLoot;
-	}
+    @Override
+    protected @NotNull ObjectArrayList<ItemStack>
+            doApply(LootTable table, ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+        return CommonGrassDropLogic.apply(table, generatedLoot, context);
+    }
 
-	@Override
-	public MapCodec<? extends IGlobalLootModifier> codec() {
-		return CODEC_SUPPLIER.get();
-	}
+    @Override
+    public MapCodec<? extends IGlobalLootModifier> codec() {
+        return CODEC_SUPPLIER.get();
+    }
 
 }

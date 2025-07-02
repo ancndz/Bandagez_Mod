@@ -16,17 +16,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import ru.ancndz.bandagez.effect.EffectPriority;
 import ru.ancndz.bandagez.effect.ModMobEffects;
 import ru.ancndz.bandagez.item.RemovingEffects;
 import ru.ancndz.bandagez.item.SupplyCustomTooltip;
+import ru.ancndz.bandagez.registration.RegistryObject;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 public class SplintItem extends Item implements RemovingEffects, SupplyCustomTooltip {
 
@@ -45,8 +44,6 @@ public class SplintItem extends Item implements RemovingEffects, SupplyCustomToo
     public @NotNull InteractionResult use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
         if (getRemovingEffects().stream()
                 .map(RegistryObject::getHolder)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
                 .noneMatch(player::hasEffect)) {
             return InteractionResult.FAIL;
         }
@@ -64,8 +61,6 @@ public class SplintItem extends Item implements RemovingEffects, SupplyCustomToo
 
         getRemovingEffects().stream()
                 .map(RegistryObject::getHolder)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
                 .filter(effect -> entityLiving.hasEffect(effect) && effect instanceof EffectPriority)
                 .min(Comparator.comparing(effect -> ((EffectPriority) effect).getPriority()))
                 .ifPresent(effect -> {

@@ -4,10 +4,10 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.registries.RegistryObject;
 import ru.ancndz.bandagez.effect.ModMobEffects;
 import ru.ancndz.bandagez.item.Healing;
 import ru.ancndz.bandagez.item.RemovingEffects;
+import ru.ancndz.bandagez.registration.RegistryObject;
 
 import java.util.Collections;
 import java.util.List;

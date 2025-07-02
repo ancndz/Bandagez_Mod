@@ -13,10 +13,8 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
-import ru.ancndz.bandagez.mod.BandagezMod;
-import ru.ancndz.bandagez.mod.BandagezModConfig;
-
-import javax.annotation.Nullable;
+import ru.ancndz.bandagez.BandagezMod;
+import ru.ancndz.bandagez.ConfigHolder;
 
 public class BleedingMobEffect extends MobEffect implements EffectPriority {
 
@@ -24,7 +22,6 @@ public class BleedingMobEffect extends MobEffect implements EffectPriority {
 
     private final boolean hard;
 
-    @Nullable
     private String descriptionId;
 
     public BleedingMobEffect(boolean hard, MobEffectCategory category, int color) {
@@ -46,7 +43,7 @@ public class BleedingMobEffect extends MobEffect implements EffectPriority {
 
     @Override
     public @NotNull ParticleOptions createParticleOptions(@NotNull MobEffectInstance effectInstance) {
-        if (Boolean.TRUE.equals(BandagezModConfig.CLIENT.showParticles.get())) {
+        if (Boolean.TRUE.equals(ConfigHolder.getConfig().showParticles())) {
             return super.createParticleOptions(effectInstance);
         } else {
             return () -> ParticleTypes.EFFECT;

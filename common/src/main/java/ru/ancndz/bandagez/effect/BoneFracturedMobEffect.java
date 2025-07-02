@@ -13,9 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import org.jetbrains.annotations.NotNull;
-import ru.ancndz.bandagez.mod.BandagezMod;
-
-import javax.annotation.Nullable;
+import ru.ancndz.bandagez.BandagezMod;
 
 public class BoneFracturedMobEffect extends MobEffect implements EffectPriority {
 
@@ -26,7 +24,6 @@ public class BoneFracturedMobEffect extends MobEffect implements EffectPriority 
 
     private final BodyPart bodyPart;
 
-    @Nullable
     private String descriptionId;
 
     protected BoneFracturedMobEffect(BodyPart bodyPart, MobEffectCategory category, int color) {

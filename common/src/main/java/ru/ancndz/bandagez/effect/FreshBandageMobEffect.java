@@ -13,9 +13,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
-import ru.ancndz.bandagez.mod.BandagezMod;
-
-import javax.annotation.Nullable;
+import ru.ancndz.bandagez.BandagezMod;
 
 public class FreshBandageMobEffect extends MobEffect implements EffectPriority {
 
@@ -23,7 +21,6 @@ public class FreshBandageMobEffect extends MobEffect implements EffectPriority {
 
 	public static final float CHANCE_TO_BLEED = 0.2F;
 
-    @Nullable
     private String descriptionId;
 
     public FreshBandageMobEffect(MobEffectCategory category, int color) {
@@ -33,8 +30,8 @@ public class FreshBandageMobEffect extends MobEffect implements EffectPriority {
     @Override
 	public boolean applyEffectTick(@NotNull ServerLevel level, @NotNull LivingEntity entity, int food) {
         if (entity.isSprinting() && entity.getRandom().nextFloat() < CHANCE_TO_BLEED) {
-            entity.addEffect(new MobEffectInstance(ModMobEffects.BLEEDING.getHolder().orElseThrow(), 400));
-            entity.removeEffect(ModMobEffects.FRESH_BANDAGE.getHolder().orElseThrow());
+            entity.addEffect(new MobEffectInstance(ModMobEffects.BLEEDING.getHolder(), 400));
+            entity.removeEffect(ModMobEffects.FRESH_BANDAGE.getHolder());
         }
         return true;
     }

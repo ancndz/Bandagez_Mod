@@ -3,6 +3,9 @@ plugins {
     id 'fabric-loom'
 }
 dependencies {
+    modImplementation 'com.electronwill.night-config:core:3.7.4'
+    modImplementation 'com.electronwill.night-config:toml:3.7.4'
+
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.layered {
         officialMojangMappings()

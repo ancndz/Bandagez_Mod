@@ -78,22 +78,29 @@ jar {
 }
 
 processResources {
-    var expandProps = ['version'                      : version,
-                       'group'                        : project.group, //Else we target the task's group.
+    var expandProps = ['mod_id'                       : mod_id,
+                       'mod_name'                     : mod_name,
+                       'mod_license'                  : mod_license,
+                       'mod_version'                  : mod_version,
+                       'mod_group_id'                 : mod_group_id,
+                       'mod_authors'                  : mod_authors,
+                       'mod_description'              : mod_description,
+                       'license'                      : license,
+                       'credits'                      : credits,
                        'minecraft_version'            : minecraft_version,
                        'minecraft_version_range'      : minecraft_version_range,
+                       'mapping_channel'              : mapping_channel,
+                       'mapping_version'              : mapping_version,
+                       "neo_form_version"             : neo_form_version,
+                       "parchment_minecraft"          : parchment_minecraft,
+                       'parchment_version'            : parchment_version,
                        'fabric_version'               : fabric_version,
                        'fabric_loader_version'        : fabric_loader_version,
-                       'mod_name'                     : mod_name,
-                       'mod_author'                   : mod_authors,
-                       'mod_id'                       : mod_id,
-                       'license'                      : license,
-                       'description'                  : project.description,
+                       'forge_version'                : forge_version,
+                       'forge_version_range'          : forge_version_range,
+                       'forge_loader_version_range'   : forge_loader_version_range,
                        'neoforge_version'             : neoforge_version,
                        'neoforge_loader_version_range': neoforge_loader_version_range,
-                       "forge_version"                : forge_version,
-                       "forge_loader_version_range"   : forge_loader_version_range,
-                       'credits'                      : credits,
                        'java_version'                 : java_version]
 
     filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', 'META-INF/neoforge.mods.toml', '*.mixins.json']) {

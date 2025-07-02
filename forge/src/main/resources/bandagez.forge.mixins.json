@@ -1,11 +1,11 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "org.test.untitled.mixin",
+  "package": "ru.ancndz.bandagez.mixin",
   "compatibilityLevel": "JAVA_18",
   "mixins": [],
   "client": [
-    "ru.ancndz.bandagez.mixin.MixinTitleScreen"
+    "MixinTitleScreen"
   ],
   "server": [],
   "injectors": {

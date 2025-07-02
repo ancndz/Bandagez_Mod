@@ -1,7 +1,7 @@
 package ru.ancndz.bandagez.platform;
 
-import ru.ancndz.bandagez.platform.services.IPlatformHelper;
 import net.fabricmc.loader.api.FabricLoader;
+import ru.ancndz.bandagez.platform.services.IPlatformHelper;
 
 public class FabricPlatformHelper implements IPlatformHelper {
 

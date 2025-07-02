@@ -12,7 +12,5 @@ public class MixinTitleScreen {
 
     @Inject(at = @At("HEAD"), method = "init()V")
     private void init(CallbackInfo info) {
-        ModConstants.LOG.info("This line is printed by the untitled mixin from NeoForge!");
-        ModConstants.LOG.info("MC Version: {}", Minecraft.getInstance().getVersionType());
     }
 }

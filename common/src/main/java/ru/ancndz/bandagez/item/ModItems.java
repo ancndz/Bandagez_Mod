@@ -1,15 +1,33 @@
 package ru.ancndz.bandagez.item;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import ru.ancndz.bandagez.BandagezMod;
 import ru.ancndz.bandagez.item.bandage.BandageItem;
 import ru.ancndz.bandagez.item.bandage.BandageTypes;
 import ru.ancndz.bandagez.item.bandage.HealingBandageTypes;
 import ru.ancndz.bandagez.item.splint.SplintItem;
+import ru.ancndz.bandagez.registration.RegistrationProvider;
+import ru.ancndz.bandagez.registration.RegistryObject;
 
 public class ModItems {
+
+    public static void init() {
+    }
+
+    /**
+     * The provider for items
+     */
+    public static final RegistrationProvider<Item> ITEMS =
+            RegistrationProvider.get(BuiltInRegistries.ITEM, BandagezMod.MODID);
+
+    /**
+     * The provider for tabs
+     */
+    public static final RegistrationProvider<CreativeModeTab> TAB =
+            RegistrationProvider.get(BuiltInRegistries.CREATIVE_MODE_TAB, BandagezMod.MODID);
 
     public static final String EMPTY_BAND_NAME = "empty_band";
 
@@ -70,10 +88,9 @@ public class ModItems {
             () -> new SplintItem(new Item.Properties().stacksTo(2).setId(ITEMS.key(SPLINT_NAME))));
 
     public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB =
-            CREATIVE_MODE_TABS.register("bandages_tab",
-                    () -> CreativeModeTab.builder()
+            TAB.register("bandages_tab",
+                    () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 7)
                             .title(Component.translatable("bandagez.bandages_tab"))
-                            .withTabsBefore(CreativeModeTabs.FOOD_AND_DRINKS)
                             .icon(() -> SMALL_BAND_ITEM.get().getDefaultInstance())
                             .displayItems((parameters, output) -> {
                                 output.accept(FLORAL_STRING_ITEM.get());
@@ -88,6 +105,5 @@ public class ModItems {
                                 output.accept(SPLINT_ITEM.get());
                             })
                             .build());
-
 
 }
