@@ -11,6 +11,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 import ru.ancndz.bandagez.BandagezMod;
+import ru.ancndz.bandagez.effect.particle.ModParticles;
 
 public class BleedingMobEffect extends MobEffect implements EffectPriority {
 
@@ -21,7 +22,7 @@ public class BleedingMobEffect extends MobEffect implements EffectPriority {
     private String descriptionId;
 
     public BleedingMobEffect(boolean hard, MobEffectCategory category, int color) {
-        super(category, color, ParticleTypes.FALLING_LAVA);
+        super(category, color, ModParticles.BLEEDING_PARTICLE.get());
         this.hard = hard;
     }
 
