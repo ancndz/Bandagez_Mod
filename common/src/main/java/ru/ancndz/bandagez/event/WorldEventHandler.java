@@ -2,6 +2,7 @@ package ru.ancndz.bandagez.event;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import ru.ancndz.bandagez.item.SupplyCustomTooltip;
@@ -20,6 +21,9 @@ public class WorldEventHandler {
         if (itemType instanceof SupplyCustomTooltip supplyCustomTooltip) {
             supplyCustomTooltip.addCustomTooltip(component);
         }
+    }
+
+    public static void onPlayerLoggedIn(LivingEntity entity) {
     }
 
 }

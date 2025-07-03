@@ -11,6 +11,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import ru.ancndz.bandagez.BandagezMod;
+import ru.ancndz.bandagez.effect.particle.ModParticles;
 import ru.ancndz.bandagez.config.ModConfiguration;
 
 public class BleedingMobEffect extends MobEffect implements EffectPriority {

@@ -18,6 +18,9 @@
     "main": [
       "ru.ancndz.bandagez.FabricBandagez"
     ],
+    "client": [
+      "ru.ancndz.bandagez.FabricBandagezClient"
+    ],
     "fabric-datagen": [
       "ru.ancndz.bandagez.loot.BandagezFabricDataGenerator"
     ]
