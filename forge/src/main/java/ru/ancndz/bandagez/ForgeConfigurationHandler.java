@@ -35,8 +35,7 @@ public class ForgeConfigurationHandler {
         ModConfiguration.setClientConfig(specPair.getLeft());
         return specPair.getRight();
     }
-
-
+    
     private static ForgeConfigSpec buildServerForgeConfigSpec() {
         final Pair<ServerModConfiguration<ForgeConfigSpec.ConfigValue<?>>, ForgeConfigSpec> specPair =
             new ForgeConfigSpec.Builder()
@@ -58,7 +57,7 @@ public class ForgeConfigurationHandler {
 
     private static Function<ConfigEntry<?>, ForgeConfigSpec.ConfigValue<?>> getForgeValueConverter(ForgeConfigSpec.Builder builder) {
         return configEntry -> {
-            ForgeConfigSpec.Builder configValue = builder.comment(configEntry.getComment())
+            var configValue = builder.comment(configEntry.getComment())
                 .translation(configEntry.getTranslation());
             if (configEntry.getRange() != null) {
                 Object value = configEntry.getValue();
@@ -68,7 +67,9 @@ public class ForgeConfigurationHandler {
                     return (ForgeConfigSpec.ConfigValue<Double>) configValue.defineInRange(configEntry.getPath(), (Double) value, (Double) configEntry.getRange().getMinimum(), (Double) configEntry.getRange().getMaximum());
                 }
             }
-            return configValue.define(configEntry.getPath(), configEntry.getValue());
+            final var value = configValue.define(configEntry.getPath(), configEntry.getValue());
+            builder.pop();
+            return value;
         };
     }
 }
