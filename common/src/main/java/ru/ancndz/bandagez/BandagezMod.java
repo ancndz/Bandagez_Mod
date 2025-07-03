@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.ancndz.bandagez.config.ModConfiguration;
 import ru.ancndz.bandagez.effect.ModMobEffects;
+import ru.ancndz.bandagez.effect.particle.ModParticles;
 import ru.ancndz.bandagez.item.ModItems;
 
 public class BandagezMod {
@@ -13,6 +14,7 @@ public class BandagezMod {
     public static final Logger LOG = LoggerFactory.getLogger(MODID);
 
     public static void init() {
+        ModParticles.init();
         ModMobEffects.init();
         ModItems.init();
     }
