@@ -4,11 +4,8 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import ru.ancndz.bandagez.config.ModConfiguration;
 
-@OnlyIn(Dist.CLIENT)
 public class BleedingParticle extends TextureSheetParticle {
     protected boolean isGlowing;
 
