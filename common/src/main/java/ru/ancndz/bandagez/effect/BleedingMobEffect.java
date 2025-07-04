@@ -5,7 +5,6 @@ import static ru.ancndz.bandagez.effect.ModMobEffects.BLEEDING_EFFECT_NAME;
 import static ru.ancndz.bandagez.effect.ModMobEffects.HARD_BLEEDING_EFFECT_NAME;
 
 import net.minecraft.Util;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -31,7 +30,7 @@ public class BleedingMobEffect extends MobEffect implements EffectPriority {
     public void applyEffectTick(LivingEntity entity, int food) {
         entity.hurt(entity.damageSources().magic(), hard ? 1.5F : 1.0F);
         if (Boolean.TRUE.equals(ModConfiguration.getClientConfig().getShowParticles())) {
-            addParticles(entity, ParticleTypes.FALLING_LAVA);
+            addParticles(entity, ModParticles.BLEEDING_PARTICLE.get());
         }
     }
 

@@ -7,8 +7,8 @@ public class EffectParticlesHelper {
 
 	public static void addParticles(LivingEntity entity, ParticleOptions particleOptions) {
 		int j = entity.isInvisible() ? 15 : 4;
-		if (entity.getRandom().nextInt(j) == 0) {
-			entity.level().addParticle(particleOptions, entity.getRandomX(0.5), entity.getRandomY(), entity.getRandomZ(0.5), 1.0, 1.0, 1.0);
+		for (int i = 0; i < j; i++) {
+			entity.level().addParticle(particleOptions, entity.getRandomX(0.5), entity.getRandomY(), entity.getRandomZ(0.5), 0, 0, 0);
 		}
 	}
 
