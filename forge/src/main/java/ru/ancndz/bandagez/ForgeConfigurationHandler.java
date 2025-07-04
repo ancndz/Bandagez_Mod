@@ -67,9 +67,7 @@ public class ForgeConfigurationHandler {
                     return (ForgeConfigSpec.ConfigValue<Double>) configValue.defineInRange(configEntry.getPath(), (Double) value, (Double) configEntry.getRange().getMinimum(), (Double) configEntry.getRange().getMaximum());
                 }
             }
-            final var value = configValue.define(configEntry.getPath(), configEntry.getValue());
-            builder.pop();
-            return value;
+            return configValue.define(configEntry.getPath(), configEntry.getValue());
         };
     }
 }
