@@ -23,12 +23,12 @@ public class ForgeConfigurationHandler {
             new ForgeConfigSpec.Builder()
                 .configure(builder -> new ClientModConfiguration<>() {
                     @Override
-                    public Function<ForgeConfigSpec.ConfigValue<?>, Object> getConverter() {
+                    public <V extends Comparable<? super V>> Function<ForgeConfigSpec.ConfigValue<V>, V> getConverter() {
                         return ForgeConfigSpec.ConfigValue::get;
                     }
 
                     @Override
-                    protected Function<ConfigEntry<?>, ForgeConfigSpec.ConfigValue<?>> getValueConverter() {
+                    protected <V extends Comparable<? super V>> Function<ConfigEntry<V>, ForgeConfigSpec.ConfigValue<V>> getValueConverter() {
                         return getForgeValueConverter(builder);
                     }
                 });
@@ -41,12 +41,12 @@ public class ForgeConfigurationHandler {
             new ForgeConfigSpec.Builder()
                 .configure(builder -> new ServerModConfiguration<>() {
                     @Override
-                    public Function<ForgeConfigSpec.ConfigValue<?>, Object> getConverter() {
+                    public <V extends Comparable<? super V>> Function<ForgeConfigSpec.ConfigValue<V>, V> getConverter() {
                         return ForgeConfigSpec.ConfigValue::get;
                     }
 
                     @Override
-                    protected Function<ConfigEntry<?>, ForgeConfigSpec.ConfigValue<?>> getValueConverter() {
+                    protected <V extends Comparable<? super V>> Function<ConfigEntry<V>, ForgeConfigSpec.ConfigValue<V>> getValueConverter() {
                         return getForgeValueConverter(builder);
                     }
                 });
@@ -55,17 +55,12 @@ public class ForgeConfigurationHandler {
     }
 
 
-    private static Function<ConfigEntry<?>, ForgeConfigSpec.ConfigValue<?>> getForgeValueConverter(ForgeConfigSpec.Builder builder) {
+    private static <V extends Comparable<? super V>> Function<ConfigEntry<V>, ForgeConfigSpec.ConfigValue<V>> getForgeValueConverter(ForgeConfigSpec.Builder builder) {
         return configEntry -> {
             var configValue = builder.comment(configEntry.getComment())
                 .translation(configEntry.getTranslation());
             if (configEntry.getRange() != null) {
-                Object value = configEntry.getValue();
-                if (value instanceof Integer) {
-                    return (ForgeConfigSpec.ConfigValue<Integer>) configValue.defineInRange(configEntry.getPath(), (Integer) value, (Integer) configEntry.getRange().getMinimum(), (Integer) configEntry.getRange().getMaximum());
-                } else if (value instanceof Double) {
-                    return (ForgeConfigSpec.ConfigValue<Double>) configValue.defineInRange(configEntry.getPath(), (Double) value, (Double) configEntry.getRange().getMinimum(), (Double) configEntry.getRange().getMaximum());
-                }
+                return configValue.defineInRange(configEntry.getPath(), configEntry.getValue(), configEntry.getRange().getMinimum(), configEntry.getRange().getMaximum(), configEntry.getValueClass());
             }
             return configValue.define(configEntry.getPath(), configEntry.getValue());
         };

@@ -4,7 +4,6 @@ import static ru.ancndz.bandagez.effect.ModMobEffects.BLEEDING_EFFECT_NAME;
 import static ru.ancndz.bandagez.effect.ModMobEffects.HARD_BLEEDING_EFFECT_NAME;
 
 import net.minecraft.Util;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;

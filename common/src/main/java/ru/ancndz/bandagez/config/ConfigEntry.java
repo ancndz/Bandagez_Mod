@@ -6,6 +6,8 @@ public class ConfigEntry<T> {
 
     private final T value;
 
+    private final Class<T> valueClass;
+
     private final Range<T> range;
 
     private final String comment;
@@ -14,8 +16,9 @@ public class ConfigEntry<T> {
 
     private final String path;
 
-    private ConfigEntry(T value, String comment, String translation, String path, Range<T> range) {
+    private ConfigEntry(T value, Class<T> valueClass, String comment, String translation, String path, Range<T> range) {
         this.value = value;
+        this.valueClass = valueClass;
         this.comment = comment;
         this.translation = translation;
         this.path = path;
@@ -24,6 +27,10 @@ public class ConfigEntry<T> {
 
     public T getValue() {
         return value;
+    }
+
+    public Class<T> getValueClass() {
+        return valueClass;
     }
 
     public Range<T> getRange() {
@@ -50,6 +57,8 @@ public class ConfigEntry<T> {
 
         private T value;
 
+        private Class<T> valueClass;
+
         private Range<T> range;
 
         private String comment;
@@ -60,6 +69,11 @@ public class ConfigEntry<T> {
 
         public Builder<T> value(T value) {
             this.value = value;
+            return this;
+        }
+
+        public Builder<T> valueClass(Class<T> valueClass) {
+            this.valueClass = valueClass;
             return this;
         }
 
@@ -84,7 +98,10 @@ public class ConfigEntry<T> {
         }
 
         public ConfigEntry<T> build() {
-            return new ConfigEntry<>(value, comment, translation, path, range);
+            if (this.valueClass == null) {
+                this.valueClass = (Class<T>) value.getClass();
+            }
+            return new ConfigEntry<>(value, valueClass, comment, translation, path, range);
         }
     }
 
