@@ -10,8 +10,8 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import ru.ancndz.bandagez.BandagezMod;
-import ru.ancndz.bandagez.effect.particle.ModParticles;
 import ru.ancndz.bandagez.config.ModConfiguration;
+import ru.ancndz.bandagez.effect.particle.ModParticles;
 
 public class BleedingMobEffect extends MobEffect implements EffectPriority {
 
@@ -29,7 +29,7 @@ public class BleedingMobEffect extends MobEffect implements EffectPriority {
     @Override
     public void applyEffectTick(LivingEntity entity, int food) {
         entity.hurt(entity.damageSources().magic(), hard ? 1.5F : 1.0F);
-        if (Boolean.TRUE.equals(ModConfiguration.getClientConfig().getShowParticles())) {
+        if (entity.level().isClientSide && Boolean.TRUE.equals(ModConfiguration.getClientConfig().getShowParticles())) {
             addParticles(entity, ModParticles.BLEEDING_PARTICLE.get());
         }
     }
