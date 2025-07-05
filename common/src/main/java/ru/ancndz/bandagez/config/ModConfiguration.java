@@ -4,28 +4,27 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-public abstract class ModConfiguration<T> {
-
+public abstract sealed class ModConfiguration<T> permits ServerModConfiguration, ClientModConfiguration {
     private static ClientModConfiguration<?> client = null;
     private static ServerModConfiguration<?> server = null;
 
-    private final Map<String, T> values;
+    private final Map<String, T> values = new HashMap<>();
 
-    public ModConfiguration() {
-        this.values = new HashMap<>();
+    private <TT extends T> TT getValueRaw(String path) {
+        return (TT) this.values.get(path);
     }
 
-    protected T getValue(String path) {
-        return values.get(path);
+    protected <V extends Comparable<? super V>> V getValue(String path) {
+        return this.<V>getConverter().apply(getValueRaw(path));
     }
 
-    protected void putValue(ConfigEntry<?> configEntry) {
-        values.put(configEntry.getPath(), getValueConverter().apply(configEntry));
+    protected <V extends Comparable<? super V>> void putValue(ConfigEntry<V> configEntry) {
+        values.put(configEntry.getPath(), this.<V>getValueConverter().apply(configEntry));
     }
 
-    protected abstract Function<T, Object> getConverter();
+    protected abstract <V extends Comparable<? super V>> Function<? extends T, V> getConverter();
 
-    protected abstract Function<ConfigEntry<?>, T> getValueConverter();
+    protected abstract <V extends Comparable<? super V>> Function<ConfigEntry<V>, ? extends T> getValueConverter();
 
     public static void setClientConfig(ClientModConfiguration<?> clientModConfigurationConfig) {
         ModConfiguration.client = clientModConfigurationConfig;

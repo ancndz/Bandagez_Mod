@@ -30,12 +30,12 @@ public class FabricConfigurationHandler {
         clientConfig.load();
         ModConfiguration.setClientConfig(new ClientModConfiguration<>() {
             @Override
-            protected Object getValue(String path) {
+            protected <V extends Comparable<? super V>> V getValue(String path) {
                 return clientConfig.get(path);
             }
 
             @Override
-            protected void putValue(ConfigEntry<?> configEntry) {
+            protected <V extends Comparable<? super V>> void putValue(ConfigEntry<V> configEntry) {
                 if (!clientConfig.contains(configEntry.getPath())) {
                     clientConfig.set(configEntry.getPath(), configEntry.getValue());
                     if (configEntry.getTranslation() != null) {
@@ -52,13 +52,13 @@ public class FabricConfigurationHandler {
             }
 
             @Override
-            protected Function<Object, Object> getConverter() {
+            protected <V extends Comparable<? super V>> Function<V, V> getConverter() {
                 return Function.identity();
             }
 
             @Override
-            protected Function<ConfigEntry<?>, Object> getValueConverter() {
-                throw new UnsupportedOperationException();
+            protected <V extends Comparable<? super V>> Function<ConfigEntry<V>, V> getValueConverter() {
+                return ConfigEntry::getValue;
             }
         });
     }
@@ -72,12 +72,12 @@ public class FabricConfigurationHandler {
         serverConfig.load();
         ModConfiguration.setServerConfig(new ServerModConfiguration<>() {
             @Override
-            protected Object getValue(String path) {
+            protected <V extends Comparable<? super V>> V getValue(String path) {
                 return serverConfig.get(path);
             }
 
             @Override
-            protected void putValue(ConfigEntry<?> configEntry) {
+            protected <V extends Comparable<? super V>> void putValue(ConfigEntry<V> configEntry) {
                 if (!serverConfig.contains(configEntry.getPath())) {
                     serverConfig.set(configEntry.getPath(), configEntry.getValue());
                     if (configEntry.getTranslation() != null) {
@@ -93,13 +93,13 @@ public class FabricConfigurationHandler {
             }
 
             @Override
-            protected Function<Object, Object> getConverter() {
+            protected <V extends Comparable<? super V>> Function<V, V> getConverter() {
                 return Function.identity();
             }
 
             @Override
-            protected Function<ConfigEntry<?>, Object> getValueConverter() {
-                throw new UnsupportedOperationException();
+            protected <V extends Comparable<? super V>> Function<ConfigEntry<V>, V> getValueConverter() {
+                return ConfigEntry::getValue;
             }
         });
     }

@@ -10,7 +10,7 @@ import ru.ancndz.bandagez.effect.particle.BleedingParticle;
 import ru.ancndz.bandagez.effect.particle.ModParticles;
 
 @OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(modid = BandagezMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = BandagezMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ForgeClientEventHandler {
 
     @SubscribeEvent

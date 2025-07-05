@@ -18,7 +18,6 @@
     "frame": "task",
     "hidden": true,
     "icon": {
-      "count": 1,
       "id": "minecraft:bone_meal"
     },
     "show_toast": true,

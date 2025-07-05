@@ -23,12 +23,12 @@ public class NeoForgeConfigurationHandler {
             new ModConfigSpec.Builder()
                 .configure(builder -> new ClientModConfiguration<>() {
                     @Override
-                    public Function<ModConfigSpec.ConfigValue<?>, Object> getConverter() {
+                    public <V extends Comparable<? super V>> Function<ModConfigSpec.ConfigValue<V>, V> getConverter() {
                         return ModConfigSpec.ConfigValue::get;
                     }
 
                     @Override
-                    protected Function<ConfigEntry<?>, ModConfigSpec.ConfigValue<?>> getValueConverter() {
+                    public <V extends Comparable<? super V>> Function<ConfigEntry<V>, ModConfigSpec.ConfigValue<V>> getValueConverter() {
                         return getForgeValueConverter(builder);
                     }
                 });
@@ -36,18 +36,17 @@ public class NeoForgeConfigurationHandler {
         return specPair.getRight();
     }
 
-
     private static ModConfigSpec buildServerNeoModConfigSpec() {
         final Pair<ServerModConfiguration<ModConfigSpec.ConfigValue<?>>, ModConfigSpec> specPair =
             new ModConfigSpec.Builder()
                 .configure(builder -> new ServerModConfiguration<>() {
                     @Override
-                    public Function<ModConfigSpec.ConfigValue<?>, Object> getConverter() {
+                    public <V extends Comparable<? super V>> Function<ModConfigSpec.ConfigValue<V>, V> getConverter() {
                         return ModConfigSpec.ConfigValue::get;
                     }
 
                     @Override
-                    protected Function<ConfigEntry<?>, ModConfigSpec.ConfigValue<?>> getValueConverter() {
+                    public <V extends Comparable<? super V>> Function<ConfigEntry<V>, ModConfigSpec.ConfigValue<V>> getValueConverter() {
                         return getForgeValueConverter(builder);
                     }
                 });
@@ -55,18 +54,12 @@ public class NeoForgeConfigurationHandler {
         return specPair.getRight();
     }
 
-
-    private static Function<ConfigEntry<?>, ModConfigSpec.ConfigValue<?>> getForgeValueConverter(ModConfigSpec.Builder builder) {
+    private static <V extends Comparable<? super V>> Function<ConfigEntry<V>, ModConfigSpec.ConfigValue<V>> getForgeValueConverter(ModConfigSpec.Builder builder) {
         return configEntry -> {
-            ModConfigSpec.Builder configValue = builder.comment(configEntry.getComment())
+            var configValue = builder.comment(configEntry.getComment())
                 .translation(configEntry.getTranslation());
             if (configEntry.getRange() != null) {
-                Object value = configEntry.getValue();
-                if (value instanceof Integer) {
-                    return (ModConfigSpec.ConfigValue<Integer>) configValue.defineInRange(configEntry.getPath(), (Integer) value, (Integer) configEntry.getRange().getMinimum(), (Integer) configEntry.getRange().getMaximum());
-                } else if (value instanceof Double) {
-                    return (ModConfigSpec.ConfigValue<Double>) configValue.defineInRange(configEntry.getPath(), (Double) value, (Double) configEntry.getRange().getMinimum(), (Double) configEntry.getRange().getMaximum());
-                }
+                return configValue.defineInRange(configEntry.getPath(), configEntry.getValue(), configEntry.getRange().getMinimum(), configEntry.getRange().getMaximum(), configEntry.getValueClass());
             }
             return configValue.define(configEntry.getPath(), configEntry.getValue());
         };
