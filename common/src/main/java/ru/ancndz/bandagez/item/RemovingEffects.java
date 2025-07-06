@@ -10,13 +10,13 @@ public interface RemovingEffects {
 
     static boolean hasAnyOf(LivingEntity livingEntity, List<RegistryObject<MobEffect>> removingEffects) {
         return removingEffects.stream()
-                .map(RegistryObject::getHolder)
+                .map(o -> o.getHolder())
                 .anyMatch(livingEntity::hasEffect);
     }
 
     default void removeEffects(LivingEntity livingEntity) {
         getRemovingEffects().stream()
-                .map(RegistryObject::getHolder)
+                .map(o -> o.getHolder())
                 .filter(livingEntity::hasEffect)
                 .forEach(livingEntity::removeEffect);
     }

@@ -43,7 +43,7 @@ public class SplintItem extends Item implements RemovingEffects, SupplyCustomToo
     @Override
     public @NotNull InteractionResult use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
         if (getRemovingEffects().stream()
-                .map(RegistryObject::getHolder)
+                .map(o -> o.getHolder())
                 .noneMatch(player::hasEffect)) {
             return InteractionResult.FAIL;
         }
@@ -60,7 +60,7 @@ public class SplintItem extends Item implements RemovingEffects, SupplyCustomToo
         }
 
         getRemovingEffects().stream()
-                .map(RegistryObject::getHolder)
+                .map(o -> o.getHolder())
                 .filter(effect -> entityLiving.hasEffect(effect) && effect instanceof EffectPriority)
                 .min(Comparator.comparing(effect -> ((EffectPriority) effect).getPriority()))
                 .ifPresent(effect -> {
