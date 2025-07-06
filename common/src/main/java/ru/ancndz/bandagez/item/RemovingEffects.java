@@ -9,12 +9,12 @@ import java.util.List;
 public interface RemovingEffects {
 
     static boolean hasAnyOf(LivingEntity livingEntity, List<RegistryObject<MobEffect>> removingEffects) {
-        return removingEffects.stream().map(RegistryObject::get).anyMatch(livingEntity::hasEffect);
+        return removingEffects.stream().map(o -> o.get()).anyMatch(livingEntity::hasEffect);
     }
 
     default void removeEffects(LivingEntity livingEntity) {
         getRemovingEffects().stream()
-                .map(RegistryObject::get)
+                .map(o -> o.get())
                 .filter(livingEntity::hasEffect)
                 .forEach(livingEntity::removeEffect);
     }
