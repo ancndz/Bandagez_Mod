@@ -8,11 +8,11 @@ public abstract non-sealed class ClientModConfiguration<T> extends ModConfigurat
 
     public ClientModConfiguration() {
         putValue(ConfigEntry.<Boolean>builder()
-            .value(Boolean.TRUE)
-            .comment("Show particles on bleeding effects")
-            .translation("bandagez.config.show_bleeding_particles")
-            .path(Options.SHOW_PARTICLES_OPTION)
-            .build());
+                .value(Boolean.TRUE)
+                .comment("Show particles on bleeding effects")
+                .translation("bandagez.config.show_bleeding_particles")
+                .path(Options.SHOW_PARTICLES_OPTION)
+                .build());
     }
 
     public Boolean getShowParticles() {

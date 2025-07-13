@@ -1,6 +1,5 @@
 package ru.ancndz.bandagez;
 
-import java.util.function.Function;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -19,15 +18,16 @@ public class ForgeConfigurationHandler {
     private static ForgeConfigSpec buildClientForgeConfigSpec() {
         final ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
         final var config = new ClientModConfiguration<ForgeConfigSpec.ConfigValue<?>>() {
+            final ForgeConfigConverter converter = new ForgeConfigConverter(builder);
 
             @Override
-            public Function<ForgeConfigSpec.ConfigValue<?>, Object> getConverter() {
-                return ForgeConfigSpec.ConfigValue::get;
+            protected <V extends Comparable<? super V>> V getValue(String path) {
+                return converter.<V>toValue().apply(getValueRaw(path));
             }
 
             @Override
-            protected Function<ConfigEntry<?>, ForgeConfigSpec.ConfigValue<?>> getValueConverter() {
-                return getForgeValueConverter(builder);
+            protected <V extends Comparable<? super V>> void putValue(ConfigEntry<V> configEntry) {
+                getValues().put(configEntry.getPath(), converter.<V>toConfigImplValue().apply(configEntry));
             }
         };
 
@@ -38,15 +38,16 @@ public class ForgeConfigurationHandler {
     private static ForgeConfigSpec buildServerForgeConfigSpec() {
         final ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
         final var config = new ServerModConfiguration<ForgeConfigSpec.ConfigValue<?>>() {
+            final ForgeConfigConverter converter = new ForgeConfigConverter(builder);
 
             @Override
-            public Function<ForgeConfigSpec.ConfigValue<?>, Object> getConverter() {
-                return ForgeConfigSpec.ConfigValue::get;
+            protected <V extends Comparable<? super V>> V getValue(String path) {
+                return converter.<V>toValue().apply(getValueRaw(path));
             }
 
             @Override
-            protected Function<ConfigEntry<?>, ForgeConfigSpec.ConfigValue<?>> getValueConverter() {
-                return getForgeValueConverter(builder);
+            protected <V extends Comparable<? super V>> void putValue(ConfigEntry<V> configEntry) {
+                getValues().put(configEntry.getPath(), converter.<V>toConfigImplValue().apply(configEntry));
             }
         };
 
@@ -55,20 +56,5 @@ public class ForgeConfigurationHandler {
     }
 
 
-    private static Function<ConfigEntry<?>, ForgeConfigSpec.ConfigValue<?>> getForgeValueConverter(ForgeConfigSpec.Builder builder) {
-        return configEntry -> {
-            var configValue = builder.comment(configEntry.getComment())
-                    .translation(configEntry.getTranslation());
-            if (configEntry.getRange() != null) {
-                Object value = configEntry.getValue();
-                if (value instanceof Integer) {
-                    return (ForgeConfigSpec.ConfigValue<Integer>) configValue.defineInRange(configEntry.getPath(), (Integer) value, (Integer) configEntry.getRange().getMinimum(), (Integer) configEntry.getRange().getMaximum());
-                } else if (value instanceof Double) {
-                    return (ForgeConfigSpec.ConfigValue<Double>) configValue.defineInRange(configEntry.getPath(), (Double) value, (Double) configEntry.getRange().getMinimum(), (Double) configEntry.getRange().getMaximum());
-                }
-            }
-            return configValue.define(configEntry.getPath(), configEntry.getValue());
-        };
-    }
 }
 
