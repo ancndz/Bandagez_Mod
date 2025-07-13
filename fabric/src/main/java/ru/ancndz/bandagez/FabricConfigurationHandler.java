@@ -8,8 +8,6 @@ import ru.ancndz.bandagez.config.ConfigEntry;
 import ru.ancndz.bandagez.config.ModConfiguration;
 import ru.ancndz.bandagez.config.ServerModConfiguration;
 
-import java.util.function.Function;
-
 public class FabricConfigurationHandler {
 
     private static CommentedFileConfig clientConfig;
@@ -23,9 +21,9 @@ public class FabricConfigurationHandler {
 
     private static void initClientConfig(FabricLoader instance) {
         clientConfig = CommentedFileConfig.builder(instance.getConfigDir().resolve("bandagez-client.toml"))
-            .autosave()
-            .autoreload()
-            .build();
+                .autosave()
+                .autoreload()
+                .build();
 
         clientConfig.load();
         ModConfiguration.setClientConfig(new ClientModConfiguration<>() {
@@ -51,23 +49,14 @@ public class FabricConfigurationHandler {
                 }
             }
 
-            @Override
-            protected <V extends Comparable<? super V>> Function<V, V> getConverter() {
-                return Function.identity();
-            }
-
-            @Override
-            protected <V extends Comparable<? super V>> Function<ConfigEntry<V>, V> getValueConverter() {
-                return ConfigEntry::getValue;
-            }
         });
     }
 
     private static void initServerConfig(FabricLoader instance) {
         serverConfig = CommentedFileConfig.builder(instance.getConfigDir().resolve("bandagez-server.toml"))
-            .autosave()
-            .autoreload()
-            .build();
+                .autosave()
+                .autoreload()
+                .build();
 
         serverConfig.load();
         ModConfiguration.setServerConfig(new ServerModConfiguration<>() {
@@ -92,15 +81,6 @@ public class FabricConfigurationHandler {
                 }
             }
 
-            @Override
-            protected <V extends Comparable<? super V>> Function<V, V> getConverter() {
-                return Function.identity();
-            }
-
-            @Override
-            protected <V extends Comparable<? super V>> Function<ConfigEntry<V>, V> getValueConverter() {
-                return ConfigEntry::getValue;
-            }
         });
     }
 }
