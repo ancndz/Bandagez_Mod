@@ -38,7 +38,7 @@ public abstract sealed class ModConfiguration<T> permits ServerModConfiguration,
 
     public static ServerModConfiguration<?> getServerConfig() {
         if (server == null) {
-            throw new IllegalStateException("Client configuration is not initialized");
+            throw new IllegalStateException("Server configuration is not initialized");
         }
         return server;
     }
