@@ -6,17 +6,11 @@ import ru.ancndz.bandagez.config.ConfigEntry;
 
 public class ForgeConfigConverter {
 
-    final ForgeConfigSpec.Builder builder;
-
-    public ForgeConfigConverter(ForgeConfigSpec.Builder builder) {
-        this.builder = builder;
-    }
-
-    public <V extends Comparable<? super V>> Function<? extends ForgeConfigSpec.ConfigValue<V>, V> toValue() {
+    public static <V extends Comparable<? super V>> Function<? extends ForgeConfigSpec.ConfigValue<V>, V> toValue() {
         return ForgeConfigSpec.ConfigValue::get;
     }
 
-    public <V extends Comparable<? super V>> Function<ConfigEntry<V>, ? extends ForgeConfigSpec.ConfigValue<V>> toConfigImplValue() {
+    public static <V extends Comparable<? super V>> Function<ConfigEntry<V>, ? extends ForgeConfigSpec.ConfigValue<V>> toConfigImplValue(ForgeConfigSpec.Builder builder) {
         return configEntry -> {
             var configValue = builder.comment(configEntry.getComment())
                     .translation(configEntry.getTranslation());

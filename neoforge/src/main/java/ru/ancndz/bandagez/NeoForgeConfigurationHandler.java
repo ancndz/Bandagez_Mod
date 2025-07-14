@@ -21,16 +21,14 @@ public class NeoForgeConfigurationHandler {
         final Pair<ClientModConfiguration<ModConfigSpec.ConfigValue<?>>, ModConfigSpec> specPair =
                 new ModConfigSpec.Builder()
                         .configure(builder -> new ClientModConfiguration<>() {
-                            final NeoForgeConfigConverter converter = new NeoForgeConfigConverter(builder);
-
                             @Override
                             protected <V extends Comparable<? super V>> V getValue(String path) {
-                                return converter.<V>toValue().apply(getValueRaw(path));
+                                return NeoForgeConfigConverter.<V>toValue().apply(getValueRaw(path));
                             }
 
                             @Override
                             protected <V extends Comparable<? super V>> void putValue(ConfigEntry<V> configEntry) {
-                                getValues().put(configEntry.getPath(), converter.<V>toConfigImplValue().apply(configEntry));
+                                getValues().put(configEntry.getPath(), NeoForgeConfigConverter.<V>toConfigImplValue(builder).apply(configEntry));
                             }
                         });
         ModConfiguration.setClientConfig(specPair.getLeft());
@@ -41,16 +39,14 @@ public class NeoForgeConfigurationHandler {
         final Pair<ServerModConfiguration<ModConfigSpec.ConfigValue<?>>, ModConfigSpec> specPair =
                 new ModConfigSpec.Builder()
                         .configure(builder -> new ServerModConfiguration<>() {
-                            final NeoForgeConfigConverter converter = new NeoForgeConfigConverter(builder);
-
                             @Override
                             protected <V extends Comparable<? super V>> V getValue(String path) {
-                                return converter.<V>toValue().apply(getValueRaw(path));
+                                return NeoForgeConfigConverter.<V>toValue().apply(getValueRaw(path));
                             }
 
                             @Override
                             protected <V extends Comparable<? super V>> void putValue(ConfigEntry<V> configEntry) {
-                                getValues().put(configEntry.getPath(), converter.<V>toConfigImplValue().apply(configEntry));
+                                getValues().put(configEntry.getPath(), NeoForgeConfigConverter.<V>toConfigImplValue(builder).apply(configEntry));
                             }
                         });
         ModConfiguration.setServerConfig(specPair.getLeft());

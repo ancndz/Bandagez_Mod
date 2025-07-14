@@ -6,17 +6,11 @@ import ru.ancndz.bandagez.config.ConfigEntry;
 
 public class NeoForgeConfigConverter {
 
-    final ModConfigSpec.Builder builder;
-
-    public NeoForgeConfigConverter(ModConfigSpec.Builder builder) {
-        this.builder = builder;
-    }
-
-    public <V extends Comparable<? super V>> Function<? extends ModConfigSpec.ConfigValue<V>, V> toValue() {
+    public static <V extends Comparable<? super V>> Function<? extends ModConfigSpec.ConfigValue<V>, V> toValue() {
         return ModConfigSpec.ConfigValue::get;
     }
 
-    public <V extends Comparable<? super V>> Function<ConfigEntry<V>, ? extends ModConfigSpec.ConfigValue<V>> toConfigImplValue() {
+    public static <V extends Comparable<? super V>> Function<ConfigEntry<V>, ? extends ModConfigSpec.ConfigValue<V>> toConfigImplValue(ModConfigSpec.Builder builder) {
         return configEntry -> {
             var configValue = builder.comment(configEntry.getComment())
                     .translation(configEntry.getTranslation());
