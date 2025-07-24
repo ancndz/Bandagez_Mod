@@ -9,7 +9,8 @@ import ru.ancndz.bandagez.registration.RegistryObject;
 
 public class ModSoundEvents {
 
-    /**
+    public static void init() {
+    }/**
      * The provider for items
      */
     public static final RegistrationProvider<SoundEvent> SOUND_EVENTS =
@@ -36,5 +37,5 @@ public class ModSoundEvents {
 					ResourceLocation.tryBuild(BandagezMod.MODID, "item.band.bandage_use_end")));
 
     private ModSoundEvents() {
-	}
+    }
 }
