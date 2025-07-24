@@ -6,6 +6,7 @@ import ru.ancndz.bandagez.config.ModConfiguration;
 import ru.ancndz.bandagez.effect.ModMobEffects;
 import ru.ancndz.bandagez.effect.particle.ModParticles;
 import ru.ancndz.bandagez.item.ModItems;
+import ru.ancndz.bandagez.sound.ModSoundEvents;
 
 public class BandagezMod {
 
@@ -16,6 +17,7 @@ public class BandagezMod {
     public static void init() {
         ModParticles.init();
         ModMobEffects.init();
+        ModSoundEvents.init();
         ModItems.init();
     }
 
