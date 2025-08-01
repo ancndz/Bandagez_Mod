@@ -36,16 +36,16 @@ public class SplintItem extends Item implements RemovingEffects, SupplyCustomToo
     }
 
     @Override
-    public int getUseDuration(@NotNull ItemStack itemstack) {
+    public int getUseDuration(@NotNull ItemStack itemstack, @NotNull LivingEntity entity) {
         return 50; // Duration for using the splint
     }
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack>
-            use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
+    use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
         if (getRemovingEffects().stream()
-                .map(o -> o.getHolder())
-                .noneMatch(player::hasEffect)) {
+            .map(o -> o.getHolder())
+            .noneMatch(player::hasEffect)) {
             return InteractionResultHolder.fail(player.getItemInHand(hand));
         }
         LOGGER.debug("Player {} ({} hp) is using splint", player.getName().getString(), player.getHealth());
@@ -54,20 +54,20 @@ public class SplintItem extends Item implements RemovingEffects, SupplyCustomToo
 
     @Override
     public @NotNull ItemStack
-            finishUsingItem(@NotNull ItemStack stack, @NotNull Level worldIn, @NotNull LivingEntity entityLiving) {
+    finishUsingItem(@NotNull ItemStack stack, @NotNull Level worldIn, @NotNull LivingEntity entityLiving) {
         if (entityLiving instanceof ServerPlayer serverPlayer) {
             LOGGER.debug("Player {} finished using splint.", serverPlayer.getName().getString());
             CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
         }
 
         getRemovingEffects().stream()
-                .map(o -> o.getHolder())
-                .filter(effect -> entityLiving.hasEffect(effect) && effect instanceof EffectPriority)
-                .min(Comparator.comparing(effect -> ((EffectPriority) effect).getPriority()))
-                .ifPresent(effect -> {
-                    entityLiving.removeEffect(effect);
-                    LOGGER.debug("Removed effect {} from {}", effect, entityLiving.getName().getString());
-                });
+            .map(o -> o.getHolder())
+            .filter(effect -> entityLiving.hasEffect(effect) && effect instanceof EffectPriority)
+            .min(Comparator.comparing(effect -> ((EffectPriority) effect).getPriority()))
+            .ifPresent(effect -> {
+                entityLiving.removeEffect(effect);
+                LOGGER.debug("Removed effect {} from {}", effect, entityLiving.getName().getString());
+            });
 
         if (entityLiving instanceof Player player) {
             player.awardStat(Stats.ITEM_USED.get(this));
@@ -81,8 +81,8 @@ public class SplintItem extends Item implements RemovingEffects, SupplyCustomToo
     @Override
     public List<RegistryObject<MobEffect>> getRemovingEffects() {
         return List.of(ModMobEffects.BONE_FRACTURE_ARM_MAIN,
-                ModMobEffects.BONE_FRACTURE_LEG,
-                ModMobEffects.BONE_FRACTURE_ARM);
+            ModMobEffects.BONE_FRACTURE_LEG,
+            ModMobEffects.BONE_FRACTURE_ARM);
     }
 
     @Override

@@ -4,13 +4,13 @@ import static ru.ancndz.bandagez.effect.ModMobEffects.BLEEDING_EFFECT_NAME;
 import static ru.ancndz.bandagez.effect.ModMobEffects.HARD_BLEEDING_EFFECT_NAME;
 
 import net.minecraft.Util;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 import ru.ancndz.bandagez.BandagezMod;
-import ru.ancndz.bandagez.effect.particle.ModParticles;
 
 public class BleedingMobEffect extends MobEffect implements EffectPriority {
 
@@ -21,7 +21,7 @@ public class BleedingMobEffect extends MobEffect implements EffectPriority {
     private String descriptionId;
 
     public BleedingMobEffect(boolean hard, MobEffectCategory category, int color) {
-        super(category, color, ModParticles.BLEEDING_PARTICLE.get());
+        super(category, color, ParticleTypes.FALLING_LAVA);
         this.hard = hard;
     }
 
@@ -41,8 +41,8 @@ public class BleedingMobEffect extends MobEffect implements EffectPriority {
     protected @NotNull String getOrCreateDescriptionId() {
         if (this.descriptionId == null) {
             this.descriptionId = Util.makeDescriptionId("effect",
-                    ResourceLocation.tryBuild(BandagezMod.MODID,
-                            hard ? HARD_BLEEDING_EFFECT_NAME : BLEEDING_EFFECT_NAME));
+                ResourceLocation.tryBuild(BandagezMod.MODID,
+                    hard ? HARD_BLEEDING_EFFECT_NAME : BLEEDING_EFFECT_NAME));
         }
         return this.descriptionId;
     }

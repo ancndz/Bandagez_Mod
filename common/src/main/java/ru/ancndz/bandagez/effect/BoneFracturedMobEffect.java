@@ -16,9 +16,7 @@ import ru.ancndz.bandagez.BandagezMod;
 
 public class BoneFracturedMobEffect extends MobEffect implements EffectPriority {
 
-    public static final String BROKEN_BONE_ATTACK_DAMAGE = "2ec606e1-fbe7-4956-97ae-a76fb5018fbc";
-
-    public static final String SLOWNESS = "7107DE5E-7CE8-4030-940E-514C1F160890";
+    public static final ResourceLocation BROKEN_BONE_ATTACK_DAMAGE = ResourceLocation.fromNamespaceAndPath(BandagezMod.MODID, "broken_bone_attack_damage");
 
     public static final int DAMAGE_INTERVAL = 80;
 
@@ -32,14 +30,14 @@ public class BoneFracturedMobEffect extends MobEffect implements EffectPriority 
 
         switch (bodyPart) {
             case LEG -> this.addAttributeModifier(Attributes.MOVEMENT_SPEED,
-                    SLOWNESS,
-                    -0.45F,
-                    AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+                ResourceLocation.withDefaultNamespace("effect.slowness"),
+                -0.45F,
+                AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 
             case ARM_MAIN -> this.addAttributeModifier(Attributes.ATTACK_DAMAGE,
-                    BROKEN_BONE_ATTACK_DAMAGE,
-                    -0.4F,
-                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+                BROKEN_BONE_ATTACK_DAMAGE,
+                -0.4F,
+                AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
         }
     }
 
@@ -66,7 +64,7 @@ public class BoneFracturedMobEffect extends MobEffect implements EffectPriority 
                 default -> LEG_FRACTURE_EFFECT_NAME;
             };
             this.descriptionId =
-                    Util.makeDescriptionId("effect", ResourceLocation.tryBuild(BandagezMod.MODID, path));
+                Util.makeDescriptionId("effect", ResourceLocation.tryBuild(BandagezMod.MODID, path));
         }
         return this.descriptionId;
     }
