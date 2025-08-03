@@ -1,13 +1,16 @@
 package ru.ancndz.bandagez.event;
 
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import ru.ancndz.bandagez.BandagezMod;
 
+@EventBusSubscriber(modid = BandagezMod.MODID)
 public class NeoForgeEventHandler {
 
     @SubscribeEvent
@@ -24,8 +27,13 @@ public class NeoForgeEventHandler {
     }
 
     @SubscribeEvent
-    public static boolean onPlayerUse(PlayerInteractEvent.RightClickBlock event) {
-        return BoneFracturedEventHandler.onPlayerUse(event.getHand(), event.getEntity());
+    public static void onPlayerUse(PlayerInteractEvent.RightClickBlock event) {
+        event.setCanceled(BoneFracturedEventHandler.onPlayerUse(event.getHand(), event.getEntity()));
+    }
+
+    @SubscribeEvent
+    public static void onPlayerUse(PlayerInteractEvent.RightClickItem event) {
+        event.setCanceled(BoneFracturedEventHandler.onPlayerUse(event.getHand(), event.getEntity()));
     }
 
     @SubscribeEvent
