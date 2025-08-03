@@ -12,7 +12,7 @@ public interface HealingBandageType extends BandageType, Healing {
     default void addCustomTooltip(List<Component> components) {
         BandageType.super.addCustomTooltip(components);
         components.add(Component.empty());
-        components.add(Component.translatable("bandagez.tooltip.healing", getMaxHeal())
+        components.add(Component.translatable("bandagez.tooltip.healing", String.format("%.0f", getMaxHeal()))
                 .withStyle(MobEffectCategory.BENEFICIAL.getTooltipFormatting()));
     }
 }

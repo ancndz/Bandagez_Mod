@@ -16,7 +16,7 @@ public class ForgeEventHandler {
     @SubscribeEvent
     public static void onPlayerFall(LivingFallEvent event) {
         event.setDamageMultiplier(
-                event.getDamageMultiplier() + BoneFracturedEventHandler.onPlayerFall(event.getEntity()));
+            event.getDamageMultiplier() + BoneFracturedEventHandler.onPlayerFall(event.getEntity()));
     }
 
     @SubscribeEvent
@@ -28,6 +28,11 @@ public class ForgeEventHandler {
 
     @SubscribeEvent
     public static boolean onPlayerUse(PlayerInteractEvent.RightClickBlock event) {
+        return BoneFracturedEventHandler.onPlayerUse(event.getHand(), event.getEntity());
+    }
+
+    @SubscribeEvent
+    public static boolean onPlayerUse(PlayerInteractEvent.RightClickItem event) {
         return BoneFracturedEventHandler.onPlayerUse(event.getHand(), event.getEntity());
     }
 

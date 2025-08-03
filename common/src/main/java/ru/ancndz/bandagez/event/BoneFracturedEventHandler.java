@@ -26,14 +26,14 @@ public class BoneFracturedEventHandler {
     private static final Logger LOG = LogUtils.getLogger();
 
     private static final Map<ResourceKey<DamageType>, Double> DAMAGE_TYPES_FOR_BONE_FRACTURE =
-            Map.ofEntries(entry(DamageTypes.EXPLOSION, 0.2D), entry(DamageTypes.FALLING_STALACTITE, 0.2D));
+        Map.ofEntries(entry(DamageTypes.EXPLOSION, 0.2D), entry(DamageTypes.FALLING_STALACTITE, 0.2D));
 
     @SuppressWarnings("rawtypes")
     private static final Map<EntityType,
-            Double> ENTITY_TYPES_FOR_BONE_FRACTURE = Map.ofEntries(entry(EntityType.ZOMBIE, 0.1D),
-                    entry(EntityType.ZOMBIFIED_PIGLIN, 0.3D),
-                    entry(EntityType.POLAR_BEAR, 0.3D),
-                    entry(EntityType.WITHER_SKELETON, 0.2D));
+        Double> ENTITY_TYPES_FOR_BONE_FRACTURE = Map.ofEntries(entry(EntityType.ZOMBIE, 0.1D),
+        entry(EntityType.ZOMBIFIED_PIGLIN, 0.3D),
+        entry(EntityType.POLAR_BEAR, 0.3D),
+        entry(EntityType.WITHER_SKELETON, 0.2D));
 
     public static float onPlayerFall(LivingEntity entity) {
         if (entity.hasEffect(ModMobEffects.BONE_FRACTURE_LEG.getHolder())) {
@@ -48,7 +48,7 @@ public class BoneFracturedEventHandler {
         }
         if (amount > 10F || player.getRandom().nextDouble() < 0.2D) {
             player.addEffect(new MobEffectInstance(ModMobEffects.BONE_FRACTURE_LEG
-                    .getHolder(), MobEffectInstance.INFINITE_DURATION, 0, false, false, true));
+                .getHolder(), MobEffectInstance.INFINITE_DURATION, 0, false, false, true));
             LOG.debug("LivingEntity {} has broken leg from fall damage", player.getName().getString());
         }
     }
@@ -56,11 +56,11 @@ public class BoneFracturedEventHandler {
     public static void onPlayerTakesDamage(DamageSource source, LivingEntity entity) {
         final AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         DAMAGE_TYPES_FOR_BONE_FRACTURE.keySet()
-                .stream()
-                .filter(source::is)
-                .findFirst()
-                .ifPresent(type -> atomicBoolean
-                        .set(applyEffect(entity, DAMAGE_TYPES_FOR_BONE_FRACTURE.get(type), source)));
+            .stream()
+            .filter(source::is)
+            .findFirst()
+            .ifPresent(type -> atomicBoolean
+                .set(applyEffect(entity, DAMAGE_TYPES_FOR_BONE_FRACTURE.get(type), source)));
         if (atomicBoolean.get()) {
             return;
         }
@@ -70,21 +70,21 @@ public class BoneFracturedEventHandler {
             return;
         }
         Optional.ofNullable(ENTITY_TYPES_FOR_BONE_FRACTURE.get(damageSourceEntity.getType()))
-                .ifPresent(bleedingChance -> atomicBoolean.set(applyEffect(entity, bleedingChance, source)));
+            .ifPresent(bleedingChance -> atomicBoolean.set(applyEffect(entity, bleedingChance, source)));
     }
 
     private static boolean applyEffect(LivingEntity entity, Double bleedingChance, DamageSource source) {
         if (entity.level().getRandom().nextFloat() < bleedingChance) {
             if (entity.level().getRandom().nextFloat() < bleedingChance / 2) {
                 entity.addEffect(
-                        new MobEffectInstance(ModMobEffects.BONE_FRACTURE_ARM_MAIN.getHolder(),
-                                MobEffectInstance.INFINITE_DURATION),
-                        source.getEntity());
+                    new MobEffectInstance(ModMobEffects.BONE_FRACTURE_ARM_MAIN.getHolder(),
+                        MobEffectInstance.INFINITE_DURATION, 0, false, false, true),
+                    source.getEntity());
             } else {
                 entity.addEffect(
-                        new MobEffectInstance(ModMobEffects.BONE_FRACTURE_ARM.getHolder(),
-                                MobEffectInstance.INFINITE_DURATION),
-                        source.getEntity());
+                    new MobEffectInstance(ModMobEffects.BONE_FRACTURE_ARM.getHolder(),
+                        MobEffectInstance.INFINITE_DURATION, 0, false, false, true),
+                    source.getEntity());
             }
             return true;
         }
@@ -94,7 +94,7 @@ public class BoneFracturedEventHandler {
     public static boolean onPlayerUse(InteractionHand hand, LivingEntity entity) {
         if (hand.equals(InteractionHand.OFF_HAND) && entity.hasEffect(ModMobEffects.BONE_FRACTURE_ARM.getHolder())) {
             LOG.debug("Player {} has broken arm, canceling right-click action",
-                    entity.getName().getString());
+                entity.getName().getString());
             return true;
         } else {
             return false;
@@ -102,7 +102,7 @@ public class BoneFracturedEventHandler {
     }
 
     public static InteractionResult onPlayerUseWithResult(InteractionHand hand, LivingEntity entity) {
-        return onPlayerUse(hand, entity) ? InteractionResult.PASS : InteractionResult.FAIL;
+        return onPlayerUse(hand, entity) ? InteractionResult.FAIL : InteractionResult.PASS;
     }
 
 }
