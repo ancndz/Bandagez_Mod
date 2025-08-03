@@ -62,7 +62,7 @@ public class SplintItem extends Item implements RemovingEffects, SupplyCustomToo
 
         getRemovingEffects().stream()
             .map(o -> o.getHolder())
-            .filter(effect -> entityLiving.hasEffect(effect) && effect instanceof EffectPriority)
+            .filter(effect -> entityLiving.hasEffect(effect) && effect.value() instanceof EffectPriority)
             .min(Comparator.comparing(effect -> ((EffectPriority) effect).getPriority()))
             .ifPresent(effect -> {
                 entityLiving.removeEffect(effect);
