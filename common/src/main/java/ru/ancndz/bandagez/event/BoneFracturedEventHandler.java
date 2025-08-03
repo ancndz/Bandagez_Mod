@@ -80,12 +80,12 @@ public class BoneFracturedEventHandler {
             if (entity.level().getRandom().nextFloat() < bleedingChance / 2) {
                 entity.addEffect(
                     new MobEffectInstance(ModMobEffects.BONE_FRACTURE_ARM_MAIN.getHolder(),
-                        MobEffectInstance.INFINITE_DURATION),
+                        MobEffectInstance.INFINITE_DURATION, 0, false, false, true),
                     source.getEntity());
             } else {
                 entity.addEffect(
                     new MobEffectInstance(ModMobEffects.BONE_FRACTURE_ARM.getHolder(),
-                        MobEffectInstance.INFINITE_DURATION),
+                        MobEffectInstance.INFINITE_DURATION, 0, false, false, true),
                     source.getEntity());
             }
             return true;
