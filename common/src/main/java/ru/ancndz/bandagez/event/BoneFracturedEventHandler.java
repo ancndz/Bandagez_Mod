@@ -6,6 +6,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -14,6 +15,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import org.slf4j.Logger;
 import ru.ancndz.bandagez.effect.ModMobEffects;
 
@@ -26,14 +28,14 @@ public class BoneFracturedEventHandler {
     private static final Logger LOG = LogUtils.getLogger();
 
     private static final Map<ResourceKey<DamageType>, Double> DAMAGE_TYPES_FOR_BONE_FRACTURE =
-            Map.ofEntries(entry(DamageTypes.EXPLOSION, 0.2D), entry(DamageTypes.FALLING_STALACTITE, 0.2D));
+        Map.ofEntries(entry(DamageTypes.EXPLOSION, 0.2D), entry(DamageTypes.FALLING_STALACTITE, 0.2D));
 
     @SuppressWarnings("rawtypes")
     private static final Map<EntityType,
-            Double> ENTITY_TYPES_FOR_BONE_FRACTURE = Map.ofEntries(entry(EntityType.ZOMBIE, 0.1D),
-                    entry(EntityType.ZOMBIFIED_PIGLIN, 0.3D),
-                    entry(EntityType.POLAR_BEAR, 0.3D),
-                    entry(EntityType.WITHER_SKELETON, 0.2D));
+        Double> ENTITY_TYPES_FOR_BONE_FRACTURE = Map.ofEntries(entry(EntityType.ZOMBIE, 0.1D),
+        entry(EntityType.ZOMBIFIED_PIGLIN, 0.3D),
+        entry(EntityType.POLAR_BEAR, 0.3D),
+        entry(EntityType.WITHER_SKELETON, 0.2D));
 
     public static float onPlayerFall(LivingEntity entity) {
         if (entity.hasEffect(ModMobEffects.BONE_FRACTURE_LEG.get())) {
@@ -102,7 +104,12 @@ public class BoneFracturedEventHandler {
     }
 
     public static InteractionResult onPlayerUseWithResult(InteractionHand hand, LivingEntity entity) {
-        return onPlayerUse(hand, entity) ? InteractionResult.PASS : InteractionResult.FAIL;
+        return onPlayerUse(hand, entity) ? InteractionResult.FAIL : InteractionResult.PASS;
+    }
+
+    public static InteractionResultHolder<ItemStack> onPlayerUseWithResultHolder(InteractionHand hand,
+                                                                                 LivingEntity entity) {
+        return new InteractionResultHolder<>(onPlayerUseWithResult(hand, entity), entity.getItemInHand(hand));
     }
 
 }
